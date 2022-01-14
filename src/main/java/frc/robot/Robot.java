@@ -4,9 +4,14 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Constants.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -15,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
+  TalonFX myTalon = new TalonFX(DriveConstants.myFalconChannel);
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
@@ -27,6 +33,9 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
+    myTalon.set(ControlMode.PercentOutput, 0.0);
+    myTalon.setInverted(false);
+    myTalon.setSensorPhase(false);
     m_robotContainer = new RobotContainer();
   }
 
@@ -44,6 +53,9 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    SmartDashboard.putNumber("Talon Velocity: ", myTalon.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("Talon Position: ", myTalon.getSelectedSensorPosition());
+    SmartDashboard.putNumber("Talon Current: ", myTalon.getSupplyCurrent());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -81,7 +93,9 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    myTalon.set(ControlMode.PercentOutput, 0.3);
+  }
 
   @Override
   public void testInit() {
