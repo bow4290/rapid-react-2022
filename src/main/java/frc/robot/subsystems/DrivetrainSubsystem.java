@@ -4,6 +4,9 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX; // Falcon500 onboard speed
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
+
 import frc.robot.Constants.DriveConstants;
 
 public class DrivetrainSubsystem extends SubsystemBase {
@@ -12,28 +15,32 @@ public class DrivetrainSubsystem extends SubsystemBase {
   private WPI_TalonFX rightMotor1 = new WPI_TalonFX(DriveConstants.rightMotor1Channel);
   private WPI_TalonFX rightMotor2 = new WPI_TalonFX(DriveConstants.rightMotor2Channel);
 
-  private final DifferentialDrive drivetrain = new DifferentialDrive(leftMotor1, rightMotor1);
+  private final DifferentialDrive drivetrain;
 
   public DrivetrainSubsystem() {
-    // NOTE: Should we use NeutralMode.Brake?
-	// see https://github.com/Yeti-Robotics/olaf-java-2021/blob/79e1bbd6b482c05b18b97d5423d9376dac4c2597/src/main/java/frc/robot/subsystems/DrivetrainSubsystem.java#L51
-
-    leftMotor1.setInverted(false);
-
+    leftMotor1.setInverted(TalonFXInvertType.Clockwise);
     leftMotor2.follow(leftMotor1);
     leftMotor2.setInverted(InvertType.FollowMaster);
 
-    rightMotor1.setInverted(true);
-
+    rightMotor1.setInverted(TalonFXInvertType.CounterClockwise);
     rightMotor2.follow(rightMotor1);
     rightMotor2.setInverted(InvertType.FollowMaster);
+
+    leftMotor1.setNeutralMode(NeutralMode.Brake);
+    leftMotor2.setNeutralMode(NeutralMode.Brake);
+    rightMotor1.setNeutralMode(NeutralMode.Brake);
+    rightMotor2.setNeutralMode(NeutralMode.Brake);
+
+    leftMotor1.configOpenloopRamp(0.5);
+    leftMotor2.configOpenloopRamp(0.5);
+    rightMotor1.configOpenloopRamp(0.5);
+    rightMotor2.configOpenloopRamp(0.5);
+
+    drivetrain = new DifferentialDrive(leftMotor1, rightMotor1);
   }
 
-  public void drive(double forward, double rotation) {
-    drivetrain.arcadeDrive(forward, rotation);
+  public void drive(double leftSpeed, double rightSpeed) {
+    drivetrain.tankDrive(leftSpeed, rightSpeed, true);
   }
 
-  public void stopDrive(){
-    drive(0,0);
-  }
 }
