@@ -13,7 +13,7 @@ public final class Constants {
   }
 
   public static final class JoystickConstants {
-    public static final int LEFT_JOYSTICK = 0;
-    public static final int RIGHT_JOYSTICK = 1;
+    public static int LEFT_JOYSTICK = 0;
+    public static int RIGHT_JOYSTICK = 1;
   }
 }
