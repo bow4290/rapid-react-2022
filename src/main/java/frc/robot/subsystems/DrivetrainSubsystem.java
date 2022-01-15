@@ -15,6 +15,9 @@ import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 
 import frc.robot.Constants.DriveConstants;
 
+/**
+ * The main class for controlling the drivetrain.
+ */
 public class DrivetrainSubsystem extends SubsystemBase {
   private WPI_TalonFX leftMotor1 = new WPI_TalonFX(DriveConstants.leftMotor1Channel);
   private WPI_TalonFX leftMotor2 = new WPI_TalonFX(DriveConstants.leftMotor2Channel);
@@ -40,16 +43,19 @@ public class DrivetrainSubsystem extends SubsystemBase {
     rightMotor2.follow(rightMotor1);
     rightMotor2.setInverted(InvertType.FollowMaster);
 
+    // Make the drivetrain brake when there is no input from the joysticks.
     leftMotor1.setNeutralMode(NeutralMode.Brake);
     leftMotor2.setNeutralMode(NeutralMode.Brake);
     rightMotor1.setNeutralMode(NeutralMode.Brake);
     rightMotor2.setNeutralMode(NeutralMode.Brake);
 
+    // Smooth the joystick inputs to regulate power draw.
     leftMotor1.configOpenloopRamp(0.5);
     leftMotor2.configOpenloopRamp(0.5);
     rightMotor1.configOpenloopRamp(0.5);
     rightMotor2.configOpenloopRamp(0.5);
 
+    // Don't draw more than 11 volts - keeps speed consistent even when battery output isn't.
     leftMotor1.configVoltageCompSaturation(11);
     leftMotor2.configVoltageCompSaturation(11);
     rightMotor1.configVoltageCompSaturation(11);
@@ -60,6 +66,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     rightMotor1.enableVoltageCompensation(true); 
     rightMotor2.enableVoltageCompensation(true);
 
+    // Tell the Falcon 500 to use the onboard sensor.
     leftMotor1.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
     rightMotor1.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
 
@@ -73,6 +80,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
     drivetrain.tankDrive(leftSpeed, rightSpeed, true);
   }
 
+  /**
+   * Resets the sensor positions.
+   */
   public void resetDriveEncoders() {
     leftMotor1.setSelectedSensorPosition(0);
     rightMotor1.setSelectedSensorPosition(0);
@@ -92,19 +102,32 @@ public class DrivetrainSubsystem extends SubsystemBase {
     gearShiftPosition = GearShiftPosition.UP;
   }
 
-  // add distance conversion for shifting
+  /**
+   * Returns the calculated position (instead of the raw sensor position).
+   */
   public double getLeftCalculatedPosition() {
+    // TODO: add distance conversion for shifting
     return (getLeftRawEncoderPosition() * (DriveConstants.encoderDistanceConversion));
   }
 
+  /**
+   * Returns the calculated position (instead of the raw sensor position).
+   */
   public double getRightCalculatedPosition() {
+    // TODO: add distance conversion for shifting
     return (getRightRawEncoderPosition() * (DriveConstants.encoderDistanceConversion));
   }
 
+  /**
+   * Returns the raw position.
+   */
   private double getLeftRawEncoderPosition() {
     return leftMotor1.getSelectedSensorPosition();
   }
 
+  /**
+   * Returns the raw position.
+   */
   private double getRightRawEncoderPosition() {
     return rightMotor1.getSelectedSensorPosition();
   }
@@ -115,5 +138,5 @@ public class DrivetrainSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Right Drive Position", getRightCalculatedPosition());
     SmartDashboard.putNumber("Left Raw Drive Position", getLeftRawEncoderPosition());
     SmartDashboard.putNumber("Right Raw Drive Position", getRightRawEncoderPosition());
-  } 
+  }
 }
