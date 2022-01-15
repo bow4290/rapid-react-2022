@@ -66,6 +66,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     drivetrain = new DifferentialDrive(leftMotor1, rightMotor1);
 
     gearShiftSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, DriveConstants.gearShiftUpChannel, DriveConstants.gearShiftDownChannel);
+    gearShiftPosition = null;
   }
 
   public void drive(double leftSpeed, double rightSpeed) { 
@@ -81,14 +82,14 @@ public class DrivetrainSubsystem extends SubsystemBase {
     return gearShiftPosition;
   }
 
-  public void setGearShiftSolenoid(GearShiftPosition shiftPosition){
-    if(shiftPosition == GearShiftPosition.UP){
-      gearShiftSolenoid.set(DoubleSolenoid.Value.kForward);
-      setGearShiftPosition(GearShiftPosition.UP);
-    } else{
-      gearShiftSolenoid.set(DoubleSolenoid.Value.kReverse);
-      setGearShiftPosition(GearShiftPosition.DOWN);
-    }
+  public void shiftDown(){
+    gearShiftSolenoid.set(DoubleSolenoid.Value.kForward);   // kForward is DOWN
+    gearShiftPosition = GearShiftPosition.DOWN;
+  }
+
+  public void shiftUp(){
+    gearShiftSolenoid.set(DoubleSolenoid.Value.kReverse);   // kReverse is UP
+    gearShiftPosition = GearShiftPosition.UP;
   }
 
   // add distance conversion for shifting
@@ -106,10 +107,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   private double getRightRawEncoderPosition() {
     return rightMotor1.getSelectedSensorPosition();
-  }
-
-  private void setGearShiftPosition(GearShiftPosition shiftPosition){
-    gearShiftPosition = shiftPosition;
   }
 
   @Override

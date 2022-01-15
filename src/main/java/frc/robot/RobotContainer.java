@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
@@ -10,8 +6,12 @@ import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.Drivetrain.Drive;
+import frc.robot.commands.Drivetrain.ShiftGearDown;
+import frc.robot.commands.Drivetrain.ShiftGearUp;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
@@ -53,21 +53,29 @@ public class RobotContainer {
     return joystickRight.getX();
   }
 
-  /**
-   * Use this method to define your button->command mappings. Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
-   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    setJoystickButtonWhenPressed(joystickLeft, 1, new ShiftGearDown());
+    setJoystickButtonWhenPressed(joystickRight, 1, new ShiftGearUp());
+  }
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
     return m_autoCommand;
   }
+
+  // WhenPressed runs the command once at the moment the button is pressed.
+  private void setJoystickButtonWhenPressed(Joystick joystick, int button, CommandBase command) {
+    new JoystickButton(joystick, button).whenPressed(command);
+  }
+
+  // WhileHeld constantly starts the command and repeatedly schedules while the button is held. Cancels when button is released.
+  private void setJoystickButtonWhileHeld(Joystick joystick, int button, CommandBase command) {
+    new JoystickButton(joystick, button).whileHeld(command);
+  }
+
+  // WhenHeld starts the command once when the button is first pressed. Command runs until button is released or command interrupted.
+  private void setJoystickButtonWhenHeld(Joystick joystick, int button, CommandBase command) {
+    new JoystickButton(joystick, button).whenHeld(command);
+  }
 }
+
+
