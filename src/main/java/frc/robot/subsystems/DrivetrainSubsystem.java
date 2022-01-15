@@ -25,11 +25,11 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   private final DoubleSolenoid gearShiftSolenoid;
 
-  public enum GearShiftStatus{
+  private enum GearShiftPosition{
     UP, DOWN
   }
 
-  public static GearShiftStatus gearShiftStatus;
+  private static GearShiftPosition gearShiftPosition;
 
   public DrivetrainSubsystem() {
     leftMotor1.setInverted(TalonFXInvertType.Clockwise);
@@ -68,10 +68,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
     gearShiftSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, DriveConstants.gearShiftUpChannel, DriveConstants.gearShiftDownChannel);
   }
 
-  public GearShiftStatus getSolenoid(){
-    return gearShiftStatus;
-  }
-
   public void drive(double leftSpeed, double rightSpeed) { 
     drivetrain.tankDrive(leftSpeed, rightSpeed, true);
   }
@@ -79,6 +75,20 @@ public class DrivetrainSubsystem extends SubsystemBase {
   public void resetDriveEncoders() {
     leftMotor1.setSelectedSensorPosition(0);
     rightMotor1.setSelectedSensorPosition(0);
+  }
+
+  public GearShiftPosition getGearShiftPosition(){
+    return gearShiftPosition;
+  }
+
+  public void setGearShiftSolenoid(GearShiftPosition shiftPosition){
+    if(shiftPosition == GearShiftPosition.UP){
+      gearShiftSolenoid.set(DoubleSolenoid.Value.kForward);
+      setGearShiftPosition(GearShiftPosition.UP);
+    } else{
+      gearShiftSolenoid.set(DoubleSolenoid.Value.kReverse);
+      setGearShiftPosition(GearShiftPosition.DOWN);
+    }
   }
 
   // add distance conversion for shifting
@@ -98,6 +108,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
     return rightMotor1.getSelectedSensorPosition();
   }
 
+  private void setGearShiftPosition(GearShiftPosition shiftPosition){
+    gearShiftPosition = shiftPosition;
+  }
 
   @Override
   public void periodic(){
