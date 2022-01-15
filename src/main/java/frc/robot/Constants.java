@@ -1,8 +1,6 @@
-
 package frc.robot;
 
 public final class Constants {
-  
   public static final class DriveConstants {
     public static int leftMotor1Channel = 0;
     public static int leftMotor2Channel = 1;
@@ -12,7 +10,6 @@ public final class Constants {
     public static int gearShiftDownChannel = 9;
 
     public static double encoderDistanceConversion = 1.0;
-    
   }
 
   public static final class JoystickConstants {
