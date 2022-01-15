@@ -62,17 +62,17 @@ public class RobotContainer {
     return m_autoCommand;
   }
 
-  // WhenPressed runs the command once at the moment the button is pressed.
+   /** WhenPressed runs the command once at the moment the button is pressed. */
   private void setJoystickButtonWhenPressed(Joystick joystick, int button, CommandBase command) {
     new JoystickButton(joystick, button).whenPressed(command);
   }
 
-  // WhileHeld constantly starts the command and repeatedly schedules while the button is held. Cancels when button is released.
+  /** WhileHeld constantly starts the command and repeatedly schedules while the button is held. Cancels when button is released. */
   private void setJoystickButtonWhileHeld(Joystick joystick, int button, CommandBase command) {
     new JoystickButton(joystick, button).whileHeld(command);
   }
 
-  // WhenHeld starts the command once when the button is first pressed. Command runs until button is released or command interrupted.
+  /** WhenHeld starts the command once when the button is first pressed. Command runs until button is released or command interrupted. */
   private void setJoystickButtonWhenHeld(Joystick joystick, int button, CommandBase command) {
     new JoystickButton(joystick, button).whenHeld(command);
   }
