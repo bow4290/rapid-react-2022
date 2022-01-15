@@ -14,4 +14,9 @@ public final class Constants {
     public static double encoderDistanceConversion = 1.0;
     
   }
+
+  public static final class JoystickConstants {
+    public static final int LEFT_JOYSTICK = 0;
+    public static final int RIGHT_JOYSTICK = 1;
+  }
 }

@@ -6,9 +6,9 @@ package frc.robot.commands.Drivetrain;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class stopDrive extends CommandBase {
+public class StopDrive extends CommandBase {
   /** Creates a new stopDrive. */
-  public stopDrive() {
+  public StopDrive() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

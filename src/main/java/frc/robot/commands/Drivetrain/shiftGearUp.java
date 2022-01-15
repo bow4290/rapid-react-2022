@@ -6,9 +6,9 @@ package frc.robot.commands.Drivetrain;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class shiftGearUp extends CommandBase {
+public class ShiftGearUp extends CommandBase {
   /** Creates a new shiftGearUp. */
-  public shiftGearUp() {
+  public ShiftGearUp() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

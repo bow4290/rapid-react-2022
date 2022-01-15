@@ -6,26 +6,51 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.Constants.JoystickConstants;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.Drivetrain.Drive;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.*;
 
-/**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
- * subsystems, commands, and button mappings) should be declared here.
- */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
+  public static Joystick joystickLeft;
+  public static Joystick joystickRight;
+
+  private DrivetrainSubsystem drivetrainSubsystem;
+
+  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+
   public RobotContainer() {
-    // Configure the button bindings
+
+    joystickLeft = new Joystick(JoystickConstants.LEFT_JOYSTICK);
+    joystickRight = new Joystick(JoystickConstants.RIGHT_JOYSTICK);
+
+    drivetrainSubsystem = new DrivetrainSubsystem();
+
+    drivetrainSubsystem.setDefaultCommand(new Drive(getLeftY(), getRightY(), drivetrainSubsystem));
+    
     configureButtonBindings();
+  }
+
+  public double getLeftY(){
+    return joystickLeft.getY();   // Joystick Y axis provides -1 for forward, so invert this
+  }
+
+  public double getLeftX(){
+    return joystickLeft.getX();
+  }
+
+  public double getRightY(){
+    return joystickRight.getY();  // Joystick Y axis provides -1 for forward, so invert this
+  }
+
+  public double getRightX(){
+    return joystickRight.getX();
   }
 
   /**
