@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX; // Falcon500 onboard speed controller
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.InvertType;
@@ -16,7 +15,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
   private final DifferentialDrive drivetrain = new DifferentialDrive(leftMotor1, rightMotor1);
 
   public DrivetrainSubsystem() {
-    // TODO: NeutralMode.Brake? https://github.com/Yeti-Robotics/olaf-java-2021/blob/79e1bbd6b482c05b18b97d5423d9376dac4c2597/src/main/java/frc/robot/subsystems/DrivetrainSubsystem.java#L51
+    // NOTE: Should we use NeutralMode.Brake?
+	// see https://github.com/Yeti-Robotics/olaf-java-2021/blob/79e1bbd6b482c05b18b97d5423d9376dac4c2597/src/main/java/frc/robot/subsystems/DrivetrainSubsystem.java#L51
 
     leftMotor1.setInverted(false);
 
