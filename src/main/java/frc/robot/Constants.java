@@ -17,4 +17,10 @@ public final class Constants {
     public static int LEFT_JOYSTICK = 0;
     public static int RIGHT_JOYSTICK = 1;
   }
+
+  public static final class LimelightConstants {
+    public static final double h1 = 0;                     // Distance from ground to limelight
+    public static final double h2 = 0;                     // Distance from ground to target
+    public static final double a1 = 0;                  // Limelight mount angle
+  }
 }
