@@ -1,7 +1,5 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.commands.ExampleCommand;
@@ -38,7 +36,7 @@ public class RobotContainer {
   }
 
   public double getLeftY(){
-    return joystickLeft.getY();   // Joystick Y axis provides -1 for forward, so invert this
+    return joystickLeft.getY();
   }
 
   public double getLeftX(){
@@ -46,7 +44,7 @@ public class RobotContainer {
   }
 
   public double getRightY(){
-    return joystickRight.getY();  // Joystick Y axis provides -1 for forward, so invert this
+    return joystickRight.getY();
   }
 
   public double getRightX(){
