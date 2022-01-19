@@ -5,108 +5,122 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.robot.Constants.LimelightConstants;
 
 public class Limelight {
+  private static NetworkTable table = null;
+  private static double avgYError = 0.0;
 
-    private static NetworkTable table = null;
-    private static double avgYError = 0.0;
+  public static enum LedMode {
+    ledPipeline, ledOff, ledBlink, ledOn
+  }
+  
+  public static enum CamMode {
+    vision, driving
+  }
 
-    public static enum LedMode {
-        ledPipeline, ledOff, ledBlink, ledOn
+  public Limelight() {
+    table = NetworkTableInstance.getDefault().getTable("limelight");
+  }
+
+  /** Set the state of the LED */
+  public void setLedMode(LedMode mode) {
+    table.getEntry("ledMode").setNumber(mode.ordinal());
+  }
+
+  public LedMode getLedMode() {
+    int mode_num = table.getEntry("ledMode").getNumber(0).intValue();
+
+    if (mode_num == 0) {
+      return LedMode.ledPipeline;
     }
-    
-    public static enum CamMode {
-        vision, driving
+    else if (mode_num == 1) {
+      return LedMode.ledOff;
     }
-
-    public Limelight(){
-        table = NetworkTableInstance.getDefault().getTable("limelight");
+    else if (mode_num == 1) {
+      return LedMode.ledBlink;
     }
-
-    public void setLedMode(LedMode mode){                       // Set the state of the LED
-        table.getEntry("ledMode").setNumber(mode.ordinal());
-    }
-
-    public LedMode getLedMode(){
-        int mode_num = table.getEntry("ledMode").getNumber(0).intValue();
-
-        if (mode_num == 0) {
-            return LedMode.ledPipeline;
-        }
-        else if (mode_num == 1) {
-            return LedMode.ledOff;
-        }
-        else if (mode_num == 1) {
-            return LedMode.ledBlink;
-        }
-        else if (mode_num == 2) {
-            return LedMode.ledOn;
-        }
-
-        return LedMode.ledOff;
+    else if (mode_num == 2) {
+      return LedMode.ledOn;
     }
 
-    public void setCamMode(CamMode mode){                       // Set the camera mode (vision processing or driving camera)
-        table.getEntry("camMode").setNumber(mode.ordinal());
-    }
+    return LedMode.ledOff;
+  }
 
-    public void setPipeline(int pipeline){                      // Set the pipeline number (0-9)
-        table.getEntry("pipeline").setNumber(pipeline);
-    }
+  /** Set the camera mode (vision processing or driving camera) */
+  public void setCamMode(CamMode mode) {
+    table.getEntry("camMode").setNumber(mode.ordinal());
+  }
 
-    public double getTarget(){                          // Whether the limelight has any valid targets (0 or 1)
-        return table.getEntry("tv").getDouble(0);
-    }
+  /** Set the pipeline number (0-9) */
+  public void setPipeline(int pipeline) {
+    table.getEntry("pipeline").setNumber(pipeline);
+  }
 
-    public boolean isTarget(){                          // Whether the limelight has any valid targets (0 or 1)
-        return table.getEntry("tv").getDouble(0) == 1;
-    }
-    
-    public double getXError(){                          // Horizontal offset from limelight crosshair to target crosshair
-        return table.getEntry("tx").getDouble(0.00);
-    }
+  /** Whether the limelight has any valid targets (0 or 1) */
+  public double getTarget() {
+    return table.getEntry("tv").getDouble(0);
+  }
 
-    public double getYError(){                          // Vertical offset from limelight crosshair to target crosshair
-        return table.getEntry("ty").getDouble(0.00);
-    }
+  /** Whether the limelight has any valid targets (0 or 1) */
+  public boolean isTarget() {
+    return table.getEntry("tv").getDouble(0) == 1;
+  }
+  
+  /** Horizontal offset from limelight crosshair to target crosshair */
+  public double getXError() {
+    return table.getEntry("tx").getDouble(0.00);
+  }
 
-    public double getAvgYError(double historic_weight){
-        avgYError = ((historic_weight * avgYError) + ((1.0-historic_weight)*getYError()))/2.0;
-        return avgYError;
-    }
+  /** Vertical offset from limelight crosshair to target crosshair */
+  public double getYError() {
+    return table.getEntry("ty").getDouble(0.00);
+  }
 
-    public double getArea(){                            // Target area (0% to 100% of image)
-        return table.getEntry("ta").getDouble(0.00);
-    }
+  public double getAvgYError(double historic_weight) {
+    avgYError = ((historic_weight * avgYError) + ((1.0-historic_weight)*getYError()))/2.0;
+    return avgYError;
+  }
 
-    public double getSkew(){                            // Skew or rotation (-90 deg to 0 deg)
-        return table.getEntry("ts").getDouble(0.00);
-    }
+  /** Target area (0% to 100% of image) */
+  public double getArea() {
+    return table.getEntry("ta").getDouble(0.00);
+  }
 
-    public double getLatency(){                         // Pipeline latency contribution (ms)
-        return table.getEntry("tl").getDouble(0.00);
-    }
+  /** Skew or rotation (-90 deg to 0 deg) */
+  public double getSkew() {
+    return table.getEntry("ts").getDouble(0.00);
+  }
 
-    public double getShortLength(){                     // Sidelength of shortest side of fitted box (pixels)
-        return table.getEntry("tshort").getDouble(0);
-    }
+  /** Pipeline latency contribution (ms) */
+  public double getLatency() {
+    return table.getEntry("tl").getDouble(0.00);
+  }
 
-    public double getLongLength(){                      // Sidelength of longest side of fitted box (pixels)
-        return table.getEntry("tlong").getDouble(0);
-    }
+  /** Sidelength of shortest side of fitted box (pixels) */
+  public double getShortLength() {
+    return table.getEntry("tshort").getDouble(0);
+  }
 
-    public double getHorizontalLength(){                // Horizontal sidelength of rough bouding box (0-320 pixels)
-        return table.getEntry("thor").getDouble(0);
-    }
+  /** Sidelength of longest side of fitted box (pixels) */
+  public double getLongLength() {
+    return table.getEntry("tlong").getDouble(0);
+  }
 
-    public double getVerticalLength(){                  // Vertical sidelength of rough bouding box (0-320 pixels)
-        return table.getEntry("tvert").getDouble(0);
-    }
+  /** Horizontal sidelength of rough bouding box (0-320 pixels) */
+  public double getHorizontalLength() {
+    return table.getEntry("thor").getDouble(0);
+  }
 
-    public double getPipeline(){                        // True active pipeline of the camera (0-9)
-        return table.getEntry("getpipe").getDouble(0);
-    }
+  /** Vertical sidelength of rough bouding box (0-320 pixels) */
+  public double getVerticalLength() {
+    return table.getEntry("tvert").getDouble(0);
+  }
 
-    public double getDistance(){                        // Horizontal distance from limelight to target
-        return (LimelightConstants.h2 - LimelightConstants.h1) / Math.tan(Math.toRadians(LimelightConstants.a1 + getYError()));
-    }
+  /** True active pipeline of the camera (0-9) */
+  public double getPipeline() {
+    return table.getEntry("getpipe").getDouble(0);
+  }
 
+  /** Horizontal distance from limelight to target */
+  public double getDistance() {
+    return (LimelightConstants.h2 - LimelightConstants.h1) / Math.tan(Math.toRadians(LimelightConstants.a1 + getYError()));
+  }
 }
