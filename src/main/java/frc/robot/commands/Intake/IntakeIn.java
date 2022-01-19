@@ -7,10 +7,10 @@ package frc.robot.commands.Intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
 
-public class IntakeCommand extends CommandBase {
-  private final IntakeSubsystem intakeSubsystem;
-  public IntakeCommand(IntakeSubsystem intakeSubsystem) {
-    this.intakeSubsystem = intakeSubsystem;
+public class IntakeIn extends CommandBase {
+  private IntakeSubsystem intakeSubsystem;
+
+  public IntakeIn() {
     addRequirements(intakeSubsystem);
   }
 
@@ -25,7 +25,7 @@ public class IntakeCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {  
   }
-
+  
   @Override
   public boolean isFinished() {
     return false;

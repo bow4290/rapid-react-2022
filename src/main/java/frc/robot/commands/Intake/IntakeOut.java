@@ -7,24 +7,24 @@ package frc.robot.commands.Intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
 
-public class IntakeDown extends CommandBase {
+public class IntakeOut extends CommandBase {
   private IntakeSubsystem intakeSubsystem;
 
-  public IntakeDown(IntakeSubsystem intakeSubsystem) {
-    this.intakeSubsystem = intakeSubsystem;
+  public IntakeOut() {
     addRequirements(intakeSubsystem);
   }
-  
+
   @Override
   public void initialize() {}
 
   @Override
   public void execute() {
-    intakeSubsystem.extendIntake();
+    intakeSubsystem.intakeSpin(-1);
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   @Override
   public boolean isFinished() {

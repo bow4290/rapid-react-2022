@@ -1,11 +1,14 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.Drivetrain.Drive;
 import frc.robot.commands.Drivetrain.ShiftGearDown;
 import frc.robot.commands.Drivetrain.ShiftGearUp;
+import frc.robot.commands.Intake.IntakeIn;
+import frc.robot.commands.Intake.IntakeOut;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -16,6 +19,7 @@ public class RobotContainer {
 
   public static Joystick joystickLeft;
   public static Joystick joystickRight;
+  public static Joystick xboxController;
 
   private DrivetrainSubsystem drivetrainSubsystem;
 
@@ -27,6 +31,7 @@ public class RobotContainer {
 
     joystickLeft = new Joystick(JoystickConstants.LEFT_JOYSTICK);
     joystickRight = new Joystick(JoystickConstants.RIGHT_JOYSTICK);
+    xboxController = new Joystick(JoystickConstants.XBOX_CONTROLLER);
 
     drivetrainSubsystem = new DrivetrainSubsystem();
 
@@ -51,9 +56,21 @@ public class RobotContainer {
     return joystickRight.getX();
   }
 
+/* Xbox Controller Button Binding: 
+Left Bumper= 5 Right Bumper= 6 
+Stick Left= 9 Stick Right= 10 
+A= 1 B= 2 X= 3 Y= 4 
+Back= 7 Start= 8
+
+Axis
+Left X= 0 Right X= 4 Left Y= 1 Right Y= 5
+Left Trigger= 2 Right Trigger= 3
+*/
   private void configureButtonBindings() {
     setJoystickButtonWhenPressed(joystickLeft, 1, new ShiftGearDown());
     setJoystickButtonWhenPressed(joystickRight, 1, new ShiftGearUp());
+    setJoystickButtonWhileHeld(xboxController, 5, new IntakeOut());
+    setJoystickButtonWhileHeld(xboxController, 6, new IntakeIn());
   }
 
   public Command getAutonomousCommand() {
