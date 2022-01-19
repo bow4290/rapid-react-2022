@@ -5,14 +5,15 @@
 package frc.robot.commands.Intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.IntakeSubsystem;
 
-public class intakeUp extends CommandBase {
-  /** Creates a new intakeUp. */
-  public intakeUp() {
-    // Use addRequirements() here to declare subsystem dependencies.
+public class IntakeUp extends CommandBase {
+  private IntakeSubsystem IntakeSubsystem;
+  
+  public IntakeUp() {
+
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
 
