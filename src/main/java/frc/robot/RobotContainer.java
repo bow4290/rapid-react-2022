@@ -55,14 +55,17 @@ public class RobotContainer {
   }
 
 /* Xbox Controller Button Binding: 
-Left Bumper= 5 Right Bumper= 6 
-Stick Left= 9 Stick Right= 10 
-A= 1 B= 2 X= 3 Y= 4 
-Back= 7 Start= 8
+  Buttons:
+    1 - A           6 - RightBump
+    2 - B           7 - Back
+    3 - X           8 - Start
+    4 - Y           9 - LeftStickIn
+    5 - LeftBump   10 - RightStickIn
 
-Axis
-Left X= 0 Right X= 4 Left Y= 1 Right Y= 5
-Left Trigger= 2 Right Trigger= 3
+  Axes:
+    0 - LeftX       3 - RightTrig
+    1 - LeftY       4 - RightX
+    2 - LeftTrig    5 - RightY
 */
   private void configureButtonBindings() {
     setJoystickButtonWhenPressed(joystickLeft, 1, new ShiftGearDown());
