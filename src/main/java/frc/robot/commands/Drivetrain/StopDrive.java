@@ -3,9 +3,7 @@ package frc.robot.commands.Drivetrain;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
-/**
- * Command to stop driving.
- */
+/** Command to stop driving. */
 public class StopDrive extends CommandBase {
   private DrivetrainSubsystem drivetrainSubsystem;
 

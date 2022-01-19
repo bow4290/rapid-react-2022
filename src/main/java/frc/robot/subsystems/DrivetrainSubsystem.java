@@ -15,9 +15,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 
 import frc.robot.Constants.DriveConstants;
 
-/**
- * The main class for controlling the drivetrain.
- */
+/** The main class for controlling the drivetrain. */
 public class DrivetrainSubsystem extends SubsystemBase {
   private WPI_TalonFX leftMotor1 = new WPI_TalonFX(DriveConstants.leftMotor1Channel);
   private WPI_TalonFX leftMotor2 = new WPI_TalonFX(DriveConstants.leftMotor2Channel);
@@ -80,9 +78,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     drivetrain.tankDrive(leftSpeed, rightSpeed, true);
   }
 
-  /**
-   * Resets the sensor positions.
-   */
+  /** Resets the sensor positions. */
   public void resetDriveEncoders() {
     leftMotor1.setSelectedSensorPosition(0);
     rightMotor1.setSelectedSensorPosition(0);
@@ -102,32 +98,24 @@ public class DrivetrainSubsystem extends SubsystemBase {
     gearShiftPosition = GearShiftPosition.UP;
   }
 
-  /**
-   * Returns the calculated position (instead of the raw sensor position).
-   */
+  /** Returns the calculated position (instead of the raw sensor position). */
   public double getLeftCalculatedPosition() {
     // TODO: add distance conversion for shifting
     return (getLeftRawEncoderPosition() * (DriveConstants.encoderDistanceConversion));
   }
 
-  /**
-   * Returns the calculated position (instead of the raw sensor position).
-   */
+  /** Returns the calculated position (instead of the raw sensor position). */
   public double getRightCalculatedPosition() {
     // TODO: add distance conversion for shifting
     return (getRightRawEncoderPosition() * (DriveConstants.encoderDistanceConversion));
   }
 
-  /**
-   * Returns the raw position.
-   */
+  /** Returns the raw position. */
   private double getLeftRawEncoderPosition() {
     return leftMotor1.getSelectedSensorPosition();
   }
 
-  /**
-   * Returns the raw position.
-   */
+  /** Returns the raw position. */
   private double getRightRawEncoderPosition() {
     return rightMotor1.getSelectedSensorPosition();
   }

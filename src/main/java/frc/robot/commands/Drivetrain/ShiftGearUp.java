@@ -3,9 +3,7 @@ package frc.robot.commands.Drivetrain;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
-/**
- * Command to shift the gears up.
- */
+/** Command to shift the gears up. */
 public class ShiftGearUp extends CommandBase {
   private DrivetrainSubsystem drivetrainSubsystem;
 

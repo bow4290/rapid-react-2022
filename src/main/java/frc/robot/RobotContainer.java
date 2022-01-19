@@ -78,7 +78,7 @@ public class RobotContainer {
     return m_autoCommand;
   }
 
-   /** WhenPressed runs the command once at the moment the button is pressed. */
+  /** WhenPressed runs the command once at the moment the button is pressed. */
   private void setJoystickButtonWhenPressed(Joystick joystick, int button, CommandBase command) {
     new JoystickButton(joystick, button).whenPressed(command);
   }
