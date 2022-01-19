@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj.I2C;
+import frc.robot.sensors.RevColorSensor;
 
 import com.revrobotics.ColorSensorV3;
 
@@ -16,26 +16,22 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
+  private RevColorSensor colorSensor;
+
+  /**
+   * This function is run when the robot is first started up and should be used for any
+   * initialization code.
+   */
   @Override
   public void robotInit() {
     m_robotContainer = new RobotContainer();
+    colorSensor = new RevColorSensor(0, 255, 0, 255, 0, 255, 0, 2047);
   }
 
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
-    
-    int detectedRedColor = m_colorSensor.getRed();
-    int detectedGreenColor = m_colorSensor.getGreen();
-    int detectedBlueColor = m_colorSensor.getBlue();
-    double IR = m_colorSensor.getIR();
-    int proximity = m_colorSensor.getProximity();
-
-    SmartDashboard.putNumber("Red", detectedRedColor);
-    SmartDashboard.putNumber("Green", detectedGreenColor);
-    SmartDashboard.putNumber("Blue", detectedBlueColor);
-    SmartDashboard.putNumber("IR", IR);
-    SmartDashboard.putNumber("Proximity", proximity);
+    SmartDashboard.putBoolean("Is Target?", colorSensor.isTarget());
   }
 
   @Override
