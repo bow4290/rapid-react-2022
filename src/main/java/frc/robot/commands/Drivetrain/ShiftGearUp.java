@@ -9,7 +9,8 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 public class ShiftGearUp extends CommandBase {
   private DrivetrainSubsystem drivetrainSubsystem;
 
-  public ShiftGearUp() {
+  public ShiftGearUp(DrivetrainSubsystem drivetrainSubsystem) {
+    this.drivetrainSubsystem = drivetrainSubsystem;
     addRequirements(drivetrainSubsystem);
   }
 

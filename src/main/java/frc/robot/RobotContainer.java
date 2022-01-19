@@ -3,9 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.Drivetrain.Drive;
-import frc.robot.commands.Drivetrain.ShiftGearDown;
-import frc.robot.commands.Drivetrain.ShiftGearUp;
+import frc.robot.commands.Drivetrain.*;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -52,8 +50,8 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
-    setJoystickButtonWhenPressed(joystickLeft, 1, new ShiftGearDown());
-    setJoystickButtonWhenPressed(joystickRight, 1, new ShiftGearUp());
+    setJoystickButtonWhenPressed(joystickLeft, 1, new ShiftGearDown(drivetrainSubsystem));
+    setJoystickButtonWhenPressed(joystickRight, 1, new ShiftGearUp(drivetrainSubsystem));
   }
 
   public Command getAutonomousCommand() {
