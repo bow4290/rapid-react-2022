@@ -70,7 +70,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     setJoystickButtonWhenPressed(joystickLeft, 1, new ShiftGearDown());
     setJoystickButtonWhenPressed(joystickRight, 1, new ShiftGearUp());
-    setJoystickButtonToggleWhenPressed(xboxController, 1, new IntakeToggle());
+    setJoystickButtonWhenPressed(xboxController, 1, new IntakeToggle());
   }
 
   public Command getAutonomousCommand() {
