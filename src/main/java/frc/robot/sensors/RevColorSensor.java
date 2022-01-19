@@ -1,25 +1,8 @@
 /*
-Sample test code that works:
-----------------------------------------------------------------------------
-import edu.wpi.first.wpilibj.I2C;
-import com.revrobotics.ColorSensorV3;
-
-private final I2C.Port i2cPort = I2C.Port.kOnboard;
-private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
-
-int detectedRedColor = m_colorSensor.getRed();
-int detectedGreenColor = m_colorSensor.getGreen();
-int detectedBlueColor = m_colorSensor.getBlue();
-double IR = m_colorSensor.getIR();
-int proximity = m_colorSensor.getProximity();
-
-SmartDashboard.putNumber("Red", detectedRedColor);
-SmartDashboard.putNumber("Green", detectedGreenColor);
-SmartDashboard.putNumber("Blue", detectedBlueColor);
-SmartDashboard.putNumber("IR", IR);
-SmartDashboard.putNumber("Proximity", proximity);
-----------------------------------------------------------------------------
+    Color thresholds should be in the range [0-255]
+    Proximity thresholds should be in the range [0-2047]
 */
+
 package frc.robot.sensors;
 
 import edu.wpi.first.wpilibj.I2C;
