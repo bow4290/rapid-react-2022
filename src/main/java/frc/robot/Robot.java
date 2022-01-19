@@ -7,16 +7,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.sensors.RevColorSensor;
 
-import com.revrobotics.ColorSensorV3;
-
 public class Robot extends TimedRobot {
-  private final I2C.Port i2cPort = I2C.Port.kOnboard;
-  private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
 
-  private RevColorSensor colorSensor;
+  private RevColorSensor redBallColorSensor;
+  private RevColorSensor blueBallColorSensor;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -25,13 +22,15 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     m_robotContainer = new RobotContainer();
-    colorSensor = new RevColorSensor(0, 255, 0, 255, 0, 255, 0, 2047);
+    redBallColorSensor = new RevColorSensor(80, 180, 50, 80, 15, 40, 0, 2048);
+    blueBallColorSensor = new RevColorSensor(10, 70, 50, 100, 40, 100, 0, 2048);
   }
 
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
-    SmartDashboard.putBoolean("Is Target?", colorSensor.isTarget());
+    SmartDashboard.putBoolean("Is Red Ball?", redBallColorSensor.isTarget());
+    SmartDashboard.putBoolean("Is Blue Ball?", blueBallColorSensor.isTarget());
   }
 
   @Override
