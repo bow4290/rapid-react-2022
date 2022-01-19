@@ -13,11 +13,11 @@ public class IntakeStop extends CommandBase {
 
   @Override
   public void initialize() {
+    intakeSubsystem.intakeSpin(0);
   }
 
   @Override
   public void execute() {
-    intakeSubsystem.intakeSpin(0);
   }
 
   @Override
@@ -26,6 +26,6 @@ public class IntakeStop extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

@@ -6,7 +6,7 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.Drivetrain.Drive;
 import frc.robot.commands.Drivetrain.ShiftGearDown;
 import frc.robot.commands.Drivetrain.ShiftGearUp;
-import frc.robot.commands.Intake.IntakeToggle;
+import frc.robot.commands.Intake.*;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -20,6 +20,7 @@ public class RobotContainer {
   public static Joystick xboxController;
 
   private DrivetrainSubsystem drivetrainSubsystem;
+  private IntakeSubsystem intakeSubsystem;
 
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
@@ -34,6 +35,7 @@ public class RobotContainer {
     drivetrainSubsystem = new DrivetrainSubsystem();
 
     drivetrainSubsystem.setDefaultCommand(new Drive(getLeftY(), getRightY(), drivetrainSubsystem));
+    intakeSubsystem.setDefaultCommand(new IntakeStop(intakeSubsystem));
     
     configureButtonBindings();
   }
@@ -70,7 +72,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     setJoystickButtonWhenPressed(joystickLeft, 1, new ShiftGearDown());
     setJoystickButtonWhenPressed(joystickRight, 1, new ShiftGearUp());
-    setJoystickButtonWhenPressed(xboxController, 1, new IntakeToggle());
+    setJoystickButtonWhenPressed(xboxController, 1, new IntakeToggle(intakeSubsystem));
+    setJoystickButtonWhileHeld(xboxController, 2, new IntakeIn(intakeSubsystem));
   }
 
   public Command getAutonomousCommand() {

@@ -8,15 +8,13 @@ public class IntakeToggle extends CommandBase {
 
 private IntakeSubsystem intakeSubsystem;
 
-  public IntakeToggle() {
+  public IntakeToggle(IntakeSubsystem intakeSubsystem) {
+    this.intakeSubsystem = intakeSubsystem;
     addRequirements(intakeSubsystem);
   }
 
   @Override
-  public void initialize() {}
-
-  @Override
-  public void execute() {
+  public void initialize() {
     if (IntakeSubsystem.getIntakePosition() == IntakeStatus.UP) {
       intakeSubsystem.extendIntake();
     } else{
@@ -25,10 +23,15 @@ private IntakeSubsystem intakeSubsystem;
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void execute() {
+  }
+
+  @Override
+  public void end(boolean interrupted) {
+  }
 
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }
