@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeSubsystem;
 
 public class IntakeStop extends CommandBase {
-  private final IntakeSubsystem intakeSubsystem;
+  private IntakeSubsystem intakeSubsystem;
 
   public IntakeStop(IntakeSubsystem intakeSubsystem) {
     this.intakeSubsystem = intakeSubsystem;

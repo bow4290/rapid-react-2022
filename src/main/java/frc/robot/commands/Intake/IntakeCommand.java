@@ -19,12 +19,11 @@ public class IntakeCommand extends CommandBase {
 
   @Override
   public void execute() {
-    intakeSubsystem.intakeIn(1);
+    intakeSubsystem.intakeSpin(1);
   }
 
   @Override
-  public void end(boolean interrupted) {
-    intakeSubsystem.intakeStop();
+  public void end(boolean interrupted) {  
   }
 
   @Override
