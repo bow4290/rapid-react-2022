@@ -5,7 +5,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 
 public class IntakeUp extends CommandBase {
   private IntakeSubsystem intakeSubsystem;
-  
+
   public IntakeUp(IntakeSubsystem intakeSubsystem) {
     this.intakeSubsystem = intakeSubsystem;
     addRequirements(intakeSubsystem);
@@ -17,12 +17,10 @@ public class IntakeUp extends CommandBase {
   }
 
   @Override
-  public void execute() {
-  }
+  public void execute() {}
 
   @Override
-  public void end(boolean interrupted) {
-  }
+  public void end(boolean interrupted) {}
 
   @Override
   public boolean isFinished() {

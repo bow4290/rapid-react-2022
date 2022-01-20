@@ -26,9 +26,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   private final DoubleSolenoid gearShiftSolenoid;
 
-  private enum GearShiftPosition{
-    UP, DOWN
-  }
+  private enum GearShiftPosition { UP, DOWN }
 
   private static GearShiftPosition gearShiftPosition;
 
@@ -59,9 +57,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
     rightMotor1.configVoltageCompSaturation(11);
     rightMotor2.configVoltageCompSaturation(11);
 
-    leftMotor1.enableVoltageCompensation(true); 
-    leftMotor2.enableVoltageCompensation(true); 
-    rightMotor1.enableVoltageCompensation(true); 
+    leftMotor1.enableVoltageCompensation(true);
+    leftMotor2.enableVoltageCompensation(true);
+    rightMotor1.enableVoltageCompensation(true);
     rightMotor2.enableVoltageCompensation(true);
 
     // Tell the Falcon 500 to use the onboard sensor.
@@ -74,7 +72,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     gearShiftPosition = null;
   }
 
-  public void drive(double leftSpeed, double rightSpeed) { 
+  public void drive(double leftSpeed, double rightSpeed) {
     drivetrain.tankDrive(leftSpeed, rightSpeed, true);
   }
 
@@ -84,17 +82,15 @@ public class DrivetrainSubsystem extends SubsystemBase {
     rightMotor1.setSelectedSensorPosition(0);
   }
 
-  public GearShiftPosition getGearShiftPosition(){
-    return gearShiftPosition;
-  }
+  public GearShiftPosition getGearShiftPosition() { return gearShiftPosition; }
 
-  public void shiftDown(){
-    gearShiftSolenoid.set(DoubleSolenoid.Value.kForward);   // kForward is DOWN
+  public void shiftDown() {
+    gearShiftSolenoid.set(DoubleSolenoid.Value.kForward);  // kForward is DOWN
     gearShiftPosition = GearShiftPosition.DOWN;
   }
 
-  public void shiftUp(){
-    gearShiftSolenoid.set(DoubleSolenoid.Value.kReverse);   // kReverse is UP
+  public void shiftUp() {
+    gearShiftSolenoid.set(DoubleSolenoid.Value.kReverse);  // kReverse is UP
     gearShiftPosition = GearShiftPosition.UP;
   }
 
@@ -111,17 +107,13 @@ public class DrivetrainSubsystem extends SubsystemBase {
   }
 
   /** Returns the raw position. */
-  private double getLeftRawEncoderPosition() {
-    return leftMotor1.getSelectedSensorPosition();
-  }
+  private double getLeftRawEncoderPosition() { return leftMotor1.getSelectedSensorPosition(); }
 
   /** Returns the raw position. */
-  private double getRightRawEncoderPosition() {
-    return rightMotor1.getSelectedSensorPosition();
-  }
+  private double getRightRawEncoderPosition() { return rightMotor1.getSelectedSensorPosition(); }
 
   @Override
-  public void periodic(){
+  public void periodic() {
     SmartDashboard.putNumber("Left Drive Position", getLeftCalculatedPosition());
     SmartDashboard.putNumber("Right Drive Position", getRightCalculatedPosition());
     SmartDashboard.putNumber("Left Raw Drive Position", getLeftRawEncoderPosition());

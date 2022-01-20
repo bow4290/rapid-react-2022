@@ -12,36 +12,32 @@ public class IntakeSubsystem extends SubsystemBase {
   private final WPI_VictorSPX intakeMotor;
   private final DoubleSolenoid intakeSolenoid;
 
-  public enum IntakeStatus{
-    DOWN, UP
-  }
+  public enum IntakeStatus { DOWN, UP }
   public static IntakeStatus intakeStatus;
 
   public IntakeSubsystem() {
     intakeMotor = new WPI_VictorSPX(IntakeConstants.intakeMotorChannel);
     intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, IntakeConstants.intakeUpChannel, IntakeConstants.intakeDownChannel);
-  
+
     intakeMotor.setInverted(false);
     intakeStatus = IntakeStatus.UP;
   }
 
-  public void retractIntake(){
+  public void retractIntake() {
     intakeSolenoid.set(DoubleSolenoid.Value.kReverse);
     intakeStatus = IntakeStatus.UP;
   }
 
-  public void extendIntake(){
+  public void extendIntake() {
     intakeSolenoid.set(DoubleSolenoid.Value.kForward);
     intakeStatus = IntakeStatus.DOWN;
   }
 
-  public void intakeSpin(double intakeSpeed){
+  public void intakeSpin(double intakeSpeed) {
     intakeMotor.set(ControlMode.PercentOutput, intakeSpeed);
   }
 
-  public static IntakeStatus getIntakePosition(){
-    return intakeStatus;
-  }
+  public static IntakeStatus getIntakePosition() { return intakeStatus; }
 
   @Override
   public void periodic() {

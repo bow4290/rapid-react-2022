@@ -9,7 +9,6 @@ public class Drive extends CommandBase {
   private double leftSpeed;
   private double rightSpeed;
 
-
   public Drive(double leftSpeed, double rightSpeed, DrivetrainSubsystem drivetrainSubsystem) {
     this.leftSpeed = leftSpeed;
     this.rightSpeed = rightSpeed;
@@ -19,7 +18,7 @@ public class Drive extends CommandBase {
 
   @Override
   public void initialize() {}
-  
+
   @Override
   public void execute() {
     drivetrainSubsystem.drive(leftSpeed, rightSpeed);

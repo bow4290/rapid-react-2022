@@ -5,8 +5,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.IntakeSubsystem.IntakeStatus;
 
 public class IntakeToggle extends CommandBase {
-
-private IntakeSubsystem intakeSubsystem;
+  private IntakeSubsystem intakeSubsystem;
 
   public IntakeToggle(IntakeSubsystem intakeSubsystem) {
     this.intakeSubsystem = intakeSubsystem;
@@ -17,18 +16,16 @@ private IntakeSubsystem intakeSubsystem;
   public void initialize() {
     if (IntakeSubsystem.getIntakePosition() == IntakeStatus.UP) {
       intakeSubsystem.extendIntake();
-    } else{
+    } else {
       intakeSubsystem.retractIntake();
     }
   }
 
   @Override
-  public void execute() {
-  }
+  public void execute() {}
 
   @Override
-  public void end(boolean interrupted) {
-  }
+  public void end(boolean interrupted) {}
 
   @Override
   public boolean isFinished() {

@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
-
   public static Joystick joystickLeft;
   public static Joystick joystickRight;
   public static Joystick xboxController;
@@ -23,9 +22,7 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
-
   public RobotContainer() {
-
     joystickLeft = new Joystick(JoystickConstants.LEFT_JOYSTICK);
     joystickRight = new Joystick(JoystickConstants.RIGHT_JOYSTICK);
     xboxController = new Joystick(JoystickConstants.XBOX_CONTROLLER);
@@ -34,39 +31,31 @@ public class RobotContainer {
 
     drivetrainSubsystem.setDefaultCommand(new Drive(getLeftY(), getRightY(), drivetrainSubsystem));
     intakeSubsystem.setDefaultCommand(new IntakeStop(intakeSubsystem));
-    
+
     configureButtonBindings();
   }
 
-  public double getLeftY(){
-    return joystickLeft.getY();
-  }
+  public double getLeftY() { return joystickLeft.getY(); }
 
-  public double getLeftX(){
-    return joystickLeft.getX();
-  }
+  public double getLeftX() { return joystickLeft.getX(); }
 
-  public double getRightY(){
-    return joystickRight.getY();
-  }
+  public double getRightY() { return joystickRight.getY(); }
 
-  public double getRightX(){
-    return joystickRight.getX();
-  }
+  public double getRightX() { return joystickRight.getX(); }
 
-/* Xbox Controller Button Binding: 
-  Buttons:
-    1 - A           6 - RightBump
-    2 - B           7 - Back
-    3 - X           8 - Start
-    4 - Y           9 - LeftStickIn
-    5 - LeftBump   10 - RightStickIn
+  /* Xbox Controller Button Binding:
+    Buttons:
+      1 - A           6 - RightBump
+      2 - B           7 - Back
+      3 - X           8 - Start
+      4 - Y           9 - LeftStickIn
+      5 - LeftBump   10 - RightStickIn
 
-  Axes:
-    0 - LeftX       3 - RightTrig
-    1 - LeftY       4 - RightX
-    2 - LeftTrig    5 - RightY
-*/
+    Axes:
+      0 - LeftX       3 - RightTrig
+      1 - LeftY       4 - RightX
+      2 - LeftTrig    5 - RightY
+  */
   private void configureButtonBindings() {
     setJoystickButtonWhenPressed(joystickLeft, 1, new ShiftGearDown(drivetrainSubsystem));
     setJoystickButtonWhenPressed(joystickRight, 1, new ShiftGearUp(drivetrainSubsystem));
@@ -74,21 +63,25 @@ public class RobotContainer {
     setJoystickButtonWhileHeld(xboxController, 2, new IntakeIn(intakeSubsystem));
   }
 
-  public Command getAutonomousCommand() {
-    return m_autoCommand;
-  }
+  public Command getAutonomousCommand() { return m_autoCommand; }
 
   /** WhenPressed runs the command once at the moment the button is pressed. */
   private void setJoystickButtonWhenPressed(Joystick joystick, int button, CommandBase command) {
     new JoystickButton(joystick, button).whenPressed(command);
   }
 
-  /** WhileHeld constantly starts the command and repeatedly schedules while the button is held. Cancels when button is released. */
+  /**
+   * WhileHeld constantly starts the command and repeatedly schedules while the
+   * button is held. Cancels when button is released.
+   */
   private void setJoystickButtonWhileHeld(Joystick joystick, int button, CommandBase command) {
     new JoystickButton(joystick, button).whileHeld(command);
   }
 
-  /** WhenHeld starts the command once when the button is first pressed. Command runs until button is released or command interrupted. */
+  /**
+   * WhenHeld starts the command once when the button is first pressed. Command
+   * runs until button is released or command interrupted.
+   */
   private void setJoystickButtonWhenHeld(Joystick joystick, int button, CommandBase command) {
     new JoystickButton(joystick, button).whenHeld(command);
   }
@@ -97,5 +90,3 @@ public class RobotContainer {
     new JoystickButton(joystick, button).toggleWhenPressed(command);
   }
 }
-
-
