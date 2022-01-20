@@ -1,11 +1,14 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import frc.robot.Constants.IntakeConstants;
 
 public class IntakeSubsystem extends SubsystemBase {
@@ -41,6 +44,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // TODO: smartboard
+    // TODO: Should we also display the current intake speed? (maybe in intakeSpin)
+    SmartDashboard.putString("Intake Status", intakeStatus == IntakeStatus.UP ? "Up" : "Down");
   }
 }
