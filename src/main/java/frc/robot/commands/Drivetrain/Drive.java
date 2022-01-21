@@ -20,15 +20,11 @@ public class Drive extends CommandBase {
   public void initialize() {}
 
   @Override
-  public void execute() {
-    drivetrainSubsystem.drive(leftSpeed, rightSpeed);
-  }
+  public void execute() { drivetrainSubsystem.drive(leftSpeed, rightSpeed); }
 
   @Override
   public void end(boolean interrupted) {}
 
   @Override
-  public boolean isFinished() {
-    return false;
-  }
+  public boolean isFinished() { return false; }
 }

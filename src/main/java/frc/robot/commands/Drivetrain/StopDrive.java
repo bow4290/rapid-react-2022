@@ -16,15 +16,11 @@ public class StopDrive extends CommandBase {
   public void initialize() {}
 
   @Override
-  public void execute() {
-    drivetrainSubsystem.drive(0, 0);
-  }
+  public void execute() { drivetrainSubsystem.drive(0, 0); }
 
   @Override
   public void end(boolean interrupted) {}
 
   @Override
-  public boolean isFinished() {
-    return false;
-  }
+  public boolean isFinished() { return false; }
 }

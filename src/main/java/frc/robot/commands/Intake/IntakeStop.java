@@ -12,9 +12,7 @@ public class IntakeStop extends CommandBase {
   }
 
   @Override
-  public void initialize() {
-    intakeSubsystem.intakeSpin(0);
-  }
+  public void initialize() { intakeSubsystem.intakeSpin(0); }
 
   @Override
   public void execute() {}
@@ -23,7 +21,5 @@ public class IntakeStop extends CommandBase {
   public void end(boolean interrupted) {}
 
   @Override
-  public boolean isFinished() {
-    return true;
-  }
+  public boolean isFinished() { return true; }
 }

@@ -15,15 +15,11 @@ public class IntakeIn extends CommandBase {
   public void initialize() {}
 
   @Override
-  public void execute() {
-    intakeSubsystem.intakeSpin(1);
-  }
+  public void execute() { intakeSubsystem.intakeSpin(1); }
 
   @Override
   public void end(boolean interrupted) {}
 
   @Override
-  public boolean isFinished() {
-    return false;
-  }
+  public boolean isFinished() { return false; }
 }
