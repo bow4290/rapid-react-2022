@@ -14,13 +14,13 @@ public class ClimberFrontSubsystem extends SubsystemBase {
   private CANSparkMax frontClimberMotorChannel = new CANSparkMax(DriveConstants.frontClimberMotorChannel, MotorType.kBrushless);
   
   /** Creates a new ClimberFrontSubsystem. */
-  public ClimberFrontSubsystem() {frontClimberMotorChannel.setInverted(false);}
+  public ClimberFrontSubsystem() { frontClimberMotorChannel.setInverted(false); }
 
-  public void extendFrontClimber(double climberSpeed) {frontClimberMotorChannel.set(climberSpeed);}
+  public void extendFrontClimber(double climberSpeed) { frontClimberMotorChannel.set(climberSpeed); }
 
-  public void retractFrontClimber(double climberSpeed) {frontClimberMotorChannel.set(-climberSpeed);}
+  public void retractFrontClimber(double climberSpeed) { frontClimberMotorChannel.set(-climberSpeed); }
 
-  public void stopFrontClimber() {frontClimberMotorChannel.set(0);}
+  public void stopFrontClimber() { frontClimberMotorChannel.set(0); }
 
   @Override
   public void periodic() {

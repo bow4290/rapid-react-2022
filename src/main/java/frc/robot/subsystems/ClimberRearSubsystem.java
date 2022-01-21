@@ -14,13 +14,13 @@ public class ClimberRearSubsystem extends SubsystemBase {
   private CANSparkMax rearClimberMotorChannel = new CANSparkMax(DriveConstants.rearClimberMotorChannel, MotorType.kBrushless);
   
   /** Creates a new ClimberRearSubsystem. */
-  public ClimberRearSubsystem() {rearClimberMotorChannel.setInverted(false);}
+  public ClimberRearSubsystem() { rearClimberMotorChannel.setInverted(false); }
 
-  public void extendRearClimber(double climberSpeed) {rearClimberMotorChannel.set(climberSpeed);}
+  public void extendRearClimber(double climberSpeed) { rearClimberMotorChannel.set(climberSpeed); }
 
-  public void retractRearClimber(double climberSpeed) {rearClimberMotorChannel.set(-climberSpeed);}
+  public void retractRearClimber(double climberSpeed) { rearClimberMotorChannel.set(-climberSpeed); }
 
-  public void stopRearClimber() {rearClimberMotorChannel.set(0);}
+  public void stopRearClimber() { rearClimberMotorChannel.set(0); }
 
   @Override
   public void periodic() {
