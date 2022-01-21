@@ -2,13 +2,20 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.climber;
+package frc.robot.commands.Climber;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.ClimberFrontSubsystem;
 
-public class lowerArms extends CommandBase {
-  /** Creates a new lowerArms. */
-  public lowerArms() {
+public class ExtendFrontClimber extends CommandBase {
+  private ClimberFrontSubsystem climberFrontSubsystem;
+  private double climberSpeed;
+  
+  /** Creates a new ExtendFrontClimber. */
+  public ExtendFrontClimber(double climberSpeed, ClimberFrontSubsystem climberFrontSubsystem) {
+    this.climberFrontSubsystem = climberFrontSubsystem;
+    this.climberSpeed = climberSpeed;
+    addRequirements(climberFrontSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -18,11 +25,11 @@ public class lowerArms extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {climberFrontSubsystem.extendFrontClimber(climberSpeed);}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {climberFrontSubsystem.stopFrontClimber();}
 
   // Returns true when the command should end.
   @Override

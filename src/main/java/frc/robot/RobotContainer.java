@@ -3,6 +3,12 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.Climber.ExtendFrontClimber;
+import frc.robot.commands.Climber.ExtendRearClimber;
+import frc.robot.commands.Climber.RetractFrontClimber;
+import frc.robot.commands.Climber.RetractRearClimber;
+import frc.robot.commands.Climber.StopFrontClimber;
+import frc.robot.commands.Climber.StopRearClimber;
 import frc.robot.commands.Intake.*;
 import frc.robot.commands.Drivetrain.*;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -18,6 +24,8 @@ public class RobotContainer {
 
   private DrivetrainSubsystem drivetrainSubsystem;
   private IntakeSubsystem intakeSubsystem;
+  private ClimberFrontSubsystem climberFrontSubsystem;
+  private ClimberRearSubsystem climberRearSubsystem;
 
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
@@ -31,6 +39,8 @@ public class RobotContainer {
 
     drivetrainSubsystem.setDefaultCommand(new Drive(getLeftY(), getRightY(), drivetrainSubsystem));
     intakeSubsystem.setDefaultCommand(new IntakeStop(intakeSubsystem));
+    climberFrontSubsystem.setDefaultCommand(new StopFrontClimber(climberFrontSubsystem));
+    climberRearSubsystem.setDefaultCommand(new StopRearClimber(climberRearSubsystem));
 
     configureButtonBindings();
   }
@@ -61,6 +71,12 @@ public class RobotContainer {
     setJoystickButtonWhenPressed(joystickRight, 1, new ShiftGearUp(drivetrainSubsystem));
     setJoystickButtonWhenPressed(xboxController, 1, new IntakeToggle(intakeSubsystem));
     setJoystickButtonWhileHeld(xboxController, 2, new IntakeIn(intakeSubsystem));
+    setJoystickButtonWhenHeld(xboxController, 3, new ExtendFrontClimber(.5, climberFrontSubsystem));
+    setJoystickButtonWhenHeld(xboxController, 4, new RetractFrontClimber(.5, climberFrontSubsystem));
+    setJoystickButtonWhenHeld(xboxController, 5, new ExtendRearClimber(.5, climberRearSubsystem));
+    setJoystickButtonWhenHeld(xboxController, 6, new RetractRearClimber(.5, climberRearSubsystem));
+
+
   }
 
   public Command getAutonomousCommand() { return m_autoCommand; }
