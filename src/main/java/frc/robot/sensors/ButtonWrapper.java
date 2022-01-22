@@ -18,6 +18,4 @@ public class ButtonWrapper {
 
     private boolean isPressed() { return (buttonType == ButtonType.NO) ? button.get() : !button.get(); }
 
-    private boolean isNotPressed() { return (buttonType == ButtonType.NO) ? !button.get() : button.get(); }
-
 }
