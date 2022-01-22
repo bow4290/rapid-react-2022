@@ -7,8 +7,6 @@ public class BallIdentification {
 
     private RevColorSensor redBallColorSensor;
     private RevColorSensor blueBallColorSensor;
-    private Color ballColor;
-    private Color allianceColor;
 
     public static enum Color { RED, BLUE, NEITHER }
 
@@ -17,11 +15,7 @@ public class BallIdentification {
         this.blueBallColorSensor = blueBallColorSensor;
     }
 
-    public boolean isBallTeamColor() {
-        allianceColor = getAllianceColor();
-        ballColor = getBallColor();
-        return (allianceColor == ballColor);
-    }
+    public boolean isBallTeamColor() { return (getAllianceColor() == getBallColor()); }
 
     public Color getBallColor() {
         if(redBallColorSensor.isTarget() && !blueBallColorSensor.isTarget()) {
@@ -33,7 +27,7 @@ public class BallIdentification {
         }
     }
 
-    private Color getAllianceColor(){
+    private Color getAllianceColor() {
         switch(DriverStation.getAlliance()) {
             case Red:     return Color.RED;
             case Blue:    return Color.BLUE;
