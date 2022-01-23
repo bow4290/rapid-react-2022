@@ -7,6 +7,7 @@ public class BallIdentification {
 
     private RevColorSensor redBallColorSensor;
     private RevColorSensor blueBallColorSensor;
+    private Color ballColor = getAllianceColor();
 
     public static enum Color { RED, BLUE, NEITHER }
 
@@ -19,12 +20,11 @@ public class BallIdentification {
 
     public Color getBallColor() {
         if(redBallColorSensor.isTarget() && !blueBallColorSensor.isTarget()) {
-            return Color.RED;
+            ballColor = Color.RED;
         } else if (blueBallColorSensor.isTarget() && !redBallColorSensor.isTarget()) {
-            return Color.BLUE;
-        } else {
-            return Color.NEITHER;
+            ballColor = Color.RED;
         }
+        return ballColor;
     }
 
     private Color getAllianceColor() {
