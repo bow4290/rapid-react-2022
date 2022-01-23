@@ -30,6 +30,8 @@ public final class Constants {
     public static int shooterMotor2Channel = 1;
     public static int shooterMotorVoltage = 11;
 
+    public static double discardSpeedRPM = 2500.0;
+
     public static double kP = 1;
     public static double kI = 0;
     public static double kD = 0;
