@@ -18,6 +18,8 @@ public class BallIdentification {
 
     public boolean isBallTeamColor() { return (getAllianceColor() == getBallColor()); }
 
+    public boolean isBallPresent() { return (redBallColorSensor.isTarget() || blueBallColorSensor.isTarget()); }
+
     public Color getBallColor() {
         if(redBallColorSensor.isTarget() && !blueBallColorSensor.isTarget()) {
             ballColor = Color.RED;
