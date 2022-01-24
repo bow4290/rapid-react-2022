@@ -4,6 +4,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.Intake.*;
+import frc.robot.sensors.BallIdentification;
+import frc.robot.sensors.RevColorSensor;
 import frc.robot.commands.Drivetrain.*;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -16,6 +18,11 @@ public class RobotContainer {
   public static Joystick joystickRight;
   public static Joystick xboxController;
 
+  public RevColorSensor redBallColorSensor;
+  public RevColorSensor blueBallColorSensor;
+
+  public BallIdentification ball;
+
   private DrivetrainSubsystem drivetrainSubsystem;
   private IntakeSubsystem intakeSubsystem;
 
@@ -26,6 +33,11 @@ public class RobotContainer {
     joystickLeft = new Joystick(JoystickConstants.LEFT_JOYSTICK);
     joystickRight = new Joystick(JoystickConstants.RIGHT_JOYSTICK);
     xboxController = new Joystick(JoystickConstants.XBOX_CONTROLLER);
+
+    redBallColorSensor = new RevColorSensor(80, 180, 50, 80, 15, 40, 0, 2048);
+    blueBallColorSensor = new RevColorSensor(10, 70, 50, 100, 40, 100, 0, 2048);
+    
+    ball = new BallIdentification(redBallColorSensor, blueBallColorSensor);
 
     drivetrainSubsystem = new DrivetrainSubsystem();
 
