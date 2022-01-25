@@ -4,7 +4,11 @@ import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.Intake.*;
+import frc.robot.commands.Shooter.ShootHigh;
+import frc.robot.commands.Shooter.ShootLow;
+import frc.robot.commands.Shooter.ShootStop;
 import frc.robot.sensors.BallIdentification;
+import frc.robot.sensors.Limelight;
 import frc.robot.sensors.RevColorSensor;
 import frc.robot.commands.Drivetrain.*;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -18,11 +22,14 @@ public class RobotContainer {
   public static Joystick joystickRight;
   public static Joystick xboxController;
 
+  private Limelight limelight = new Limelight();
+
   public RevColorSensor redBallColorSensor;
   public RevColorSensor blueBallColorSensor;
 
   public BallIdentification ball;
 
+  private ShooterSubsystem shooterSubsystem;
   private DrivetrainSubsystem drivetrainSubsystem;
   private IntakeSubsystem intakeSubsystem;
 
@@ -43,6 +50,7 @@ public class RobotContainer {
 
     drivetrainSubsystem.setDefaultCommand(new Drive(getLeftY(), getRightY(), drivetrainSubsystem));
     intakeSubsystem.setDefaultCommand(new IntakeStop(intakeSubsystem));
+    shooterSubsystem.setDefaultCommand(new ShootStop(shooterSubsystem));
 
     configureButtonBindings();
   }
@@ -73,6 +81,8 @@ public class RobotContainer {
     setJoystickButtonWhenPressed(joystickRight, 1, new ShiftGearUp(drivetrainSubsystem));
     setJoystickButtonWhenPressed(xboxController, 1, new IntakeToggle(intakeSubsystem));
     setJoystickButtonWhileHeld(xboxController, 2, new IntakeIn(intakeSubsystem));
+    setJoystickButtonWhileHeld(xboxController, 5, new ShootLow(ball, limelight, shooterSubsystem));
+    setJoystickButtonWhileHeld(xboxController, 6, new ShootHigh(ball, limelight, shooterSubsystem));
   }
 
   public Command getAutonomousCommand() { return m_autoCommand; }

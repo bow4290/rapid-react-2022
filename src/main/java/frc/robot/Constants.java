@@ -26,8 +26,7 @@ public final class Constants {
   }
 
   public static final class ShooterConstants {
-    public static int shooterMotor1Channel = 0;
-    public static int shooterMotor2Channel = 1;
+    public static int shooterMotorChannel = 0;
     public static int shooterMotorVoltage = 11;
 
     public static double discardSpeedRPM = 2500.0;
