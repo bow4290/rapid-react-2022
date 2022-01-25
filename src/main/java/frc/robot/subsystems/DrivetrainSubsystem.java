@@ -39,13 +39,13 @@ public class DrivetrainSubsystem extends SubsystemBase {
     rightMotor2.follow(rightMotor1);
     rightMotor2.setInverted(InvertType.FollowMaster);
 
-    // Make the drivetrain brake when there is no input from the joysticks.
+    // Make the drivetrain brake when the motors are set to 0.
     leftMotor1.setNeutralMode(NeutralMode.Brake);
     leftMotor2.setNeutralMode(NeutralMode.Brake);
     rightMotor1.setNeutralMode(NeutralMode.Brake);
     rightMotor2.setNeutralMode(NeutralMode.Brake);
 
-    // Smooth the joystick inputs to regulate power draw.
+    // Smooth the motor inputs to regulate power draw.
     leftMotor1.configOpenloopRamp(0.5);
     leftMotor2.configOpenloopRamp(0.5);
     rightMotor1.configOpenloopRamp(0.5);
