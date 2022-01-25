@@ -25,6 +25,10 @@ public final class Constants {
     public static int intakeDownChannel = 0;
   }
 
+  public static final class TurretConstants {
+    public static int searchMotorRPM = 250;
+  }
+
   public static final class LimelightConstants {
     public static final double h1 = 0;  // Distance from ground to limelight
     public static final double h2 = 0;  // Distance from ground to target

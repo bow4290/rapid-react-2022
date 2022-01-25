@@ -5,11 +5,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 
 public class TurretSubsystem extends SubsystemBase {
-  private boolean isLeftLimitPressed = false;
-  private boolean isRightLimitPressed = false;
+
+  public static enum TurretRotation { CLOCKWISE, COUNTERCLOCKWISE }
+
   //TODO add motor
 
   public TurretSubsystem() {
+  }
+
+  public void turn(double turretSpeedRPM, TurretRotation rotation) {
+    // TODO: Set motor
   }
 
   @Override

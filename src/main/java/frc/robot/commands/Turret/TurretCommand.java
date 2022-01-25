@@ -1,28 +1,34 @@
 package frc.robot.commands.Turret;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.sensors.BallIdentification;
 import frc.robot.sensors.Limelight;
 import frc.robot.subsystems.TurretSubsystem;
+import frc.robot.subsystems.TurretSubsystem.TurretRotation;
+import frc.robot.Constants.TurretConstants;
 
 public class TurretCommand extends CommandBase {
 
   public static enum TurretMode { SEARCH, TRACK, DISCARD }
-  private static enum SearchMotorDirection { CW, CCW }
-
-  private TurretSubsystem turretSubsystem;
+  
+  private BallIdentification ball;
   private Limelight limelight;
   //private ButtonWrapper leftLimitSwitch;
   //private ButtonWrapper rightLimitSwitch;
-  private TurretMode turretMode = TurretMode.SEARCH;
-  private SearchMotorDirection searchMotorDirection;
-
   // TODO discard button
-  // add ButtonWrapper limit switches to constructor
-  public TurretCommand(TurretSubsystem turretSubsystem, Limelight limelight) {
-    this.turretSubsystem = turretSubsystem;
+  private TurretSubsystem turretSubsystem;
+
+  private TurretMode turretMode = TurretMode.SEARCH;
+  private double turretMotorRPM = 0.0;
+  private TurretRotation turretRotation = TurretRotation.CLOCKWISE; // Arbitrary rotation to start
+
+  public TurretCommand(BallIdentification ball, Limelight limelight, TurretSubsystem turretSubsystem) {
+    this.ball = ball;
     this.limelight = limelight;
     //this.leftLimitSwitch = leftLimitSwitch;
     //this.rightLimitSwitch = rightLimitSwitch;
+
+    this.turretSubsystem = turretSubsystem;
     addRequirements(turretSubsystem);
   }
 
@@ -31,21 +37,22 @@ public class TurretCommand extends CommandBase {
 
   @Override
   public void execute() {
-    turretMode = determineTurretMode();
+    
+    determineTurretMode();
 
     switch(turretMode) {
-      case SEARCH:
-        searchMode();
-        break;
       case TRACK:
-        trackMode();
+        trackModeCalcRpmAndDir();
         break;
       case DISCARD:
-        discardMode();
+        discardModeCalcRpmAndDir();
         break;
+      case SEARCH:
       default:
-        searchMode();
+        searchModeCalcRpmAndDir();
     }
+
+    turretSubsystem.turn(turretMotorRPM, turretRotation);
   }
 
   @Override
@@ -56,32 +63,42 @@ public class TurretCommand extends CommandBase {
     return false;
   }
 
-  private TurretMode determineTurretMode(){
+  private void determineTurretMode() {
+    // TODO: placeholder
+    boolean discardButtonHeld = false;
 
-    /**
-     * if limelight !isTarget() AND !DiscardButtonHeld AND isBallTeamColor
-     *  set to SEARCH
-     * else if limelight isTarget() AND !DiscardButtonHeld AND isBallTeamColor
-     *  set to TRACK
-     * else if DiscardButtonHeld OR !isBallTeamColor
-     *  set to DISCARD
-     */
-
-    return TurretMode.SEARCH;
+    if (!limelight.isTarget() && !discardButtonHeld && ball.isBallTeamColor()) {
+      turretMode = TurretMode.SEARCH;
+    }
+    else if (limelight.isTarget() && !discardButtonHeld && ball.isBallTeamColor()) {
+      turretMode = TurretMode.TRACK;
+    }
+    else if (discardButtonHeld || !ball.isBallTeamColor()) {
+      turretMode = TurretMode.DISCARD;
+    }
   }
 
-  private void searchMode(){
-    /**
-     * double searchSpeed = turretConstants.motorSpeed
-     * if leftLimitSwitch isPressed, set searchMotorDirection.CW
-     * if rightLimitSwitch isPressed, set searchMotorDirection.CCW
-     * if CW, TurretSubsystem.setSpeed(searchSpeed)
-     * else if CCW, TurretSubsystem.setSpeed(-searchSpeed)
-     * else, TurretSubsystem.setSpeed(0)
-     */
+  private void searchModeCalcRpmAndDir() {
+    // TODO: placeholders for limit switches
+    boolean leftLimitSwitch = false;
+    boolean rightLimitSwitch = false;
+
+    if (leftLimitSwitch) {
+      turretRotation = TurretRotation.CLOCKWISE;
+    }
+    else if (rightLimitSwitch)
+    {
+      turretRotation = TurretRotation.COUNTERCLOCKWISE;
+    }
+    
+    turretMotorRPM = TurretConstants.searchMotorRPM;
   }
 
-  private void trackMode(){}
+  private void trackModeCalcRpmAndDir() {
+    turretMotorRPM = 0.0;
+  }
 
-  private void discardMode(){}
+  private void discardModeCalcRpmAndDir() {
+    turretMotorRPM = 0.0;
+  }
 }
