@@ -16,6 +16,5 @@ public class ButtonWrapper {
         this.buttonPort = buttonPort;
     }
 
-    private boolean isPressed() { return (buttonType == ButtonType.NO) ? button.get() : !button.get(); }
-
+    public boolean isPressed() { return (buttonType == ButtonType.NO) ? button.get() : !button.get(); }
 }
