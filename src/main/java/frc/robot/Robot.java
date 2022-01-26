@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -42,9 +43,10 @@ public class Robot extends TimedRobot {
     myTalon.configNominalOutputReverse(0);
     myTalon.configPeakOutputForward(1);
     myTalon.configPeakOutputReverse(-1);
+    myTalon.setInverted(TalonFXInvertType.Clockwise);
     
-    myTalon.config_kF(0, 1023.0/20660.0);
-    myTalon.config_kP(0, 0);
+    myTalon.config_kF(0, 1023.0/20330.0);
+    myTalon.config_kP(0, 0.01);
     myTalon.config_kI(0, 0);
     myTalon.config_kD(0, 0);
     
@@ -89,13 +91,13 @@ public class Robot extends TimedRobot {
     double motorRPM = 0;
 
     if(xboxAButton.get()) {
-      motorRPM = 5000.0;
+      motorRPM = 6000.0;
     } else if(xboxBButton.get()) {
-      motorRPM = 4000.0;
+      motorRPM = 5500.0;
     } else if(xboxXButton.get()) {
-      motorRPM = 3000.0;
+      motorRPM = 5000.0;
     } else if(xboxYButton.get()) {
-      motorRPM = 2000.0;
+      motorRPM = 4500.0;
     }
 
     myTalon.set(TalonFXControlMode.Velocity, motorRPM*2048/600);
