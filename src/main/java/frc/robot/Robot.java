@@ -5,7 +5,11 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -22,18 +26,27 @@ public class Robot extends TimedRobot {
   JoystickButton xboxXButton = new JoystickButton(xboxController, 3);
   JoystickButton xboxYButton = new JoystickButton(xboxController, 4);
 
-  TalonFX myTalon = new TalonFX(DriveConstants.myFalconChannel);
+  WPI_TalonFX myTalon = new WPI_TalonFX(DriveConstants.myFalconChannel);
 
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
 
   @Override
   public void robotInit() {
-    myTalon.set(ControlMode.PercentOutput, 0.0);
-    myTalon.setInverted(false);
-    myTalon.setSensorPhase(false);
+    myTalon.configFactoryDefault();
     myTalon.configVoltageCompSaturation(11);
     myTalon.enableVoltageCompensation(true);
+    myTalon.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 0);
+    myTalon.setNeutralMode(NeutralMode.Coast);
+    myTalon.configNominalOutputForward(0);
+    myTalon.configNominalOutputReverse(0);
+    myTalon.configPeakOutputForward(1);
+    myTalon.configPeakOutputReverse(-1);
+    
+    myTalon.config_kF(0, 1023.0/20660.0);
+    myTalon.config_kP(0, 0);
+    myTalon.config_kI(0, 0);
+    myTalon.config_kD(0, 0);
     
     m_robotContainer = new RobotContainer();
   }
@@ -73,19 +86,19 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    double motorPercentOutput = 0;
+    double motorRPM = 0;
 
     if(xboxAButton.get()) {
-      motorPercentOutput = 1.0;
+      motorRPM = 5000.0;
     } else if(xboxBButton.get()) {
-      motorPercentOutput = 0.75;
+      motorRPM = 4000.0;
     } else if(xboxXButton.get()) {
-      motorPercentOutput = 0.5;
+      motorRPM = 3000.0;
     } else if(xboxYButton.get()) {
-      motorPercentOutput = 0.25;
+      motorRPM = 2000.0;
     }
 
-    myTalon.set(ControlMode.PercentOutput, motorPercentOutput);
+    myTalon.set(TalonFXControlMode.Velocity, motorRPM*2048/600);
 
   }
 
