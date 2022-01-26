@@ -14,14 +14,11 @@ public class ShooterSubsystem extends SubsystemBase {
   private WPI_TalonFX shooterMotor = new WPI_TalonFX(ShooterConstants.shooterMotorChannel);
 
   public ShooterSubsystem() {
+    shooterMotor.configFactoryDefault();
     shooterMotor.setInverted(TalonFXInvertType.Clockwise);
-
     shooterMotor.setNeutralMode(NeutralMode.Coast);
-
     shooterMotor.configVoltageCompSaturation(ShooterConstants.shooterMotorVoltage);
-
     shooterMotor.enableVoltageCompensation(true);
-
     shooterMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
 
     shooterMotor.config_kF(0, ShooterConstants.kF);
