@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.sensors.BallIdentification;
 import frc.robot.sensors.Limelight;
 import frc.robot.subsystems.TurretSubsystem;
-import frc.robot.subsystems.TurretSubsystem.TurretRotation;
 import frc.robot.Constants.TurretConstants;
 
 public class TurretCommand extends CommandBase {
@@ -13,20 +12,16 @@ public class TurretCommand extends CommandBase {
   
   private BallIdentification ball;
   private Limelight limelight;
-  //private ButtonWrapper leftLimitSwitch;
-  //private ButtonWrapper rightLimitSwitch;
-  // TODO discard button
+  // TODO discard button?
   private TurretSubsystem turretSubsystem;
 
   private TurretMode turretMode = TurretMode.SEARCH;
-  private double turretMotorRPM = 0.0;
-  private TurretRotation turretRotation = TurretRotation.CLOCKWISE; // Arbitrary rotation to start
+  private double turretMotorAngle = 0.0;
+  private int turretDirection = 1;  // TODO: make enum
 
   public TurretCommand(BallIdentification ball, Limelight limelight, TurretSubsystem turretSubsystem) {
     this.ball = ball;
     this.limelight = limelight;
-    //this.leftLimitSwitch = leftLimitSwitch;
-    //this.rightLimitSwitch = rightLimitSwitch;
 
     this.turretSubsystem = turretSubsystem;
     addRequirements(turretSubsystem);
@@ -52,7 +47,7 @@ public class TurretCommand extends CommandBase {
         searchModeCalcRpmAndDir();
     }
 
-    turretSubsystem.turn(turretMotorRPM, turretRotation);
+    turretSubsystem.turn(turretMotorAngle);
   }
 
   @Override
@@ -79,26 +74,19 @@ public class TurretCommand extends CommandBase {
   }
 
   private void searchModeCalcRpmAndDir() {
-    // TODO: placeholders for limit switches
-    boolean leftLimitSwitch = false;
-    boolean rightLimitSwitch = false;
-
-    if (leftLimitSwitch) {
-      turretRotation = TurretRotation.CLOCKWISE;
-    }
-    else if (rightLimitSwitch)
-    {
-      turretRotation = TurretRotation.COUNTERCLOCKWISE;
+    
+    if (turretSubsystem.getHitLeftLimitSwitch() || turretSubsystem.getHitRightLimitSwitch()) {
+      turretDirection *= -1;
     }
     
-    turretMotorRPM = TurretConstants.searchMotorRPM;
+    turretMotorAngle += TurretConstants.searchAngleStep * turretDirection;
   }
 
   private void trackModeCalcRpmAndDir() {
-    turretMotorRPM = 0.0;
+    
   }
 
   private void discardModeCalcRpmAndDir() {
-    turretMotorRPM = 0.0;
+    
   }
 }
