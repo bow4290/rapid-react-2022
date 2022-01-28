@@ -62,15 +62,15 @@ public class TurretCommand extends CommandBase {
     // TODO: placeholder
     boolean discardButtonHeld = false;
 
-    if (!limelight.isTarget() && !discardButtonHeld && ball.isBallTeamColor()) {
+    if (discardButtonHeld || (ball.isBallPresent() && !ball.isBallTeamColor())) {
+      turretMode = TurretMode.DISCARD;
+      // small 5 second delay unless ball.isBallTeamColor becomes true, then exit delay immediately
+    } else if (limelight.isTarget()) {
+      turretMode = TurretMode.TRACK;
+    } else {
       turretMode = TurretMode.SEARCH;
     }
-    else if (limelight.isTarget() && !discardButtonHeld && ball.isBallTeamColor()) {
-      turretMode = TurretMode.TRACK;
-    }
-    else if (discardButtonHeld || !ball.isBallTeamColor()) {
-      turretMode = TurretMode.DISCARD;
-    }
+
   }
 
   private void searchModeCalcRpmAndDir() {
