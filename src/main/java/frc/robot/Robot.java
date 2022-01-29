@@ -4,13 +4,9 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
-import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
-import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.SoftLimitDirection;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -27,29 +23,20 @@ public class Robot extends TimedRobot {
   JoystickButton xboxXButton = new JoystickButton(xboxController, 3);
   JoystickButton xboxYButton = new JoystickButton(xboxController, 4);
 
-  WPI_TalonFX myTalon = new WPI_TalonFX(DriveConstants.myFalconChannel);
+  CANSparkMax neo550 = new CANSparkMax(Constants.DriveConstants.NeoMotorCANChannel, MotorType.kBrushless);
 
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
 
+  private boolean toggle = false;
+
   @Override
   public void robotInit() {
-    myTalon.configFactoryDefault();
-    myTalon.configVoltageCompSaturation(11);
-    myTalon.enableVoltageCompensation(true);
-    myTalon.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 0);
-    myTalon.setNeutralMode(NeutralMode.Coast);
-    myTalon.configNominalOutputForward(0);
-    myTalon.configNominalOutputReverse(0);
-    myTalon.configPeakOutputForward(1);
-    myTalon.configPeakOutputReverse(-1);
-    myTalon.setInverted(TalonFXInvertType.Clockwise);
-    
-    myTalon.config_kF(0, 1023.0/20330.0);
-    myTalon.config_kP(0, 0.01);
-    myTalon.config_kI(0, 0);
-    myTalon.config_kD(0, 0);
-    
+    neo550.restoreFactoryDefaults();
+    // neo550.enableSoftLimit(SoftLimitDirection.kForward, true);
+    // neo550.enableSoftLimit(SoftLimitDirection.kReverse, true);
+    // neo550.setSoftLimit(SoftLimitDirection.kForward, 5);
+    // neo550.setSoftLimit(SoftLimitDirection.kReverse, -5);
     m_robotContainer = new RobotContainer();
   }
 
@@ -57,7 +44,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
 
-    SmartDashboard.putNumber("Talon Velocity (RPM): ", myTalon.getSelectedSensorVelocity()*600/2048);
+    // SmartDashboard.putNumber("N Velocity (RPM): ", myTalon.getSelectedSensorVelocity()*600/2048);
   }
 
   @Override
@@ -87,21 +74,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-
-    double motorRPM = 0;
-
-    if(xboxAButton.get()) {
-      motorRPM = 6000.0;
-    } else if(xboxBButton.get()) {
-      motorRPM = 5500.0;
-    } else if(xboxXButton.get()) {
-      motorRPM = 5000.0;
-    } else if(xboxYButton.get()) {
-      motorRPM = 4500.0;
-    }
-
-    myTalon.set(TalonFXControlMode.Velocity, motorRPM*2048/600);
-
+    if (xboxAButton.get()) { neo550.set(0.5); }
+    else if (xboxBButton.get()) { neo550.set(0.3); }
+    else if (xboxXButton.get()) { neo550.set(0.2); }
+    else if (xboxYButton.get()) { neo550.set(0.1); }
+    else neo550.set(0);
   }
 
   @Override
