@@ -14,7 +14,8 @@ package frc.robot;
  */
 public final class Constants {
     public static final class DriveConstants{
-        public static int NeoMotorCANChannel = 1;
+        public static int VictorSPX1CANChannel = 0;
+        public static int VictorSPX2CANChannel = 1;
     }
 
 }

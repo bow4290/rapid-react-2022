@@ -4,9 +4,8 @@
 
 package frc.robot;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMax.SoftLimitDirection;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -23,21 +22,18 @@ public class Robot extends TimedRobot {
   JoystickButton xboxXButton = new JoystickButton(xboxController, 3);
   JoystickButton xboxYButton = new JoystickButton(xboxController, 4);
 
-  CANSparkMax neo550 = new CANSparkMax(Constants.DriveConstants.NeoMotorCANChannel, MotorType.kBrushless);
-
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
-
-  private boolean toggle = false;
+  private WPI_VictorSPX victorMotor1 = new WPI_VictorSPX(DriveConstants.VictorSPX1CANChannel);
+  private WPI_VictorSPX victorMotor2 = new WPI_VictorSPX(DriveConstants.VictorSPX2CANChannel);
 
   @Override
   public void robotInit() {
-    neo550.restoreFactoryDefaults();
-    // neo550.enableSoftLimit(SoftLimitDirection.kForward, true);
-    // neo550.enableSoftLimit(SoftLimitDirection.kReverse, true);
-    // neo550.setSoftLimit(SoftLimitDirection.kForward, 5);
-    // neo550.setSoftLimit(SoftLimitDirection.kReverse, -5);
     m_robotContainer = new RobotContainer();
+    victorMotor1.configFactoryDefault();
+    victorMotor1.setInverted(false);
+    victorMotor2.configFactoryDefault();
+    victorMotor2.setInverted(false);
   }
 
   @Override
@@ -74,11 +70,13 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    if (xboxAButton.get()) { neo550.set(0.5); }
-    else if (xboxBButton.get()) { neo550.set(0.3); }
-    else if (xboxXButton.get()) { neo550.set(0.2); }
-    else if (xboxYButton.get()) { neo550.set(0.1); }
-    else neo550.set(0);
+    if (xboxAButton.get()) { victorMotor1.set(ControlMode.PercentOutput, 0.35); }
+    else if (xboxBButton.get()) { victorMotor1.set(ControlMode.PercentOutput, 0.25); }
+    else victorMotor1.set(ControlMode.PercentOutput, 0);
+
+    if (xboxXButton.get()) { victorMotor2.set(ControlMode.PercentOutput, 0.35); }
+    else if (xboxYButton.get()) { victorMotor2.set(ControlMode.PercentOutput, 0.25); }
+    else victorMotor2.set(ControlMode.PercentOutput, 0);
   }
 
   @Override
