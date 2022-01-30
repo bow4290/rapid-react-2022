@@ -3,15 +3,17 @@ package frc.robot.commands.Turret;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.sensors.Limelight;
 import frc.robot.subsystems.TurretSubsystem;
-import frc.robot.Constants.TurretConstants;
 
 public class TurretCommand extends CommandBase {
-  
+
   private Limelight limelight;
   private TurretSubsystem turretSubsystem;
-
-  private double turretMotorAngle = 0.0;
-  private int turretDirection = 1;  // TODO: make enum
+  private enum TurretState {INIT, SEARCH, TRACK};
+  private TurretState turretState = TurretState.INIT;
+  private TurretState newTurretState;
+  private double setpoint = 0.0;
+  private double defaultTrackRPM = 0.0;
+  private double searchRPM = 1000.0;
 
   public TurretCommand(Limelight limelight, TurretSubsystem turretSubsystem) {
     this.limelight = limelight;
@@ -25,14 +27,24 @@ public class TurretCommand extends CommandBase {
 
   @Override
   public void execute() {
-    
-    if (limelight.isTarget()) {
-      trackModeCalcAngle();
-    } else {
-      searchModeCalcAngle();
+    newTurretState = determineTurretState();
+
+    if (newTurretState != turretState) {
+      if (newTurretState == TurretState.SEARCH) {
+        setpoint = searchRPM;
+      } else {
+        setpoint = defaultTrackRPM;
+      }
+      turretState = newTurretState;
     }
 
-    turretSubsystem.turn(turretMotorAngle);
+    if (turretState == TurretState.SEARCH) {
+      updateSearchSetpoint();
+    } else {
+      updateTrackSetpoint();
+    }
+
+    turretSubsystem.turn(setpoint);
   }
 
   @Override
@@ -43,16 +55,17 @@ public class TurretCommand extends CommandBase {
     return false;
   }
 
-  private void searchModeCalcAngle() {
-    
+  private void updateSearchSetpoint() {
     if (turretSubsystem.getHitLeftLimitSwitch() || turretSubsystem.getHitRightLimitSwitch()) {
-      turretDirection *= -1;
+      setpoint *= -1;
     }
-    
-    turretMotorAngle += TurretConstants.searchAngleStep * turretDirection;
   }
 
-  private void trackModeCalcAngle() {
-    // TODO
+  private void updateTrackSetpoint() {
+    setpoint = limelight.getXError(); 
+  }
+
+  private TurretState determineTurretState(){
+    return limelight.isTarget() ? TurretState.TRACK : TurretState.SEARCH;
   }
 }

@@ -16,7 +16,7 @@ public class TurretSubsystem extends SubsystemBase {
   private RelativeEncoder encoder;
   private SparkMaxPIDController pid;
 
-  private double kP, kI, kD, kF;
+  private double kP, kI, kD, kF, kMaxOutput, kMinOutput, setPoint;
 
   public TurretSubsystem() {
     motor = new CANSparkMax(TurretConstants.deviceID, MotorType.kBrushless);
@@ -33,25 +33,36 @@ public class TurretSubsystem extends SubsystemBase {
     motor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, TurretConstants.forwardRotations);
     motor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, TurretConstants.reverseRotations);
 
+    pid = motor.getPIDController();
+
     encoder = motor.getEncoder();
 
     // TODO: Configure constants
     // F-PID
-    kF = 0.0;
+    kF = 0.000015;
     kP = 0.1;
-    kI = 0.0001;
-    kD = 1.0;
+    kI = 0.0;
+    kD = 0.0;
+    kMaxOutput = 1.0;
+    kMinOutput = -1.0;
 
     pid.setFF(kF);
     pid.setP(kP);
     pid.setI(kI);
     pid.setD(kD);
-    pid.setOutputRange(-1.0, 1.0);
+    pid.setOutputRange(kMinOutput, kMaxOutput);
+
+    SmartDashboard.putNumber("P Gain", kP);
+    SmartDashboard.putNumber("I Gain", kI);
+    SmartDashboard.putNumber("D Gain", kD);
+    SmartDashboard.putNumber("Feed Forward", kF);
+    SmartDashboard.putNumber("Max Output", kMaxOutput);
+    SmartDashboard.putNumber("Min Output", kMinOutput);
   }
 
-  public void turn(double rotations) {
-    // TODO: Angle conversion
-    pid.setReference(rotations, CANSparkMax.ControlType.kPosition);
+  public void turn(double setPoint) {
+    setSetPoint(this.setPoint);
+    pid.setReference(this.setPoint, CANSparkMax.ControlType.kVelocity);
   }
 
   public boolean getHitLeftLimitSwitch() {
@@ -62,8 +73,32 @@ public class TurretSubsystem extends SubsystemBase {
     return motor.getFault(FaultID.kSoftLimitFwd);
   }
 
+  public double getSetPoint() {
+    return setPoint;
+  }
+
+  public void setSetPoint(double setPoint) {
+    this.setPoint = setPoint;
+  }
+
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Turret Pos:", encoder.getPosition());
+    double p = SmartDashboard.getNumber("P Gain", 0);
+    double i = SmartDashboard.getNumber("I Gain", 0);
+    double d = SmartDashboard.getNumber("D Gain", 0);
+    double ff = SmartDashboard.getNumber("Feed Forward", 0);
+    double max = SmartDashboard.getNumber("Max Output", 0);
+    double min = SmartDashboard.getNumber("Min Output", 0);
+
+    if((p != kP)) { pid.setP(p); kP = p; }
+    if((i != kI)) { pid.setI(i); kI = i; }
+    if((d != kD)) { pid.setD(d); kD = d; }
+    if((ff != kF)) { pid.setFF(ff); kF = ff; }
+    if((max != kMaxOutput) || (min != kMinOutput)) { 
+      pid.setOutputRange(min, max); 
+      kMinOutput = min; kMaxOutput = max; 
+    }
+    SmartDashboard.putNumber("SetPoint", setPoint);
+    SmartDashboard.putNumber("ProcessVariable", encoder.getVelocity());
   }
 }
