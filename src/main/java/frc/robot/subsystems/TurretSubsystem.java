@@ -16,7 +16,7 @@ public class TurretSubsystem extends SubsystemBase {
   private RelativeEncoder encoder;
   private SparkMaxPIDController pid;
 
-  private double kP, kI, kD, kF, kMaxOutput, kMinOutput, setPoint;
+  private double kP, kI, kD, kF, kMaxOutput, kMinOutput, setpoint;
 
   public TurretSubsystem() {
     motor = new CANSparkMax(TurretConstants.deviceID, MotorType.kBrushless);
@@ -60,9 +60,9 @@ public class TurretSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Min Output", kMinOutput);
   }
 
-  public void turn(double setPoint) {
-    setSetPoint(this.setPoint);
-    pid.setReference(this.setPoint, CANSparkMax.ControlType.kVelocity);
+  public void turn(double setpoint) {
+    setSetPoint(setpoint);
+    pid.setReference(setpoint, CANSparkMax.ControlType.kVelocity);
   }
 
   public boolean getHitLeftLimitSwitch() {
@@ -74,11 +74,11 @@ public class TurretSubsystem extends SubsystemBase {
   }
 
   public double getSetPoint() {
-    return setPoint;
+    return setpoint;
   }
 
-  public void setSetPoint(double setPoint) {
-    this.setPoint = setPoint;
+  public void setSetPoint(double setpoint) {
+    this.setpoint = setpoint;
   }
 
   @Override
@@ -98,7 +98,7 @@ public class TurretSubsystem extends SubsystemBase {
       pid.setOutputRange(min, max); 
       kMinOutput = min; kMaxOutput = max; 
     }
-    SmartDashboard.putNumber("SetPoint", setPoint);
+    SmartDashboard.putNumber("SetPoint", setpoint);
     SmartDashboard.putNumber("ProcessVariable", encoder.getVelocity());
   }
 }
