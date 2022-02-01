@@ -72,7 +72,7 @@ public class RobotContainer {
     setJoystickButtonWhenPressed(joystickLeft, 1, new ShiftGearDown(drivetrainSubsystem));
     setJoystickButtonWhenPressed(joystickRight, 1, new ShiftGearUp(drivetrainSubsystem));
     setJoystickButtonWhenPressed(xboxController, 1, new IntakeToggle(intakeSubsystem));
-    setJoystickButtonWhileHeld(xboxController, 2, new IntakeIn(intakeSubsystem));
+    setJoystickButtonWhenHeld(xboxController, 2, new IntakeIn(intakeSubsystem));
   }
 
   public Command getAutonomousCommand() { return m_autoCommand; }
