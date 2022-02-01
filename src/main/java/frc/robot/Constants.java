@@ -10,6 +10,9 @@ public final class Constants {
     public static int frontClimberMotorChannel = 4;
     public static int rearClimberMotorChannel = 5;
 
+    public static int rearClimberSolenoidUpChannel = 0;
+    public static int rearClimberSolenoidDownChannel = 0;
+
     public static int gearShiftUpChannel = 6;
     public static int gearShiftDownChannel = 9;
 
