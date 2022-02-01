@@ -9,6 +9,8 @@ import frc.robot.commands.Drivetrain.*;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.*;
 
@@ -70,7 +72,17 @@ public class RobotContainer {
     setJoystickButtonWhenHeld(xboxController, 4, new RetractFrontClimber(.5, climberFrontSubsystem));
     setJoystickButtonWhenHeld(xboxController, 5, new ExtendRearClimber(.5, climberRearSubsystem));
     setJoystickButtonWhenHeld(xboxController, 6, new RetractRearClimber(.5, climberRearSubsystem));
-
+    
+    setJoystickButtonWhenPressed(xboxController, 7,
+      new SequentialCommandGroup(
+        new RetractRearClimberSolenoid(climberRearSubsystem),
+        new WaitCommand(0.5),
+        new RetractRearClimber(0.5, climberRearSubsystem)));
+    
+    setJoystickButtonWhenPressed(xboxController, 8,
+      new SequentialCommandGroup(
+        new ExtendRearClimber(0.5, climberRearSubsystem),
+        new ExtendRearClimberSolenoid(climberRearSubsystem)));
 
   }
 

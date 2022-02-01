@@ -3,6 +3,7 @@ package frc.robot.commands.Climber;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ClimberRearSubsystem;
+import frc.robot.Constants.DriveConstants;
 
 public class RetractRearClimber extends CommandBase {
   private ClimberRearSubsystem climberRearSubsystem;
@@ -25,6 +26,6 @@ public class RetractRearClimber extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return false;
+    return climberRearSubsystem.getRearClimberCalculatedPosition()<=DriveConstants.rearClimberRetractDistance;
   }
 }
