@@ -27,6 +27,8 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
+  public final ExtendRearClimberSolenoid climberLockCommand = new ExtendRearClimberSolenoid(climberRearSubsystem);
+
   public RobotContainer() {
     joystickLeft = new Joystick(JoystickConstants.LEFT_JOYSTICK);
     joystickRight = new Joystick(JoystickConstants.RIGHT_JOYSTICK);
@@ -68,22 +70,11 @@ public class RobotContainer {
     setJoystickButtonWhenPressed(joystickRight, 1, new ShiftGearUp(drivetrainSubsystem));
     setJoystickButtonWhenPressed(xboxController, 1, new IntakeToggle(intakeSubsystem));
     setJoystickButtonWhileHeld(xboxController, 2, new IntakeIn(intakeSubsystem));
-    setJoystickButtonWhenHeld(xboxController, 3, new ExtendFrontClimber(.5, climberFrontSubsystem));
-    setJoystickButtonWhenHeld(xboxController, 4, new RetractFrontClimber(.5, climberFrontSubsystem));
-    setJoystickButtonWhenHeld(xboxController, 5, new ExtendRearClimber(.5, climberRearSubsystem));
-    setJoystickButtonWhenHeld(xboxController, 6, new RetractRearClimber(.5, climberRearSubsystem));
-    
-    setJoystickButtonWhenPressed(xboxController, 7,
-      new SequentialCommandGroup(
-        new RetractRearClimberSolenoid(climberRearSubsystem),
-        new WaitCommand(0.5),
-        new RetractRearClimber(0.5, climberRearSubsystem)));
-    
-    setJoystickButtonWhenPressed(xboxController, 8,
-      new SequentialCommandGroup(
-        new ExtendRearClimber(0.5, climberRearSubsystem),
-        new ExtendRearClimberSolenoid(climberRearSubsystem)));
-
+    setJoystickButtonWhenHeld(xboxController, 3, new ExtendFrontClimber(0.75, climberFrontSubsystem));
+    setJoystickButtonWhenHeld(xboxController, 4, new RetractFrontClimber(0.4, climberFrontSubsystem));
+    setJoystickButtonWhenHeld(xboxController, 5, new ExtendRearClimber(0.75, climberRearSubsystem));
+    setJoystickButtonWhenHeld(xboxController, 6, new RetractRearClimber(0.4, climberRearSubsystem));
+    setJoystickButtonWhenPressed(xboxController, 9, new ExtendRearClimberSolenoid(climberRearSubsystem));
   }
 
   public Command getAutonomousCommand() { return m_autoCommand; }
