@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
@@ -32,6 +30,11 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
 
+  double kF = 1023.0/20330.0;
+  double kP = 0.01;
+  double kI = 0;
+  double kD = 0;
+
   @Override
   public void robotInit() {
     myTalon.configFactoryDefault();
@@ -44,12 +47,17 @@ public class Robot extends TimedRobot {
     myTalon.configPeakOutputForward(1);
     myTalon.configPeakOutputReverse(-1);
     myTalon.setInverted(TalonFXInvertType.Clockwise);
-    
-    myTalon.config_kF(0, 1023.0/20330.0);
-    myTalon.config_kP(0, 0.01);
-    myTalon.config_kI(0, 0);
-    myTalon.config_kD(0, 0);
-    
+
+    myTalon.config_kF(0, kF);
+    myTalon.config_kP(0, kP);
+    myTalon.config_kI(0, kI);
+    myTalon.config_kD(0, kD);
+
+    SmartDashboard.putNumber("kF", kF);
+    SmartDashboard.putNumber("kP", kP);
+    SmartDashboard.putNumber("kI", kI);
+    SmartDashboard.putNumber("kD", kD);
+
     m_robotContainer = new RobotContainer();
   }
 
@@ -87,17 +95,26 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
+    double f = SmartDashboard.getNumber("kF", kF);
+    double p = SmartDashboard.getNumber("kP", kP);
+    double i = SmartDashboard.getNumber("kI", kI);
+    double d = SmartDashboard.getNumber("kD", kD);
+
+    if (f != kF) { myTalon.config_kF(0, f); kF = f; }
+    if (p != kP) { myTalon.config_kP(0, p); kP = p; }
+    if (i != kI) { myTalon.config_kI(0, i); kI = i; }
+    if (d != kD) { myTalon.config_kD(0, d); kD = d; }
 
     double motorRPM = 0;
 
     if(xboxAButton.get()) {
-      motorRPM = 6000.0;
+      motorRPM = 4000.0;
     } else if(xboxBButton.get()) {
-      motorRPM = 5500.0;
+      motorRPM = 3000.0;
     } else if(xboxXButton.get()) {
-      motorRPM = 5000.0;
+      motorRPM = 2000.0;
     } else if(xboxYButton.get()) {
-      motorRPM = 4500.0;
+      motorRPM = 1000.0;
     }
 
     myTalon.set(TalonFXControlMode.Velocity, motorRPM*2048/600);
