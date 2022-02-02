@@ -14,8 +14,8 @@ package frc.robot;
  */
 public final class Constants {
     public static final class DriveConstants{
-        public static final int myFalconChannel = 2;
-    
+        public static final int myFalcon1Channel = 5;
+        public static final int myFalcon2Channel = 6;
     }
 
 }

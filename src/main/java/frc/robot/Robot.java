@@ -27,28 +27,45 @@ public class Robot extends TimedRobot {
   JoystickButton xboxXButton = new JoystickButton(xboxController, 3);
   JoystickButton xboxYButton = new JoystickButton(xboxController, 4);
 
-  WPI_TalonFX myTalon = new WPI_TalonFX(DriveConstants.myFalconChannel);
+  WPI_TalonFX myTalon1 = new WPI_TalonFX(DriveConstants.myFalcon1Channel);
+  WPI_TalonFX myTalon2 = new WPI_TalonFX(DriveConstants.myFalcon2Channel);
 
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
 
   @Override
   public void robotInit() {
-    myTalon.configFactoryDefault();
-    myTalon.configVoltageCompSaturation(11);
-    myTalon.enableVoltageCompensation(true);
-    myTalon.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 0);
-    myTalon.setNeutralMode(NeutralMode.Coast);
-    myTalon.configNominalOutputForward(0);
-    myTalon.configNominalOutputReverse(0);
-    myTalon.configPeakOutputForward(1);
-    myTalon.configPeakOutputReverse(-1);
-    myTalon.setInverted(TalonFXInvertType.Clockwise);
+    myTalon1.configFactoryDefault();
+    myTalon1.configVoltageCompSaturation(11);
+    myTalon1.enableVoltageCompensation(true);
+    myTalon1.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 0);
+    myTalon1.setNeutralMode(NeutralMode.Coast);
+    myTalon1.configNominalOutputForward(0);
+    myTalon1.configNominalOutputReverse(0);
+    myTalon1.configPeakOutputForward(1);
+    myTalon1.configPeakOutputReverse(-1);
+    myTalon1.setInverted(TalonFXInvertType.Clockwise);
     
-    myTalon.config_kF(0, 1023.0/20330.0);
-    myTalon.config_kP(0, 0.01);
-    myTalon.config_kI(0, 0);
-    myTalon.config_kD(0, 0);
+    myTalon1.config_kF(0, 1023.0/20330.0);
+    myTalon1.config_kP(0, 0);
+    myTalon1.config_kI(0, 0);
+    myTalon1.config_kD(0, 0);
+
+    myTalon2.configFactoryDefault();
+    myTalon2.configVoltageCompSaturation(11);
+    myTalon2.enableVoltageCompensation(true);
+    myTalon2.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 0);
+    myTalon2.setNeutralMode(NeutralMode.Coast);
+    myTalon2.configNominalOutputForward(0);
+    myTalon2.configNominalOutputReverse(0);
+    myTalon2.configPeakOutputForward(1);
+    myTalon2.configPeakOutputReverse(-1);
+    myTalon2.setInverted(TalonFXInvertType.Clockwise);
+    
+    myTalon2.config_kF(0, 1023.0/20330.0);
+    myTalon2.config_kP(0, 0);
+    myTalon2.config_kI(0, 0);
+    myTalon2.config_kD(0, 0);
     
     m_robotContainer = new RobotContainer();
   }
@@ -57,7 +74,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
 
-    SmartDashboard.putNumber("Talon Velocity (RPM): ", myTalon.getSelectedSensorVelocity()*600/2048);
+    SmartDashboard.putNumber("Talon Velocity (RPM): ", myTalon1.getSelectedSensorVelocity()*600/2048);
   }
 
   @Override
@@ -91,16 +108,17 @@ public class Robot extends TimedRobot {
     double motorRPM = 0;
 
     if(xboxAButton.get()) {
-      motorRPM = 6000.0;
+      //motorRPM = 2000.0;
     } else if(xboxBButton.get()) {
-      motorRPM = 5500.0;
+      //motorRPM = 1000.0;
     } else if(xboxXButton.get()) {
-      motorRPM = 5000.0;
+      motorRPM = 500.0;
     } else if(xboxYButton.get()) {
-      motorRPM = 4500.0;
+      motorRPM = -500.0;
     }
 
-    myTalon.set(TalonFXControlMode.Velocity, motorRPM*2048/600);
+    myTalon1.set(TalonFXControlMode.Velocity, motorRPM*2048/600);
+    myTalon2.set(TalonFXControlMode.Velocity, motorRPM*2048/600);
 
   }
 
