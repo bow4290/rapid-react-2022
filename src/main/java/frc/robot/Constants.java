@@ -13,6 +13,11 @@ public final class Constants {
     public static double encoderDistanceConversion = 1.0;
   }
 
+  public static final class IndexerConstants {
+    public static int leftIndexerMotorChannel = 0;
+    public static int rightIndexerMotorChannel = 0;
+  }
+
   public static final class JoystickConstants {
     public static int LEFT_JOYSTICK = 0;
     public static int RIGHT_JOYSTICK = 1;
