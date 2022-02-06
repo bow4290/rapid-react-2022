@@ -20,7 +20,7 @@ public class RobotContainer {
 
     drivetrainSubsystem = new DrivetrainSubsystem();
 
-    drivetrainSubsystem.setDefaultCommand(new Drive(getLeftY(), getRightY(), drivetrainSubsystem));
+    drivetrainSubsystem.setDefaultCommand(new Drive(joystickLeft, joystickRight, drivetrainSubsystem));
 
     configureButtonBindings();
   }

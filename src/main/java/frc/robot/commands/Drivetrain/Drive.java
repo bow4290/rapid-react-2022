@@ -1,16 +1,17 @@
 package frc.robot.commands.Drivetrain;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class Drive extends CommandBase {
   private DrivetrainSubsystem drivetrainSubsystem;
-  private double leftSpeed;
-  private double rightSpeed;
+  private Joystick leftStick;
+  private Joystick rightStick;
 
-  public Drive(double leftSpeed, double rightSpeed, DrivetrainSubsystem drivetrainSubsystem) {
-    this.leftSpeed = leftSpeed;
-    this.rightSpeed = rightSpeed;
+  public Drive(Joystick leftStick, Joystick rightStick, DrivetrainSubsystem drivetrainSubsystem) {
+    this.leftStick = leftStick;
+    this.rightStick = rightStick;
     this.drivetrainSubsystem = drivetrainSubsystem;
     addRequirements(drivetrainSubsystem);
   }
@@ -19,7 +20,7 @@ public class Drive extends CommandBase {
   public void initialize() {}
 
   @Override
-  public void execute() { drivetrainSubsystem.drive(leftSpeed, rightSpeed); }
+  public void execute() { drivetrainSubsystem.drive(leftStick.getY(), rightStick.getY()); }
 
   @Override
   public void end(boolean interrupted) {}

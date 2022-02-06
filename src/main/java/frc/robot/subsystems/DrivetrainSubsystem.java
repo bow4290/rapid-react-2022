@@ -24,6 +24,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
   private final DifferentialDrive drivetrain;
 
   private final DoubleSolenoid gearShiftSolenoid;
+  // private final DoubleSolenoid gearShiftSolenoid;
 
   private enum GearShiftPosition { UP, DOWN }
 
@@ -66,7 +67,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     drivetrain = new DifferentialDrive(leftMotor1, rightMotor1);
 
-    gearShiftSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, DriveConstants.gearShiftUpChannel, DriveConstants.gearShiftDownChannel);
+    // gearShiftSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, DriveConstants.gearShiftUpChannel, DriveConstants.gearShiftDownChannel);
     gearShiftPosition = null;
   }
 
@@ -82,13 +83,13 @@ public class DrivetrainSubsystem extends SubsystemBase {
   public GearShiftPosition getGearShiftPosition() { return gearShiftPosition; }
 
   public void shiftDown() {
-    gearShiftSolenoid.set(DoubleSolenoid.Value.kForward);  // kForward is DOWN
-    gearShiftPosition = GearShiftPosition.DOWN;
+    // gearShiftSolenoid.set(DoubleSolenoid.Value.kForward);  // kForward is DOWN
+    // gearShiftPosition = GearShiftPosition.DOWN;
   }
 
   public void shiftUp() {
-    gearShiftSolenoid.set(DoubleSolenoid.Value.kReverse);  // kReverse is UP
-    gearShiftPosition = GearShiftPosition.UP;
+    // gearShiftSolenoid.set(DoubleSolenoid.Value.kReverse);  // kReverse is UP
+    // gearShiftPosition = GearShiftPosition.UP;
   }
 
   /** Returns the calculated distance in inches. Currently only calculates when in LOW gear */
