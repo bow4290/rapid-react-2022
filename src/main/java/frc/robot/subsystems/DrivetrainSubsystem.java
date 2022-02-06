@@ -23,7 +23,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   private final DifferentialDrive drivetrain;
 
-  private final DoubleSolenoid gearShiftSolenoid;
   // private final DoubleSolenoid gearShiftSolenoid;
 
   private enum GearShiftPosition { UP, DOWN }
