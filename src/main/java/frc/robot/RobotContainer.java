@@ -12,7 +12,7 @@ public class RobotContainer {
   public static Joystick joystickLeft;
   public static Joystick joystickRight;
 
-  private DrivetrainSubsystem drivetrainSubsystem;
+  public DrivetrainSubsystem drivetrainSubsystem;
 
   public RobotContainer() {
     joystickLeft = new Joystick(JoystickConstants.LEFT_JOYSTICK);

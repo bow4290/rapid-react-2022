@@ -15,7 +15,7 @@ public final class Constants {
         private static double stage2Ratio = 28/28;
         private static double lowSpreadRatio = 44/22;
         private static double highSpreadRatio = 34/32;
-        private static double wheelDiameter = 4;
+        private static double wheelDiameter = 3.75;
         private static double wheelCircum = wheelDiameter*Math.PI;
         private static int encoderCPR = 2048;
         private static double lowCountsPerWheelRev = stage1Ratio * stage2Ratio * lowSpreadRatio * encoderCPR;
