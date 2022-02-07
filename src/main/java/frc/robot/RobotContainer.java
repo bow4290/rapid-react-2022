@@ -25,14 +25,6 @@ public class RobotContainer {
     configureButtonBindings();
   }
 
-  public double getLeftY() { return joystickLeft.getY(); }
-
-  public double getLeftX() { return joystickLeft.getX(); }
-
-  public double getRightY() { return joystickRight.getY(); }
-
-  public double getRightX() { return joystickRight.getX(); }
-
   private void configureButtonBindings() {
     setJoystickButtonWhenPressed(joystickLeft, 1, new ShiftGearDown(drivetrainSubsystem));
     setJoystickButtonWhenPressed(joystickRight, 1, new ShiftGearUp(drivetrainSubsystem));
