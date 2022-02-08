@@ -7,8 +7,8 @@ public final class Constants {
         public static int rightMotor1Channel = 5;
         public static int rightMotor2Channel = 6;
     
-        public static int gearShiftUpChannel = 6;
-        public static int gearShiftDownChannel = 9;
+        public static int gearShiftUpChannel = 0;
+        public static int gearShiftDownChannel = 1;
     
         public static double targetLinearDistance = 60;
         private static double stage1Ratio = 60/12;

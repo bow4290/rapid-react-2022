@@ -23,18 +23,18 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   private final DifferentialDrive drivetrain;
 
-  // private final DoubleSolenoid gearShiftSolenoid;
+  private final DoubleSolenoid gearShiftSolenoid;
 
   private enum GearShiftPosition { UP, DOWN }
 
   private static GearShiftPosition gearShiftPosition;
 
   public DrivetrainSubsystem() {
-    leftMotor1.setInverted(TalonFXInvertType.Clockwise);
+    leftMotor1.setInverted(TalonFXInvertType.CounterClockwise);
     leftMotor2.follow(leftMotor1);
     leftMotor2.setInverted(InvertType.FollowMaster);
 
-    rightMotor1.setInverted(TalonFXInvertType.CounterClockwise);
+    rightMotor1.setInverted(TalonFXInvertType.Clockwise);
     rightMotor2.follow(rightMotor1);
     rightMotor2.setInverted(InvertType.FollowMaster);
 
@@ -66,7 +66,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     drivetrain = new DifferentialDrive(leftMotor1, rightMotor1);
 
-    // gearShiftSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, DriveConstants.gearShiftUpChannel, DriveConstants.gearShiftDownChannel);
+    gearShiftSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, DriveConstants.gearShiftUpChannel, DriveConstants.gearShiftDownChannel);
     gearShiftPosition = null;
   }
 
@@ -82,24 +82,31 @@ public class DrivetrainSubsystem extends SubsystemBase {
   public GearShiftPosition getGearShiftPosition() { return gearShiftPosition; }
 
   public void shiftDown() {
-    // gearShiftSolenoid.set(DoubleSolenoid.Value.kForward);  // kForward is DOWN
-    // gearShiftPosition = GearShiftPosition.DOWN;
+    gearShiftSolenoid.set(DoubleSolenoid.Value.kForward);  // kForward is DOWN
+    gearShiftPosition = GearShiftPosition.DOWN;
   }
 
   public void shiftUp() {
-    // gearShiftSolenoid.set(DoubleSolenoid.Value.kReverse);  // kReverse is UP
-    // gearShiftPosition = GearShiftPosition.UP;
+    gearShiftSolenoid.set(DoubleSolenoid.Value.kReverse);  // kReverse is UP
+    gearShiftPosition = GearShiftPosition.UP;
   }
 
   /** Returns the calculated distance in inches. Currently only calculates when in LOW gear */
   public double getLeftCalculatedPosition() {
-    // TODO: add distance conversion for shifting
-    return (getLeftRawEncoderPosition() * (DriveConstants.encoderLowDistanceConversion));
+    if(gearShiftPosition == GearShiftPosition.DOWN) {
+      return (getLeftRawEncoderPosition() * (DriveConstants.encoderLowDistanceConversion));
+    } else {
+      return (getLeftRawEncoderPosition() * (DriveConstants.encoderHighDistanceConversion));
+    }
+    
   }
 
   public double getRightCalculatedPosition() {
-    // TODO: add distance conversion for shifting
-    return (getRightRawEncoderPosition() * (DriveConstants.encoderLowDistanceConversion));
+    if(gearShiftPosition == GearShiftPosition.DOWN) {
+      return (getRightRawEncoderPosition() * (DriveConstants.encoderLowDistanceConversion));
+    } else {
+      return (getRightRawEncoderPosition() * (DriveConstants.encoderHighDistanceConversion));
+    }
   }
 
   /** Returns the raw encoder counts. */
