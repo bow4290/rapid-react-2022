@@ -45,10 +45,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
     rightMotor2.setNeutralMode(NeutralMode.Brake);
 
     // Smooth the motor inputs to regulate power draw.
-    leftMotor1.configOpenloopRamp(0.5);
-    leftMotor2.configOpenloopRamp(0.5);
-    rightMotor1.configOpenloopRamp(0.5);
-    rightMotor2.configOpenloopRamp(0.5);
+    leftMotor1.configOpenloopRamp(0.6);
+    leftMotor2.configOpenloopRamp(0.6);
+    rightMotor1.configOpenloopRamp(0.6);
+    rightMotor2.configOpenloopRamp(0.6);
 
     // Don't draw more than 11 volts. Keeps speed consistent even when battery output isn't.
     leftMotor1.configVoltageCompSaturation(11);
