@@ -13,7 +13,7 @@ public class TurretCommand extends CommandBase {
   private TurretState newTurretState;
   private double setpoint = 0.0;
   private double defaultTrackRPM = 0.0;
-  private double searchRPM = 0.3;
+  private double searchRPM = 0.2;
 
   public TurretCommand(Limelight limelight, TurretSubsystem turretSubsystem) {
     this.limelight = limelight;
@@ -24,7 +24,6 @@ public class TurretCommand extends CommandBase {
 
   @Override
   public void initialize() {
-    
   }
 
   @Override
@@ -44,8 +43,8 @@ public class TurretCommand extends CommandBase {
       updateSearchSetpoint();
     } else {
       updateTrackSetpoint();
-    }
-
+    } 
+    
     turretSubsystem.turn(setpoint);
   }
 
@@ -58,9 +57,8 @@ public class TurretCommand extends CommandBase {
   }
 
   private void updateSearchSetpoint() {
-    if (turretSubsystem.getHitLeftLimitSwitch() || turretSubsystem.getHitRightLimitSwitch()) {
-      setpoint *= -1;
-    }
+    if (turretSubsystem.getHitLeftLimitSwitch()) { setpoint = Math.abs(setpoint); }
+    else if (turretSubsystem.getHitRightLimitSwitch()) { setpoint = -1 * Math.abs(setpoint); }
   }
 
   private void updateTrackSetpoint() {

@@ -13,7 +13,7 @@ import frc.robot.Constants.TurretConstants;
 public class TurretSubsystem extends SubsystemBase {
 
   private CANSparkMax motor;
-  private RelativeEncoder encoder;
+  public RelativeEncoder encoder;
   private SparkMaxPIDController pid;
 
   private double kP, kI, kD, kF, kMaxOutput, kMinOutput, setpoint;
@@ -36,11 +36,12 @@ public class TurretSubsystem extends SubsystemBase {
     pid = motor.getPIDController();
 
     encoder = motor.getEncoder();
+    encoder.setPosition(0);
 
     // TODO: Configure constants
     // F-PID
-    kF = 0.000015;
-    kP = 0.1;
+    kF = 0.05;
+    kP = 0.01;
     kI = 0.0;
     kD = 0.0;
     kMaxOutput = 1.0;
@@ -62,7 +63,8 @@ public class TurretSubsystem extends SubsystemBase {
 
   public void turn(double setpoint) {
     setSetPoint(setpoint);
-    pid.setReference(setpoint, CANSparkMax.ControlType.kVelocity);
+    motor.set(setpoint);
+    //pid.setReference(setpoint, CANSparkMax.ControlType.kVelocity);
   }
 
   public boolean getHitLeftLimitSwitch() {

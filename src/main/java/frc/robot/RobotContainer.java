@@ -28,7 +28,7 @@ public class RobotContainer {
 
   //private DrivetrainSubsystem drivetrainSubsystem;
   private IntakeSubsystem intakeSubsystem;
-  private TurretSubsystem turretSubsystem;
+  public TurretSubsystem turretSubsystem;
 
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
