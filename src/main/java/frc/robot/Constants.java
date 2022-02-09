@@ -27,8 +27,8 @@ public final class Constants {
 
   public static final class TurretConstants {
     public static int deviceID = 1;
-    public static int forwardRotations = 15;
-    public static int reverseRotations = -15;
+    public static int forwardRotations = 3;
+    public static int reverseRotations = -3;
   }
 
   public static final class LimelightConstants {

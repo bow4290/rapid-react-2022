@@ -26,7 +26,7 @@ public class RobotContainer {
   public BallIdentification ball;
   public Limelight limelight;
 
-  private DrivetrainSubsystem drivetrainSubsystem;
+  //private DrivetrainSubsystem drivetrainSubsystem;
   private IntakeSubsystem intakeSubsystem;
   private TurretSubsystem turretSubsystem;
 
@@ -34,8 +34,8 @@ public class RobotContainer {
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
   public RobotContainer() {
-    joystickLeft = new Joystick(JoystickConstants.LEFT_JOYSTICK);
-    joystickRight = new Joystick(JoystickConstants.RIGHT_JOYSTICK);
+    //joystickLeft = new Joystick(JoystickConstants.LEFT_JOYSTICK);
+    //joystickRight = new Joystick(JoystickConstants.RIGHT_JOYSTICK);
     xboxController = new Joystick(JoystickConstants.XBOX_CONTROLLER);
 
     redBallColorSensor = new RevColorSensor(80, 180, 50, 80, 15, 40, 0, 2048);
@@ -44,11 +44,11 @@ public class RobotContainer {
     ball = new BallIdentification(redBallColorSensor, blueBallColorSensor);
     limelight = new Limelight();
 
-    drivetrainSubsystem = new DrivetrainSubsystem();
-    drivetrainSubsystem.setDefaultCommand(new Drive(getLeftY(), getRightY(), drivetrainSubsystem));
+    //drivetrainSubsystem = new DrivetrainSubsystem();
+    //drivetrainSubsystem.setDefaultCommand(new Drive(getLeftY(), getRightY(), drivetrainSubsystem));
 
     intakeSubsystem = new IntakeSubsystem();
-    intakeSubsystem.setDefaultCommand(new IntakeStop(intakeSubsystem));
+    //intakeSubsystem.setDefaultCommand(new IntakeStop(intakeSubsystem));
 
     turretSubsystem = new TurretSubsystem();
     turretSubsystem.setDefaultCommand(new TurretCommand(limelight, turretSubsystem));
@@ -57,14 +57,14 @@ public class RobotContainer {
     configureButtonBindings();
   }
 
-  public double getLeftY() { return joystickLeft.getY(); }
+  /*public double getLeftY() { return joystickLeft.getY(); }
 
   public double getLeftX() { return joystickLeft.getX(); }
 
   public double getRightY() { return joystickRight.getY(); }
 
   public double getRightX() { return joystickRight.getX(); }
-
+*/
   /* Xbox Controller Button Binding:
     Buttons:
       1 - A           6 - RightBump
@@ -79,8 +79,8 @@ public class RobotContainer {
       2 - LeftTrig    5 - RightY
   */
   private void configureButtonBindings() {
-    setJoystickButtonWhenPressed(joystickLeft, 1, new ShiftGearDown(drivetrainSubsystem));
-    setJoystickButtonWhenPressed(joystickRight, 1, new ShiftGearUp(drivetrainSubsystem));
+    //setJoystickButtonWhenPressed(joystickLeft, 1, new ShiftGearDown(drivetrainSubsystem));
+    //setJoystickButtonWhenPressed(joystickRight, 1, new ShiftGearUp(drivetrainSubsystem));
     setJoystickButtonWhenPressed(xboxController, 1, new IntakeToggle(intakeSubsystem));
     setJoystickButtonWhileHeld(xboxController, 2, new IntakeIn(intakeSubsystem));
   }
