@@ -36,13 +36,14 @@ public class RobotContainer {
 
     redBallColorSensor = new RevColorSensor(80, 180, 50, 80, 15, 40, 0, 2048);
     blueBallColorSensor = new RevColorSensor(10, 70, 50, 100, 40, 100, 0, 2048);
-    
+
     ball = new BallIdentification(redBallColorSensor, blueBallColorSensor);
 
     drivetrainSubsystem = new DrivetrainSubsystem();
 
     drivetrainSubsystem.setDefaultCommand(new Drive(getLeftY(), getRightY(), drivetrainSubsystem));
-    intakeSubsystem.setDefaultCommand(new IntakeStop(intakeSubsystem));
+    // .perpetually() 'duplicates' the given command but makes .isFinished() always return false
+    intakeSubsystem.setDefaultCommand(new IntakeStop(intakeSubsystem).perpetually());
 
     configureButtonBindings();
   }
