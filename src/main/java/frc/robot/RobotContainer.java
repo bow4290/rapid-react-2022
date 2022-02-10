@@ -24,7 +24,7 @@ public class RobotContainer {
   public BallIdentification ball;
 
   private DrivetrainSubsystem drivetrainSubsystem;
-  private IntakeSubsystem intakeSubsystem;
+  private IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
