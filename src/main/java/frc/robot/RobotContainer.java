@@ -5,8 +5,10 @@ import frc.robot.Constants.JoystickConstants;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.Intake.*;
 import frc.robot.sensors.BallIdentification;
+import frc.robot.sensors.Limelight;
 import frc.robot.sensors.RevColorSensor;
 import frc.robot.commands.Drivetrain.*;
+import frc.robot.commands.Hood.DefaultHoodCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -23,8 +25,11 @@ public class RobotContainer {
 
   public BallIdentification ball;
 
+  public Limelight limelight = new Limelight();
+
   private DrivetrainSubsystem drivetrainSubsystem;
   private IntakeSubsystem intakeSubsystem;
+  private HoodSubsystem hoodSubsystem = new HoodSubsystem();
 
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
@@ -43,6 +48,7 @@ public class RobotContainer {
 
     drivetrainSubsystem.setDefaultCommand(new Drive(getLeftY(), getRightY(), drivetrainSubsystem));
     intakeSubsystem.setDefaultCommand(new IntakeStop(intakeSubsystem));
+    hoodSubsystem.setDefaultCommand(new DefaultHoodCommand(limelight, hoodSubsystem));
 
     configureButtonBindings();
   }

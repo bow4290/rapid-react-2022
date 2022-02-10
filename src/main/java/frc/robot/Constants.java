@@ -28,6 +28,7 @@ public final class Constants {
   public static final class HoodConstants {
     public static int hoodSolenoidExtendChannel = 1;
     public static int hoodSolenoidRetractChannel = 0;
+    public static double hoodExtendDistance = 72;    // Distance in inches
   }
 
   public static final class LimelightConstants {

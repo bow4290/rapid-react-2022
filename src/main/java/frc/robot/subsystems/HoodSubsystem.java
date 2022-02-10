@@ -25,7 +25,11 @@ public class HoodSubsystem extends SubsystemBase {
     hoodStatus = HoodStatus.RETRACTED;
   }
 
-  public static HoodStatus getHoodSolenoidPosition() { return hoodStatus; }
+  public HoodStatus getHoodSolenoidPosition() { return hoodStatus; }
+
+  public boolean isHoodExtended() {
+    return (hoodStatus == HoodStatus.EXTENDED) ? true : false;
+  }
 
   @Override
   public void periodic() {
