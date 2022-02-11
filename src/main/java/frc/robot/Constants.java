@@ -32,8 +32,8 @@ public final class Constants {
   }
 
   public static final class LimelightConstants {
-    public static final double h1 = 0;  // Distance from ground to limelight
-    public static final double h2 = 0;  // Distance from ground to target
-    public static final double a1 = 0;  // Limelight mount angle
+    public static final double h1 = 24;             // Distance from ground to limelight
+    public static final double h2 = 8*12+8;         // Distance from ground to target (8'8")
+    public static final double a1 = 30;             // Limelight mount angle (0 = facing forward, 90 = facing the ceiling)
   }
 }
