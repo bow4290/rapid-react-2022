@@ -3,7 +3,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.Intake.*;
 import frc.robot.sensors.BallIdentification;
 import frc.robot.sensors.Limelight;
 import frc.robot.sensors.RevColorSensor;
@@ -28,7 +27,6 @@ public class RobotContainer {
   public Limelight limelight = new Limelight();
 
   private DrivetrainSubsystem drivetrainSubsystem;
-  private IntakeSubsystem intakeSubsystem;
   private HoodSubsystem hoodSubsystem = new HoodSubsystem();
 
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
@@ -47,7 +45,6 @@ public class RobotContainer {
     drivetrainSubsystem = new DrivetrainSubsystem();
 
     drivetrainSubsystem.setDefaultCommand(new Drive(getLeftY(), getRightY(), drivetrainSubsystem));
-    intakeSubsystem.setDefaultCommand(new IntakeStop(intakeSubsystem));
     hoodSubsystem.setDefaultCommand(new DefaultHoodCommand(limelight, hoodSubsystem));
 
     configureButtonBindings();
@@ -77,8 +74,6 @@ public class RobotContainer {
   private void configureButtonBindings() {
     setJoystickButtonWhenPressed(joystickLeft, 1, new ShiftGearDown(drivetrainSubsystem));
     setJoystickButtonWhenPressed(joystickRight, 1, new ShiftGearUp(drivetrainSubsystem));
-    setJoystickButtonWhenPressed(xboxController, 1, new IntakeToggle(intakeSubsystem));
-    setJoystickButtonWhenHeld(xboxController, 2, new IntakeIn(intakeSubsystem));
   }
 
   public Command getAutonomousCommand() { return m_autoCommand; }

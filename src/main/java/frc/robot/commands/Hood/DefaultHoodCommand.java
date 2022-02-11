@@ -1,5 +1,6 @@
 package frc.robot.commands.Hood;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.HoodConstants;
 import frc.robot.sensors.Limelight;
@@ -29,6 +30,7 @@ public class DefaultHoodCommand extends CommandBase {
         hoodSubsystem.retractHoodSolenoid();
       }
     }
+    SmartDashboard.putNumber("LimeLight Distance", limelight.getDistance());
   }
 
   @Override

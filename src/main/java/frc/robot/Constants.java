@@ -2,13 +2,13 @@ package frc.robot;
 
 public final class Constants {
   public static final class DriveConstants {
-    public static int leftMotor1Channel = 0;
-    public static int leftMotor2Channel = 1;
-    public static int rightMotor1Channel = 2;
-    public static int rightMotor2Channel = 3;
+    public static int leftMotor1Channel = 7;
+    public static int leftMotor2Channel = 8;
+    public static int rightMotor1Channel = 5;
+    public static int rightMotor2Channel = 6;
 
-    public static int gearShiftUpChannel = 6;
-    public static int gearShiftDownChannel = 9;
+    public static int gearShiftUpChannel = 0;
+    public static int gearShiftDownChannel = 1;
 
     public static double encoderDistanceConversion = 1.0;
   }
@@ -26,9 +26,9 @@ public final class Constants {
   }
 
   public static final class HoodConstants {
-    public static int hoodSolenoidExtendChannel = 1;
-    public static int hoodSolenoidRetractChannel = 0;
-    public static double hoodExtendDistance = 72;    // Distance in inches
+    public static int hoodSolenoidExtendChannel = 6;
+    public static int hoodSolenoidRetractChannel = 7;
+    public static double hoodExtendDistance = 125;    // Distance in inches
   }
 
   public static final class LimelightConstants {
