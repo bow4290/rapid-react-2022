@@ -1,28 +1,30 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import frc.robot.Constants.IntakeConstants;
 
 public class IntakeSubsystem extends SubsystemBase {
-  private final WPI_VictorSPX intakeMotor;
+  private final CANSparkMax intakeMotor;
   private final DoubleSolenoid intakeSolenoid;
 
   public enum IntakeStatus { DOWN, UP }
   public static IntakeStatus intakeStatus;
 
   public IntakeSubsystem() {
-    intakeMotor = new WPI_VictorSPX(IntakeConstants.intakeMotorChannel);
-    intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, IntakeConstants.intakeUpChannel, IntakeConstants.intakeDownChannel);
-
+    intakeMotor = new CANSparkMax(IntakeConstants.intakeMotorChannel, MotorType.kBrushless);
+    intakeMotor.restoreFactoryDefaults();
     intakeMotor.setInverted(false);
+    intakeMotor.enableVoltageCompensation(11);
+    intakeMotor.setOpenLoopRampRate(0.5);
+
+    intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, IntakeConstants.intakeUpChannel, IntakeConstants.intakeDownChannel);
     intakeStatus = IntakeStatus.UP;
   }
 
@@ -37,7 +39,7 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void intakeSpin(double intakeSpeed) {
-    intakeMotor.set(ControlMode.PercentOutput, intakeSpeed);
+    intakeMotor.set(intakeSpeed);
   }
 
   public static IntakeStatus getIntakePosition() { return intakeStatus; }

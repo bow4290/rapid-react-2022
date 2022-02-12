@@ -33,7 +33,7 @@ public final class Constants {
   }
 
   public static final class IntakeConstants {
-    public static int intakeMotorChannel = 0;
+    public static int intakeMotorChannel = 44;
     public static int intakeUpChannel = 6;
     public static int intakeDownChannel = 7;
   }
