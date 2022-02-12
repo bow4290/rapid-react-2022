@@ -43,4 +43,10 @@ public final class Constants {
     public static final double h2 = 0;  // Distance from ground to target
     public static final double a1 = 0;  // Limelight mount angle
   }
+
+  public static final class Flags {
+    public static final boolean drivetrain = true;
+    public static final boolean intake = true;
+    public static final boolean colors = true;
+  }
 }

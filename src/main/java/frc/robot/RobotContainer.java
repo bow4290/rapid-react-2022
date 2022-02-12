@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Constants.JoystickConstants;
+import frc.robot.Constants.Flags;
 import frc.robot.commands.Drivetrain.*;
 import frc.robot.commands.Intake.*;
 import frc.robot.sensors.BallIdentification;
@@ -16,28 +17,44 @@ public class RobotContainer {
   public static Joystick joystickRight = new Joystick(JoystickConstants.RIGHT_JOYSTICK);
   public static Joystick xboxController = new Joystick(JoystickConstants.XBOX_CONTROLLER);
 
-  public DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
-  private IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  public DrivetrainSubsystem drivetrainSubsystem;
+  private IntakeSubsystem intakeSubsystem;
 
-  public RevColorSensor redBallColorSensor = new RevColorSensor(80, 180, 50, 80, 15, 40, 0, 2048);
-  public RevColorSensor blueBallColorSensor = new RevColorSensor(10, 70, 50, 100, 40, 100, 0, 2048);
+  public RevColorSensor redBallColorSensor;
+  public RevColorSensor blueBallColorSensor;
 
-  public BallIdentification ball = new BallIdentification(redBallColorSensor, blueBallColorSensor);
+  public BallIdentification ball;
 
 
   public RobotContainer() {
-    drivetrainSubsystem.setDefaultCommand(new Drive(() -> -joystickLeft.getY(), () -> -joystickRight.getY(), drivetrainSubsystem));
-    // .perpetually() 'duplicates' the given command but makes .isFinished() always return false
-    intakeSubsystem.setDefaultCommand(new IntakeStop(intakeSubsystem).perpetually());
+    if (Flags.drivetrain) {
+      drivetrainSubsystem = new DrivetrainSubsystem();
+      drivetrainSubsystem.setDefaultCommand(new Drive(() -> -joystickLeft.getY(), () -> -joystickRight.getY(), drivetrainSubsystem));
+    }
+    if (Flags.intake) {
+      intakeSubsystem = new IntakeSubsystem();
+      // .perpetually() 'duplicates' the given command but makes .isFinished() always return false
+      intakeSubsystem.setDefaultCommand(new IntakeStop(intakeSubsystem).perpetually());
+    }
+
+    if (Flags.colors) {
+      redBallColorSensor = new RevColorSensor(80, 180, 50, 80, 15, 40, 0, 2048);
+      blueBallColorSensor = new RevColorSensor(10, 70, 50, 100, 40, 100, 0, 2048);
+      ball = new BallIdentification(redBallColorSensor, blueBallColorSensor);
+    }
 
     configureButtonBindings();
   }
 
   private void configureButtonBindings() {
-    setJoystickButtonWhenPressed(joystickLeft, 1, new ShiftGearDown(drivetrainSubsystem));
-    setJoystickButtonWhenPressed(joystickRight, 1, new ShiftGearUp(drivetrainSubsystem));
-    setJoystickButtonWhenPressed(xboxController, 1, new IntakeToggle(intakeSubsystem));
-    setJoystickButtonWhenHeld(xboxController, 2, new IntakeIn(intakeSubsystem));
+    if (Flags.drivetrain) {
+      setJoystickButtonWhenPressed(joystickLeft, 1, new ShiftGearDown(drivetrainSubsystem));
+      setJoystickButtonWhenPressed(joystickRight, 1, new ShiftGearUp(drivetrainSubsystem));
+    }
+    if (Flags.intake) {
+      setJoystickButtonWhenPressed(xboxController, 1, new IntakeToggle(intakeSubsystem));
+      setJoystickButtonWhenHeld(xboxController, 2, new IntakeIn(intakeSubsystem));
+    }
   }
   /* Xbox Controller Button Binding:
     Buttons:
