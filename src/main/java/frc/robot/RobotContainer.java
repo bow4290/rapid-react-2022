@@ -2,51 +2,22 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Constants.JoystickConstants;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.Climber.*;
-import frc.robot.commands.Intake.*;
-import frc.robot.commands.Drivetrain.*;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
-  public static Joystick joystickLeft;
-  public static Joystick joystickRight;
-  public static Joystick xboxController;
+  public static Joystick xboxController = new Joystick(JoystickConstants.XBOX_CONTROLLER);;
 
-  private DrivetrainSubsystem drivetrainSubsystem;
-  private IntakeSubsystem intakeSubsystem;
-  private ClimberFrontSubsystem climberFrontSubsystem;
-  private ClimberRearSubsystem climberRearSubsystem;
-
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  private ClimberRearSubsystem climberRearSubsystem = new ClimberRearSubsystem();
 
   public RobotContainer() {
-    joystickLeft = new Joystick(JoystickConstants.LEFT_JOYSTICK);
-    joystickRight = new Joystick(JoystickConstants.RIGHT_JOYSTICK);
-    xboxController = new Joystick(JoystickConstants.XBOX_CONTROLLER);
-
-    drivetrainSubsystem = new DrivetrainSubsystem();
-
-    drivetrainSubsystem.setDefaultCommand(new Drive(getLeftY(), getRightY(), drivetrainSubsystem));
-    intakeSubsystem.setDefaultCommand(new IntakeStop(intakeSubsystem));
-    climberFrontSubsystem.setDefaultCommand(new StopFrontClimber(climberFrontSubsystem));
     climberRearSubsystem.setDefaultCommand(new StopRearClimber(climberRearSubsystem));
 
     configureButtonBindings();
   }
-
-  public double getLeftY() { return joystickLeft.getY(); }
-
-  public double getLeftX() { return joystickLeft.getX(); }
-
-  public double getRightY() { return joystickRight.getY(); }
-
-  public double getRightX() { return joystickRight.getX(); }
 
   /* Xbox Controller Button Binding:
     Buttons:
@@ -62,19 +33,11 @@ public class RobotContainer {
       2 - LeftTrig    5 - RightY
   */
   private void configureButtonBindings() {
-    setJoystickButtonWhenPressed(joystickLeft, 1, new ShiftGearDown(drivetrainSubsystem));
-    setJoystickButtonWhenPressed(joystickRight, 1, new ShiftGearUp(drivetrainSubsystem));
-    setJoystickButtonWhenPressed(xboxController, 1, new IntakeToggle(intakeSubsystem));
-    setJoystickButtonWhileHeld(xboxController, 2, new IntakeIn(intakeSubsystem));
-    setJoystickButtonWhenHeld(xboxController, 3, new ExtendFrontClimber(.5, climberFrontSubsystem));
-    setJoystickButtonWhenHeld(xboxController, 4, new RetractFrontClimber(.5, climberFrontSubsystem));
-    setJoystickButtonWhenHeld(xboxController, 5, new ExtendRearClimber(.5, climberRearSubsystem));
-    setJoystickButtonWhenHeld(xboxController, 6, new RetractRearClimber(.5, climberRearSubsystem));
-
-
+    setJoystickButtonWhenHeld(xboxController, 5, new RetractRearClimber(0.5, climberRearSubsystem));
+    setJoystickButtonWhenHeld(xboxController, 6, new ExtendRearClimber(0.5, climberRearSubsystem));
   }
 
-  public Command getAutonomousCommand() { return m_autoCommand; }
+  public Command getAutonomousCommand() { return null; }
 
   /** WhenPressed runs the command once at the moment the button is pressed. */
   private void setJoystickButtonWhenPressed(Joystick joystick, int button, CommandBase command) {
