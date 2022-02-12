@@ -14,6 +14,7 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
   public static Joystick joystickLeft = new Joystick(JoystickConstants.LEFT_JOYSTICK);
   public static Joystick joystickRight = new Joystick(JoystickConstants.RIGHT_JOYSTICK);
+  public static Joystick xboxController = new Joystick(JoystickConstants.XBOX_CONTROLLER);
 
   public DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
   private IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
@@ -35,6 +36,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     setJoystickButtonWhenPressed(joystickLeft, 1, new ShiftGearDown(drivetrainSubsystem));
     setJoystickButtonWhenPressed(joystickRight, 1, new ShiftGearUp(drivetrainSubsystem));
+    setJoystickButtonWhenPressed(xboxController, 1, new IntakeToggle(intakeSubsystem));
+    setJoystickButtonWhenHeld(xboxController, 2, new IntakeIn(intakeSubsystem));
   }
   /* Xbox Controller Button Binding:
     Buttons:
@@ -55,6 +58,23 @@ public class RobotContainer {
   private void setJoystickButtonWhenPressed(Joystick joystick, int button, CommandBase command) {
     new JoystickButton(joystick, button).whenPressed(command);
   }
+
+ /**
+   * WhileHeld constantly starts the command and repeatedly schedules while the
+   * button is held. Cancels when button is released.
+   */
+  private void setJoystickButtonWhileHeld(Joystick joystick, int button, CommandBase command) {
+    new JoystickButton(joystick, button).whileHeld(command);
+  }
+
+  /**
+   * WhenHeld starts the command once when the button is first pressed. Command
+   * runs until button is released or command interrupted.
+   */
+  private void setJoystickButtonWhenHeld(Joystick joystick, int button, CommandBase command) {
+    new JoystickButton(joystick, button).whenHeld(command);
+  }
+
 
   private void setJoystickButtonToggleWhenPressed(Joystick joystick, int button, CommandBase command) {
     new JoystickButton(joystick, button).toggleWhenPressed(command);
