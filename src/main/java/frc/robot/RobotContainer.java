@@ -2,9 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Constants.JoystickConstants;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.Climber.*;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -14,18 +12,11 @@ public class RobotContainer {
   public static Joystick xboxController;
 
   private ClimberFrontSubsystem climberFrontSubsystem =  new ClimberFrontSubsystem();
-  private ClimberRearSubsystem climberRearSubsystem = new ClimberRearSubsystem();
-
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-
-  //public final ExtendRearClimberSolenoid climberLockCommand = new ExtendRearClimberSolenoid(climberRearSubsystem);
 
   public RobotContainer() {
     xboxController = new Joystick(JoystickConstants.XBOX_CONTROLLER);
 
     climberFrontSubsystem.setDefaultCommand(new StopFrontClimber(climberFrontSubsystem));
-    climberRearSubsystem.setDefaultCommand(new StopRearClimber(climberRearSubsystem));
 
     configureButtonBindings();
   }
@@ -44,14 +35,11 @@ public class RobotContainer {
       2 - LeftTrig    5 - RightY
   */
   private void configureButtonBindings() {
-    setJoystickButtonWhenHeld(xboxController, 3, new ExtendFrontClimber(0.75, climberFrontSubsystem));
-    setJoystickButtonWhenHeld(xboxController, 4, new RetractFrontClimber(0.4, climberFrontSubsystem));
-    setJoystickButtonWhenHeld(xboxController, 5, new RetractRearClimber(0.5, climberRearSubsystem));
-    setJoystickButtonWhenHeld(xboxController, 6, new ExtendRearClimber(0.5, climberRearSubsystem));
-    setJoystickButtonWhenPressed(xboxController, 9, new ExtendRearClimberSolenoid(climberRearSubsystem));
+    setJoystickButtonWhenHeld(xboxController, 3, new ExtendFrontClimber(0.5, climberFrontSubsystem));
+    setJoystickButtonWhenHeld(xboxController, 4, new RetractFrontClimber(0.5, climberFrontSubsystem));
   }
 
-  public Command getAutonomousCommand() { return m_autoCommand; }
+  public Command getAutonomousCommand() { return null; }
 
   /** WhenPressed runs the command once at the moment the button is pressed. */
   private void setJoystickButtonWhenPressed(Joystick joystick, int button, CommandBase command) {

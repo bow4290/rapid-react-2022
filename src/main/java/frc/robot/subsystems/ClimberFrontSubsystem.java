@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
 
 public class ClimberFrontSubsystem extends SubsystemBase {
-  /*private CANSparkMax frontClimberMotorChannel = new CANSparkMax(ClimberConstants.frontClimberMotorChannel, MotorType.kBrushless);
+  private CANSparkMax frontClimberMotorChannel = new CANSparkMax(ClimberConstants.frontClimberMotorChannel, MotorType.kBrushless);
   
   public ClimberFrontSubsystem() { frontClimberMotorChannel.setInverted(false); }
 
@@ -19,5 +19,5 @@ public class ClimberFrontSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-  }*/
+  }
 }

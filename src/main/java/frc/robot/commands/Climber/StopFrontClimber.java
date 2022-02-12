@@ -11,7 +11,7 @@ public class StopFrontClimber extends CommandBase {
     this.climberFrontSubsystem = climberFrontSubsystem;
     addRequirements(climberFrontSubsystem);
   }
-/*
+
   @Override
   public void initialize() {}
 
@@ -24,5 +24,5 @@ public class StopFrontClimber extends CommandBase {
   @Override
   public boolean isFinished() {
     return false;
-  }*/
+  }
 }
