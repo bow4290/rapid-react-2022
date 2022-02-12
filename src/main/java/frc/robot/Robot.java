@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.Constants.*;
 
 public class Robot extends TimedRobot {
   Joystick xboxController = new Joystick(0);
@@ -27,8 +26,6 @@ public class Robot extends TimedRobot {
 
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
-
-  private boolean toggle = false;
 
   @Override
   public void robotInit() {
