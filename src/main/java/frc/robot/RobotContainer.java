@@ -12,32 +12,19 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
-  public static Joystick joystickLeft;
-  public static Joystick joystickRight;
+  public static Joystick joystickLeft = new Joystick(JoystickConstants.LEFT_JOYSTICK);
+  public static Joystick joystickRight = new Joystick(JoystickConstants.RIGHT_JOYSTICK);
 
-  public DrivetrainSubsystem drivetrainSubsystem;
-
-  public RevColorSensor redBallColorSensor;
-  public RevColorSensor blueBallColorSensor;
-
-  public BallIdentification ball;
-
+  public DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
   private IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 
+  public RevColorSensor redBallColorSensor = new RevColorSensor(80, 180, 50, 80, 15, 40, 0, 2048);
+  public RevColorSensor blueBallColorSensor = new RevColorSensor(10, 70, 50, 100, 40, 100, 0, 2048);
+
+  public BallIdentification ball = new BallIdentification(redBallColorSensor, blueBallColorSensor);
+
+
   public RobotContainer() {
-
-    redBallColorSensor = new RevColorSensor(80, 180, 50, 80, 15, 40, 0, 2048);
-    blueBallColorSensor = new RevColorSensor(10, 70, 50, 100, 40, 100, 0, 2048);
-
-    ball = new BallIdentification(redBallColorSensor, blueBallColorSensor);
-
-    intakeSubsystem.setDefaultCommand(new IntakeStop(intakeSubsystem));
-
-    joystickLeft = new Joystick(JoystickConstants.LEFT_JOYSTICK);
-    joystickRight = new Joystick(JoystickConstants.RIGHT_JOYSTICK);
-
-    drivetrainSubsystem = new DrivetrainSubsystem();
-
     drivetrainSubsystem.setDefaultCommand(new Drive(() -> -joystickLeft.getY(), () -> -joystickRight.getY(), drivetrainSubsystem));
     // .perpetually() 'duplicates' the given command but makes .isFinished() always return false
     intakeSubsystem.setDefaultCommand(new IntakeStop(intakeSubsystem).perpetually());
