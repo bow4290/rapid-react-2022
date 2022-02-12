@@ -8,20 +8,28 @@ import frc.robot.Constants.IndexerConstants;
 
 public class IndexerSubsystem extends SubsystemBase {
 
-  private WPI_VictorSPX leftIndexerMotor;
-  private WPI_VictorSPX rightIndexerMotor;
+  private WPI_VictorSPX upperIndexMotor;
+  private WPI_VictorSPX lowerIndexMotor;
 
-  public IndexerSubsystem() {
-    leftIndexerMotor = new WPI_VictorSPX(IndexerConstants.leftIndexerMotorChannel);
-    rightIndexerMotor = new WPI_VictorSPX(IndexerConstants.rightIndexerMotorChannel);
-    leftIndexerMotor.setInverted(true);
-
+  public IndexerSubsystem(){
+    upperIndexMotor = new WPI_VictorSPX(IndexerConstants.upperIndexMotorChannel);
+    lowerIndexMotor = new WPI_VictorSPX(IndexerConstants.lowerIndexMotorChannel);
   }
 
-  public void indexBall(double indexLeftSpeed, double indexRightSpeed){
-    leftIndexerMotor.set(ControlMode.PercentOutput, indexLeftSpeed);
-    rightIndexerMotor.set(ControlMode.PercentOutput, indexRightSpeed);
+  public void turnBothIndexMotors(double upperIndexSpeed, double lowerIndexSpeed){
+    upperIndexMotor.set(ControlMode.PercentOutput, upperIndexSpeed);
+    lowerIndexMotor.set(ControlMode.PercentOutput, lowerIndexSpeed);
   }
+
+  public void turnUpperIndexMotor(double upperIndexSpeed){
+    upperIndexMotor.set(ControlMode.PercentOutput, upperIndexSpeed);
+  }
+  
+  //FIXME: are the methods above and below redundant?
+  public void turnLowerIndexMotor(double lowerIndexSpeed){
+    lowerIndexMotor.set(ControlMode.PercentOutput, lowerIndexSpeed);
+  }
+
   @Override
   public void periodic() {
   }

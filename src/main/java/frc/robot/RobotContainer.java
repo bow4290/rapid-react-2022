@@ -4,10 +4,10 @@ import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.Intake.*;
+import frc.robot.commands.Indexer.*;
 import frc.robot.sensors.BallIdentification;
 import frc.robot.sensors.RevColorSensor;
 import frc.robot.commands.Drivetrain.*;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -21,10 +21,13 @@ public class RobotContainer {
   public RevColorSensor redBallColorSensor;
   public RevColorSensor blueBallColorSensor;
 
-  public BallIdentification ball;
+  public BallIdentification ballUpper;
+  public BallIdentification ballLower;
+
 
   private DrivetrainSubsystem drivetrainSubsystem;
   private IntakeSubsystem intakeSubsystem;
+  private IndexerSubsystem indexerSubsystem;
 
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
@@ -37,13 +40,15 @@ public class RobotContainer {
     redBallColorSensor = new RevColorSensor(80, 180, 50, 80, 15, 40, 0, 2048);
     blueBallColorSensor = new RevColorSensor(10, 70, 50, 100, 40, 100, 0, 2048);
     
-    ball = new BallIdentification(redBallColorSensor, blueBallColorSensor);
+    ballUpper = new BallIdentification(redBallColorSensor, blueBallColorSensor);
+    ballLower = new BallIdentification(redBallColorSensor, blueBallColorSensor);
 
     drivetrainSubsystem = new DrivetrainSubsystem();
+    indexerSubsystem = new IndexerSubsystem();
 
     drivetrainSubsystem.setDefaultCommand(new Drive(getLeftY(), getRightY(), drivetrainSubsystem));
     intakeSubsystem.setDefaultCommand(new IntakeStop(intakeSubsystem));
-
+    indexerSubsystem.setDefaultCommand(new DefaultIndexerCommand(indexerSubsystem, ballUpper, ballLower, () -> new JoystickButton(xboxController, 2).get()));
     configureButtonBindings();
   }
 

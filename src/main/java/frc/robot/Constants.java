@@ -14,8 +14,10 @@ public final class Constants {
   }
 
   public static final class IndexerConstants {
-    public static int leftIndexerMotorChannel = 0;
-    public static int rightIndexerMotorChannel = 0;
+    public static int upperIndexMotorChannel = 0;
+    public static int lowerIndexMotorChannel = 0;
+    
+    public static double indexerSpeed = .3;
   }
 
   public static final class JoystickConstants {
