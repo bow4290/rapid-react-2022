@@ -61,9 +61,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    if(DriverStation.getMatchTime() < 3){
-      m_robotContainer.climberLockCommand.schedule();
-    }
+    //if(DriverStation.getMatchTime() < 3){
+    //  m_robotContainer.climberLockCommand.schedule();
+    //}
   }
 
   @Override

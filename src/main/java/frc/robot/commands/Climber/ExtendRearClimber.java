@@ -2,7 +2,7 @@
 package frc.robot.commands.Climber;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.ClimberConstants;
 import frc.robot.subsystems.ClimberRearSubsystem;
 
 public class ExtendRearClimber extends CommandBase {
@@ -26,6 +26,7 @@ public class ExtendRearClimber extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return climberRearSubsystem.getRearClimberCalculatedPosition()>=DriveConstants.rearClimberExtendDistance;
+    //return climberRearSubsystem.getRearClimberCalculatedPosition()>=ClimberConstants.rearClimberExtendDistance;
+    return false;
   }
 }

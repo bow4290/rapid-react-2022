@@ -13,7 +13,7 @@ public class ExtendFrontClimber extends CommandBase {
     this.climberSpeed = climberSpeed;
     addRequirements(climberFrontSubsystem);
   }
-
+/*
   @Override
   public void initialize() {}
 
@@ -26,5 +26,5 @@ public class ExtendFrontClimber extends CommandBase {
   @Override
   public boolean isFinished() {
     return false;
-  }
+  }*/
 }

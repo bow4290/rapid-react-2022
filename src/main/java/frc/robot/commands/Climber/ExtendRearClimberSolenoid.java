@@ -13,7 +13,7 @@ public class ExtendRearClimberSolenoid extends CommandBase {
 
   @Override
   public void initialize() {
-    climberRearSubsystem.extendRearClimberSolenoid();
+    //climberRearSubsystem.extendRearClimberSolenoid();
   }
 
   @Override
