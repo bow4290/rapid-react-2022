@@ -14,18 +14,25 @@ public class IndexerSubsystem extends SubsystemBase {
   public IndexerSubsystem(){
     upperIndexMotor = new WPI_VictorSPX(IndexerConstants.upperIndexMotorChannel);
     lowerIndexMotor = new WPI_VictorSPX(IndexerConstants.lowerIndexMotorChannel);
+
+    upperIndexMotor.setInverted(false);
+    lowerIndexMotor.setInverted(true);
+
+    upperIndexMotor.configVoltageCompSaturation(11);
+    lowerIndexMotor.configVoltageCompSaturation(11);
+    upperIndexMotor.enableVoltageCompensation(true);
+    lowerIndexMotor.enableVoltageCompensation(true);
   }
 
-  public void turnBothIndexMotors(double upperIndexSpeed, double lowerIndexSpeed){
-    upperIndexMotor.set(ControlMode.PercentOutput, upperIndexSpeed);
-    lowerIndexMotor.set(ControlMode.PercentOutput, lowerIndexSpeed);
+  public void turnBothIndexMotors(double indexSpeed){
+    turnUpperIndexMotor(indexSpeed);
+    turnLowerIndexMotor(indexSpeed);
   }
 
   public void turnUpperIndexMotor(double upperIndexSpeed){
     upperIndexMotor.set(ControlMode.PercentOutput, upperIndexSpeed);
   }
-  
-  //FIXME: are the methods above and below redundant?
+
   public void turnLowerIndexMotor(double lowerIndexSpeed){
     lowerIndexMotor.set(ControlMode.PercentOutput, lowerIndexSpeed);
   }
