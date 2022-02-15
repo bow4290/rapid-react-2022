@@ -1,15 +1,14 @@
 package frc.robot.sensors;
 
 import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.Constants.LimelightConstants;
 
 public class Limelight {
-  private static NetworkTable table = null;
-  public static ShuffleboardTab tab = null;
+  private static NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+  public static ShuffleboardTab tab = Shuffleboard.getTab("Limelight");
   private static double avgYError = 0.0;
 
   public static enum LedMode { ledPipeline, ledOff, ledBlink, ledOn }
@@ -17,14 +16,9 @@ public class Limelight {
   public static enum CamMode { vision, driving }
 
   public Limelight() { 
-    table = NetworkTableInstance.getDefault().getTable("limelight"); 
-    tab = Shuffleboard.getTab("Limelight");
-    tab.addBoolean("isTargetSeen", this :: isTarget);
+    tab.addBoolean("Has a target?", this :: isTarget);
     tab.addNumber("X Error", this :: getXError);
     tab.addNumber("Y Error", this :: getYError);
-    tab.addNumber("Area", this :: getArea);
-    tab.addNumber("Skew", this :: getSkew);
-    tab.addNumber("Latency", this :: getLatency);
     tab.addNumber("Distance", this :: getDistance);
   }
 
