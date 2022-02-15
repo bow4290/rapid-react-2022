@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.*;
 
 public class Robot extends TimedRobot {
-  Joystick xboxController = new Joystick(0);
+  Joystick xboxController = new Joystick(2);
   JoystickButton xboxAButton = new JoystickButton(xboxController, 1);
   JoystickButton xboxBButton = new JoystickButton(xboxController, 2);
   JoystickButton xboxXButton = new JoystickButton(xboxController, 3);
