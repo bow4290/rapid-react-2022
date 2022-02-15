@@ -9,6 +9,7 @@ import frc.robot.Constants.LimelightConstants;
 
 public class Limelight {
   private static NetworkTable table = null;
+  public static ShuffleboardTab tab = null;
   private static double avgYError = 0.0;
 
   public static enum LedMode { ledPipeline, ledOff, ledBlink, ledOn }
@@ -17,7 +18,7 @@ public class Limelight {
 
   public Limelight() { 
     table = NetworkTableInstance.getDefault().getTable("limelight"); 
-    ShuffleboardTab tab = Shuffleboard.getTab("limelight");
+    tab = Shuffleboard.getTab("Limelight");
     tab.addBoolean("isTargetSeen", this :: isTarget);
     tab.addNumber("X Error", this :: getXError);
     tab.addNumber("Y Error", this :: getYError);

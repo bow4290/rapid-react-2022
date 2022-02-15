@@ -6,6 +6,7 @@ import frc.robot.Constants.Flags;
 import frc.robot.commands.Drivetrain.*;
 import frc.robot.commands.Intake.*;
 import frc.robot.sensors.BallIdentification;
+import frc.robot.sensors.Limelight;
 import frc.robot.sensors.RevColorSensor;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -20,11 +21,11 @@ public class RobotContainer {
   public DrivetrainSubsystem drivetrainSubsystem;
   private IntakeSubsystem intakeSubsystem;
 
+  public Limelight limelight = new Limelight();
   public RevColorSensor redBallColorSensor;
   public RevColorSensor blueBallColorSensor;
 
   public BallIdentification ball;
-
 
   public RobotContainer() {
     if (Flags.drivetrain) {
