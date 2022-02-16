@@ -6,13 +6,15 @@
 package frc.robot.sensors;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 import com.revrobotics.ColorSensorV3;
 
-public class RevColorSensor {
+public class RevColorSensor implements Sendable {
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
   private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
 
@@ -25,19 +27,8 @@ public class RevColorSensor {
   private int proxLowThresh;
   private int proxHighThresh;
 
+  private static ShuffleboardTab tab = Shuffleboard.getTab("Color Sensors");
   private static int idGen = 0;
-
-  private ShuffleboardTab tab;
-
-  private NetworkTableEntry redLowThreshShuffle;
-  private NetworkTableEntry redHighThreshShuffle;
-  private NetworkTableEntry greenLowThreshShuffle;
-  private NetworkTableEntry greenHighThreshShuffle;
-  private NetworkTableEntry blueLowThreshShuffle;
-  private NetworkTableEntry blueHighThreshShuffle;
-  private NetworkTableEntry proxLowThreshShuffle;
-  private NetworkTableEntry proxHighThreshShuffle;
-
 
   public RevColorSensor(int redLowThresh, int redHighThresh, int greenLowThresh,
                         int greenHighThresh, int blueLowThresh, int blueHighThresh,
@@ -48,36 +39,19 @@ public class RevColorSensor {
   public RevColorSensor(int redLowThresh, int redHighThresh, int greenLowThresh,
                         int greenHighThresh, int blueLowThresh, int blueHighThresh,
                         int proxLowThresh, int proxHighThresh, String name) {
-    this.redLowThresh = redLowThresh;
-    this.redHighThresh = redHighThresh;
-    this.greenLowThresh = greenLowThresh;
+    this.redLowThresh    = redLowThresh;
+    this.redHighThresh   = redHighThresh;
+    this.greenLowThresh  = greenLowThresh;
     this.greenHighThresh = greenHighThresh;
-    this.blueLowThresh = blueLowThresh;
-    this.blueHighThresh = blueHighThresh;
-    this.proxLowThresh = proxLowThresh;
-    this.proxHighThresh = proxHighThresh;
+    this.blueLowThresh   = blueLowThresh;
+    this.blueHighThresh  = blueHighThresh;
+    this.proxLowThresh   = proxLowThresh;
+    this.proxHighThresh  = proxHighThresh;
 
     // TODO: Should the ids start at 0 or 1?
-    tab = Shuffleboard.getTab("Color Sensor " + name != null ? name : Integer.toString(idGen));
+    tab.add(name != null ? name : ("ID: " + idGen), this);
     idGen++;
-
-    redLowThreshShuffle   = tab.add("Red Threshold Low",         redLowThresh).getEntry();
-    redLowThreshShuffle   = tab.add("Red Threshold High",        redLowThresh).getEntry();
-    greenLowThreshShuffle = tab.add("Green Threshold Low",       greenLowThresh).getEntry();
-    greenLowThreshShuffle = tab.add("Green Threshold High",      greenLowThresh).getEntry();
-    blueLowThreshShuffle  = tab.add("Blue Threshold Low",        blueLowThresh).getEntry();
-    blueLowThreshShuffle  = tab.add("Blue Threshold High",       blueLowThresh).getEntry();
-    proxLowThreshShuffle  = tab.add("Proximity Threshold Low",   proxLowThresh).getEntry();
-    proxLowThreshShuffle  = tab.add("Proximity Threshold High",  proxLowThresh).getEntry();
-
-    tab.addNumber  ("Red",       this::getRed);
-    tab.addNumber  ("Green",     this::getGreen);
-    tab.addNumber  ("Blue",      this::getBlue);
-    tab.addNumber  ("Proximity", this::getProximity);
-    tab.addBoolean ("Target?",   this::isTarget);
   }
-
-  // TODO: Does polling shuffleboard on every method call have performance implications?
 
   public boolean isTarget() {
     return (isRedThresholdMet() && isGreenThresholdMet() && isBlueThresholdMet() &&
@@ -85,26 +59,18 @@ public class RevColorSensor {
   }
 
   public boolean isRedThresholdMet() {
-    redLowThresh = redLowThreshShuffle.getNumber(redLowThresh).intValue();
-    redHighThresh = redHighThreshShuffle.getNumber(redHighThresh).intValue();
     return (getRed() > redLowThresh && getRed() < redHighThresh);
   }
 
   public boolean isGreenThresholdMet() {
-    greenLowThresh = greenLowThreshShuffle.getNumber(greenLowThresh).intValue();
-    greenHighThresh = greenHighThreshShuffle.getNumber(greenHighThresh).intValue();
     return (getGreen() > greenLowThresh && getGreen() < greenHighThresh);
   }
 
   public boolean isBlueThresholdMet() {
-    blueLowThresh = blueLowThreshShuffle.getNumber(blueLowThresh).intValue();
-    blueHighThresh = blueHighThreshShuffle.getNumber(blueHighThresh).intValue();
     return (getBlue() > blueLowThresh && getBlue() < blueHighThresh);
   }
 
   public boolean isProximityMet() {
-    proxLowThresh = proxLowThreshShuffle.getNumber(proxLowThresh).intValue();
-    proxHighThresh = proxHighThreshShuffle.getNumber(proxHighThresh).intValue();
     return (getProximity() > proxLowThresh && getProximity() < proxHighThresh);
   }
 
@@ -117,4 +83,21 @@ public class RevColorSensor {
   public double getIR() { return colorSensor.getIR(); }
 
   public int getProximity() { return colorSensor.getProximity(); }
+
+  @Override
+  public void initSendable(SendableBuilder builder) {
+    builder.addDoubleProperty("Red Threshold Low",        () -> this.redLowThresh,    (val) -> this.redLowThresh    = (int)val);
+    builder.addDoubleProperty("Red Threshold High",       () -> this.redHighThresh,   (val) -> this.redHighThresh   = (int)val);
+    builder.addDoubleProperty("Blue Threshold Low",       () -> this.blueLowThresh,   (val) -> this.blueLowThresh   = (int)val);
+    builder.addDoubleProperty("Blue Threshold High",      () -> this.blueHighThresh,  (val) -> this.blueHighThresh  = (int)val);
+    builder.addDoubleProperty("Green Threshold Low",      () -> this.greenLowThresh,  (val) -> this.greenLowThresh  = (int)val);
+    builder.addDoubleProperty("Green Threshold High",     () -> this.greenHighThresh, (val) -> this.greenHighThresh = (int)val);
+    builder.addDoubleProperty("Proximity Threshold Low",  () -> this.proxLowThresh,   (val) -> this.proxLowThresh   = (int)val);
+    builder.addDoubleProperty("Proximity Threshold High", () -> this.proxHighThresh,  (val) -> this.proxHighThresh  = (int)val);
+
+    builder.addDoubleProperty("Red",       this::getRed,       null);
+    builder.addDoubleProperty("Blue",      this::getBlue,      null);
+    builder.addDoubleProperty("Green",     this::getGreen,     null);
+    builder.addDoubleProperty("Proximity", this::getProximity, null);
+  }
 }
