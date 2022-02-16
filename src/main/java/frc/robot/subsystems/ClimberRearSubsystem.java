@@ -6,6 +6,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
 public class ClimberRearSubsystem extends SubsystemBase {
@@ -39,5 +40,6 @@ public class ClimberRearSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    SmartDashboard.putString("Rear Climber Status", climberStatus == ClimberStatus.RETRACTED ? "RETRACTED" : "EXTENDED");
   }
 }
