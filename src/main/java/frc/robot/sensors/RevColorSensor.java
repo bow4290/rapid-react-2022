@@ -26,7 +26,6 @@ public class RevColorSensor {
   private int proxHighThresh;
 
   private static int idGen = 0;
-  private int id;
 
   private ShuffleboardTab tab;
 
@@ -39,9 +38,16 @@ public class RevColorSensor {
   private NetworkTableEntry proxLowThreshShuffle;
   private NetworkTableEntry proxHighThreshShuffle;
 
+
   public RevColorSensor(int redLowThresh, int redHighThresh, int greenLowThresh,
                         int greenHighThresh, int blueLowThresh, int blueHighThresh,
                         int proxLowThresh, int proxHighThresh) {
+    this(redLowThresh, redHighThresh, greenLowThresh, greenHighThresh, blueLowThresh, blueHighThresh, proxLowThresh, proxHighThresh, null);
+  }
+
+  public RevColorSensor(int redLowThresh, int redHighThresh, int greenLowThresh,
+                        int greenHighThresh, int blueLowThresh, int blueHighThresh,
+                        int proxLowThresh, int proxHighThresh, String name) {
     this.redLowThresh = redLowThresh;
     this.redHighThresh = redHighThresh;
     this.greenLowThresh = greenLowThresh;
@@ -51,8 +57,9 @@ public class RevColorSensor {
     this.proxLowThresh = proxLowThresh;
     this.proxHighThresh = proxHighThresh;
 
-    id = ++idGen;
-    tab = Shuffleboard.getTab("Color Sensor " + id);
+    // TODO: Should the ids start at 0 or 1?
+    tab = Shuffleboard.getTab("Color Sensor " + name != null ? name : Integer.toString(idGen));
+    idGen++;
 
     redLowThreshShuffle   = tab.add("Red Threshold Low",         redLowThresh).getEntry();
     redLowThreshShuffle   = tab.add("Red Threshold High",        redLowThresh).getEntry();
