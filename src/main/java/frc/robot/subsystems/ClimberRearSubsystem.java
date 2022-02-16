@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 public class ClimberRearSubsystem extends SubsystemBase {
   private CANSparkMax rearClimberMotorChannel = new CANSparkMax(ClimberConstants.rearClimberMotorChannel, MotorType.kBrushless);
   private final DoubleSolenoid rearClimberSolenoid;
-  public enum ClimberStatus { EXTENDED, RETRACTED }
-  public static ClimberStatus climberStatus = ClimberStatus.RETRACTED;
+  public enum RearClimberStatus { EXTENDED, RETRACTED }
+  public static RearClimberStatus rearClimberStatus = RearClimberStatus.RETRACTED;
 
   public ClimberRearSubsystem() { 
     rearClimberMotorChannel.setInverted(false);
@@ -24,22 +24,22 @@ public class ClimberRearSubsystem extends SubsystemBase {
 
   public void extendRearClimberSolenoid() {
     rearClimberSolenoid.set(DoubleSolenoid.Value.kForward);
-    climberStatus = ClimberStatus.EXTENDED;
+    rearClimberStatus = RearClimberStatus.EXTENDED;
   }
 
   public void retractRearClimber(double climberSpeed) { rearClimberMotorChannel.set(-climberSpeed); }
 
   public void retractRearClimberSolenoid() {
     rearClimberSolenoid.set(DoubleSolenoid.Value.kReverse);
-    climberStatus = ClimberStatus.RETRACTED;
+    rearClimberStatus = RearClimberStatus.RETRACTED;
   }
 
   public void stopRearClimber() { rearClimberMotorChannel.set(0); }
 
-  public static ClimberStatus getRearClimberPosition() { return climberStatus; }
+  public static RearClimberStatus getRearClimberPosition() { return rearClimberStatus; }
 
   @Override
   public void periodic() {
-    SmartDashboard.putString("Rear Climber Status", climberStatus == ClimberStatus.RETRACTED ? "RETRACTED" : "EXTENDED");
+    SmartDashboard.putString("Rear Climber Status", rearClimberStatus == RearClimberStatus.RETRACTED ? "RETRACTED" : "EXTENDED");
   }
 }
