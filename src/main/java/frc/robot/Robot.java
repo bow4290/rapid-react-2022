@@ -19,9 +19,6 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
-    SmartDashboard.putBoolean("Is Ball Red?", m_robotContainer.redBallColorSensor.isTarget());
-    SmartDashboard.putBoolean("Is Ball Blue?", m_robotContainer.blueBallColorSensor.isTarget());
-    SmartDashboard.putBoolean("Is Ball Team Color?", m_robotContainer.ball.isBallTeamColor());
   }
 
   @Override

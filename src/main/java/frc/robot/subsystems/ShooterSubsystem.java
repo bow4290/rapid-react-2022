@@ -6,12 +6,24 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
 
 public class ShooterSubsystem extends SubsystemBase {
   private WPI_TalonFX shooterMotor = new WPI_TalonFX(ShooterConstants.shooterMotorChannel);
+  public static ShuffleboardTab tab = Shuffleboard.getTab("Shooter");
+  
+  private NetworkTableEntry kFEntry = tab.add("Shooter Motor kF", getkF()) .getEntry();
+
+  private NetworkTableEntry kPEntry = tab.add("Shooter Motor kP", getkP()) .getEntry();
+
+  private NetworkTableEntry kIEntry = tab.add("Shooter Motor kI", getkI()) .getEntry(); 
+
+  private NetworkTableEntry kDEntry = tab.add("Shooter Motor kD", getkD()) .getEntry(); 
 
   public ShooterSubsystem() {
     shooterMotor.configFactoryDefault();
@@ -25,6 +37,7 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterMotor.config_kP(0, ShooterConstants.kP);
     shooterMotor.config_kI(0, ShooterConstants.kI);
     shooterMotor.config_kD(0, ShooterConstants.kD);
+    
   }
 
   public void shoot(double shooterSpeedRPM) {
@@ -37,8 +50,22 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public double getShooterRPM() { return getShooterVelocityRaw()*600/2048; }
 
+  public double getkF() { return ShooterConstants.kF; }
+  public double getkP() { return ShooterConstants.kP; }
+  public double getkI() { return ShooterConstants.kI; }
+  public double getkD() { return ShooterConstants.kD; }
+
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Shooter Motors RPM", getShooterRPM());
+    //SmartDashboard.putNumber("Shooter Motors RPM", getShooterRPM());
+    //SmartDashboard.putNumber("Shooter Motors kF", ShooterConstants.kF);
+    //SmartDashboard.putNumber("Shooter Motors kP", ShooterConstants.kP);
+    //SmartDashboard.putNumber("Shooter Motors kI", ShooterConstants.kI);
+    //SmartDashboard.putNumber("Shooter Motors kD", ShooterConstants.kD);
+
+    kFEntry.setDouble(ShooterConstants.kF);
+    kPEntry.setDouble(ShooterConstants.kP);
+    kIEntry.setDouble(ShooterConstants.kI);
+    kDEntry.setDouble(ShooterConstants.kD);
   }
 }
