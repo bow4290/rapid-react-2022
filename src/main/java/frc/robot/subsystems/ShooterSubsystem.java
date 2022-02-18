@@ -25,6 +25,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
   private NetworkTableEntry kDEntry = tab.add("Shooter Motor kD", getkD()) .getEntry(); 
 
+  private NetworkTableEntry shooterRPMEntry = tab.add("Shooter Motor RPM", getShooterRPM()) .getEntry(); 
+
   public ShooterSubsystem() {
     shooterMotor.configFactoryDefault();
     shooterMotor.setInverted(TalonFXInvertType.Clockwise);
@@ -67,5 +69,6 @@ public class ShooterSubsystem extends SubsystemBase {
     kPEntry.setDouble(ShooterConstants.kP);
     kIEntry.setDouble(ShooterConstants.kI);
     kDEntry.setDouble(ShooterConstants.kD);
+    shooterRPMEntry.setDouble(getShooterRPM());
   }
 }

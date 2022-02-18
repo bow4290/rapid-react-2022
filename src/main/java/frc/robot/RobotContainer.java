@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.commands.Shooter.ShootHigh;
 import frc.robot.commands.Shooter.ShootLow;
+import frc.robot.commands.Shooter.ShootManual;
 import frc.robot.commands.Shooter.ShootStop;
 import frc.robot.sensors.BallIdentification;
 import frc.robot.sensors.Limelight;
@@ -45,8 +46,9 @@ public class RobotContainer {
       2 - LeftTrig    5 - RightY
   */
   private void configureButtonBindings() {
-    setJoystickButtonWhileHeld(xboxController, 5, new ShootLow(ball, limelight, shooterSubsystem));
-    setJoystickButtonWhileHeld(xboxController, 6, new ShootHigh(ball, limelight, shooterSubsystem));
+    // setJoystickButtonWhileHeld(xboxController, 5, new ShootLow(ball, limelight, shooterSubsystem));
+    // setJoystickButtonWhileHeld(xboxController, 6, new ShootHigh(ball, limelight, shooterSubsystem));
+    setJoystickButtonWhileHeld(xboxController, 6, new ShootManual(shooterSubsystem));
   }
 
   public Command getAutonomousCommand() { return null; }
