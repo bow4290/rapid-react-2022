@@ -17,7 +17,9 @@ public final class Constants {
     public static int upperIndexMotorChannel = 0;
     public static int lowerIndexMotorChannel = 0;
     
-    public static double indexerSpeed = .3;
+    public static double bothShootingIndexSpeed = 0.5;
+    public static double bothIntakingIndexSpeed = 0.5;
+    public static double lowerIntakingIndexSpeed = 0.5;
   }
 
   public static final class JoystickConstants {
