@@ -3,15 +3,26 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IndexerConstants;
+import frc.robot.sensors.BallIdentification;
+import frc.robot.sensors.RevColorSensor;
 
 public class IndexerSubsystem extends SubsystemBase {
+  public static ShuffleboardTab tab = null;
 
   private WPI_VictorSPX upperIndexMotor;
   private WPI_VictorSPX lowerIndexMotor;
 
-  public IndexerSubsystem(){
+  public IndexerSubsystem(BallIdentification upperColorSensor, BallIdentification lowerColorSensor){
+    tab = Shuffleboard.getTab("Indexer");
+    tab.add("Upper motor speed is:", upperIndexMotor);
+    tab.add("Lower motor speed is:", lowerIndexMotor);
+    tab.add("Lower color sensor", lowerColorSensor);
+    tab.add("Upper color sensor", upperColorSensor);
+    
     upperIndexMotor = new WPI_VictorSPX(IndexerConstants.upperIndexMotorChannel);
     lowerIndexMotor = new WPI_VictorSPX(IndexerConstants.lowerIndexMotorChannel);
 

@@ -1,8 +1,10 @@
 package frc.robot.sensors;
 
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
 
-public class BallIdentification {
+public class BallIdentification implements Sendable {
   private RevColorSensor redBallColorSensor;
   private RevColorSensor blueBallColorSensor;
   private Color ballColor = getAllianceColor();
@@ -40,5 +42,12 @@ public class BallIdentification {
       default:
         return Color.NEITHER;
     }
+  }
+
+  @Override
+  public void initSendable(SendableBuilder builder) {
+    // TODO Auto-generated method stub
+    builder.addBooleanProperty("Is there a ball?", this :: isBallPresent, null);
+    builder.addBooleanProperty("Is the ball the correct color?", this :: isBallTeamColor, null);
   }
 }

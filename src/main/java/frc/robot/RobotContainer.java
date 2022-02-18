@@ -41,7 +41,7 @@ public class RobotContainer {
       intakeSubsystem.setDefaultCommand(new IntakeStop(intakeSubsystem).perpetually());
     }
 
-    indexerSubsystem = new IndexerSubsystem();
+    indexerSubsystem = new IndexerSubsystem(ballUpper, ballLower);
     indexerSubsystem.setDefaultCommand(new DefaultIndexerCommand(indexerSubsystem, ballUpper, ballLower, () -> new JoystickButton(xboxController, 2).get()));
 
     if (Flags.colors) {
