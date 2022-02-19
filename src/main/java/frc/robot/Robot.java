@@ -31,11 +31,11 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     m_robotContainer = new RobotContainer();
     victorMotor1.configFactoryDefault();
-    victorMotor1.setInverted(false);    
+    victorMotor1.setInverted(true);    
     victorMotor1.configVoltageCompSaturation(11);
     victorMotor1.enableVoltageCompensation(true);
     victorMotor2.configFactoryDefault();
-    victorMotor2.setInverted(false);
+    victorMotor2.setInverted(true);
     victorMotor2.configVoltageCompSaturation(11);    
     victorMotor2.enableVoltageCompensation(true);
   }
@@ -74,13 +74,23 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    if (xboxAButton.get()) { victorMotor1.set(ControlMode.PercentOutput, 1.0); }
-    else if (xboxBButton.get()) { victorMotor1.set(ControlMode.PercentOutput, 0.8); }
-    else victorMotor1.set(ControlMode.PercentOutput, 0);
-
-    if (xboxXButton.get()) { victorMotor2.set(ControlMode.PercentOutput, 0.85); }
-    else if (xboxYButton.get()) { victorMotor2.set(ControlMode.PercentOutput, 0.75); }
-    else victorMotor2.set(ControlMode.PercentOutput, 0);
+    if (xboxYButton.get()) {
+      victorMotor1.set(ControlMode.PercentOutput, 1.0); 
+      victorMotor2.set(ControlMode.PercentOutput, 1.0);
+    } else if (xboxXButton.get()) {
+      victorMotor1.set(ControlMode.PercentOutput, 0.75); 
+      victorMotor2.set(ControlMode.PercentOutput, 0.75);
+    }else if (xboxBButton.get()) {
+      victorMotor1.set(ControlMode.PercentOutput, 0.25); 
+      victorMotor2.set(ControlMode.PercentOutput, 0.25);
+    } else if (xboxAButton.get()) {
+      victorMotor1.set(ControlMode.PercentOutput, 0.5); 
+      victorMotor2.set(ControlMode.PercentOutput, 0.5);
+    } else {
+      victorMotor1.set(ControlMode.PercentOutput, 0); 
+      victorMotor2.set(ControlMode.PercentOutput, 0);
+    }
+    
   }
 
   @Override
