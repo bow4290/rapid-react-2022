@@ -2,6 +2,7 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -97,11 +98,12 @@ public class Robot extends TimedRobot {
     double X = SmartDashboard.getNumber("Speed X", speedX);
     double Y = SmartDashboard.getNumber("Speed Y", speedY);
 
-    if (A != speedA) { myTalon.config_kF(0, A); speedA = A; }
-    if (B != speedB) { myTalon.config_kP(0, B); speedB = B; }
-    if (X != speedX) { myTalon.config_kI(0, X); speedX = X; }
-    if (Y != speedY) { myTalon.config_kD(0, Y); speedY = Y; }
-    
+    if (A != speedA) speedA = A;
+    if (B != speedB) speedB = B;
+    if (X != speedX) speedX = X;
+    if (Y != speedY) speedY = Y;
+
+    // NOTE: Not actually RPM!
     double motorRPM = 0;
 
     if(xboxAButton.get()) {
@@ -113,6 +115,8 @@ public class Robot extends TimedRobot {
     } else if(xboxYButton.get()) {
       motorRPM = speedY;
     }
+
+    myTalon.set(TalonFXControlMode.PercentOutput, motorRPM);
   }
 
   @Override
