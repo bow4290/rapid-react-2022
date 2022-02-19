@@ -25,10 +25,10 @@ public class Robot extends TimedRobot {
 
   WPI_TalonFX myTalon = new WPI_TalonFX(ShooterConstants.myFalconChannel);
 
-  double kF = 1023.0/20330.0;
-  double kP = 0.01;
-  double kI = 0;
-  double kD = 0;
+  double speedA = 0;
+  double speedB = 0;
+  double speedX = 0;
+  double speedY = 0;
 
   private RobotContainer m_robotContainer;
 
@@ -45,15 +45,15 @@ public class Robot extends TimedRobot {
     myTalon.configPeakOutputReverse(-1);
     myTalon.setInverted(TalonFXInvertType.Clockwise);
 
-    myTalon.config_kF(0, kF);
-    myTalon.config_kP(0, kP);
-    myTalon.config_kI(0, kI);
-    myTalon.config_kD(0, kD);
+    myTalon.config_kF(0, speedA);
+    myTalon.config_kP(0, speedB);
+    myTalon.config_kI(0, speedX);
+    myTalon.config_kD(0, speedY);
 
-    SmartDashboard.putNumber("kF", kF);
-    SmartDashboard.putNumber("kP", kP);
-    SmartDashboard.putNumber("kI", kI);
-    SmartDashboard.putNumber("kD", kD);
+    SmartDashboard.putNumber("Speed A", speedA);
+    SmartDashboard.putNumber("Speed B", speedB);
+    SmartDashboard.putNumber("Speed x", speedX);
+    SmartDashboard.putNumber("Speed Y", speedY);
 
     m_robotContainer = new RobotContainer();
   }
@@ -92,26 +92,26 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    double f = SmartDashboard.getNumber("kF", kF);
-    double p = SmartDashboard.getNumber("kP", kP);
-    double i = SmartDashboard.getNumber("kI", kI);
-    double d = SmartDashboard.getNumber("kD", kD);
+    double A = SmartDashboard.getNumber("Speed A", speedA);
+    double B = SmartDashboard.getNumber("Speed B", speedB);
+    double X = SmartDashboard.getNumber("Speed X", speedX);
+    double Y = SmartDashboard.getNumber("Speed Y", speedY);
 
-    if (f != kF) { myTalon.config_kF(0, f); kF = f; }
-    if (p != kP) { myTalon.config_kP(0, p); kP = p; }
-    if (i != kI) { myTalon.config_kI(0, i); kI = i; }
-    if (d != kD) { myTalon.config_kD(0, d); kD = d; }
+    if (A != speedA) { myTalon.config_kF(0, A); speedA = A; }
+    if (B != speedB) { myTalon.config_kP(0, B); speedB = B; }
+    if (X != speedX) { myTalon.config_kI(0, X); speedX = X; }
+    if (Y != speedY) { myTalon.config_kD(0, Y); speedY = Y; }
     
     double motorRPM = 0;
 
     if(xboxAButton.get()) {
-      motorRPM = 4000.0;
+      motorRPM = speedA;
     } else if(xboxBButton.get()) {
-      motorRPM = 3000.0;
+      motorRPM = speedB;
     } else if(xboxXButton.get()) {
-      motorRPM = 2000.0;
+      motorRPM = speedX;
     } else if(xboxYButton.get()) {
-      motorRPM = 1000.0;
+      motorRPM = speedY;
     }
   }
 
