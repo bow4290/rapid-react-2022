@@ -24,13 +24,13 @@ public class Robot extends TimedRobot {
   JoystickButton xboxXButton = new JoystickButton(xboxController, 3);
   JoystickButton xboxYButton = new JoystickButton(xboxController, 4);
 
-  double RPMSpeed = 0;
+  double RPMSpeedA = 0;
   
   private RobotContainer m_robotContainer;
 
   @Override
   public void robotInit() {
-    SmartDashboard.putNumber("RPM Speed A", RPMSpeed);
+    SmartDashboard.putNumber("RPM Speed A", RPMSpeedA);
 
     m_robotContainer = new RobotContainer();
   }

@@ -48,7 +48,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // setJoystickButtonWhileHeld(xboxController, 5, new ShootLow(ball, limelight, shooterSubsystem));
     // setJoystickButtonWhileHeld(xboxController, 6, new ShootHigh(ball, limelight, shooterSubsystem));
-    setJoystickButtonWhenHeld(xboxController, 1, new ShootManual(shooterSubsystem));
+    setJoystickButtonWhileHeld(xboxController, 1, new ShootManual(shooterSubsystem));
   }
 
   public Command getAutonomousCommand() { return null; }
