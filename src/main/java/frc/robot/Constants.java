@@ -31,10 +31,10 @@ public final class Constants {
 
     public static double discardSpeedRPM = 2500.0;
 
-    public static double kP = 1;
+    public static double kF = 1023.0/20330.0;
+    public static double kP = 0.01;
     public static double kI = 0;
     public static double kD = 0;
-    public static double kF = 0;
   }
 
   public static final class LimelightConstants {

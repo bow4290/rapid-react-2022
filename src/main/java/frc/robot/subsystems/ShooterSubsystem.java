@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
 
 public class ShooterSubsystem extends SubsystemBase {
-  public WPI_TalonFX shooterMotor = new WPI_TalonFX(ShooterConstants.shooterMotorChannel);
+  public static WPI_TalonFX shooterMotor = new WPI_TalonFX(ShooterConstants.shooterMotorChannel);
   public static ShuffleboardTab tab = Shuffleboard.getTab("Shooter");
   
   private NetworkTableEntry kFEntry = tab.add("Shooter Motor kF", getkF()) .getEntry();

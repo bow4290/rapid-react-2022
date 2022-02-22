@@ -1,5 +1,7 @@
 package frc.robot.commands.Shooter;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubsystem;
 
@@ -18,7 +20,7 @@ public class ShootStop extends CommandBase {
 
   @Override
   public void execute() {
-    //shooterSubsystem.shoot(0.0);
+    ShooterSubsystem.shooterMotor.set(ControlMode.Velocity, 0);
   }
   
   @Override
