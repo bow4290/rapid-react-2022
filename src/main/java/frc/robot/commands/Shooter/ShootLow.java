@@ -27,17 +27,17 @@ public class ShootLow extends CommandBase {
     if(limelight.isTarget() && ball.isBallTeamColor()) {
       double distance = limelight.getDistance();
       double calculatedRPM = calculateShooterSpeedRPM(distance);
-      shooterSubsystem.shoot(calculatedRPM);
+      //shooterSubsystem.shoot(calculatedRPM);
     } else if(!ball.isBallTeamColor()) {
-      shooterSubsystem.shoot(ShooterConstants.discardSpeedRPM);
+      //shooterSubsystem.shoot(ShooterConstants.discardSpeedRPM);
     } else {
-      shooterSubsystem.shoot(0);
+      //shooterSubsystem.shoot(0);
     }
   }
 
   @Override
   public void end(boolean interrupted) {
-    shooterSubsystem.shoot(0);
+    //shooterSubsystem.shoot(0);
   }
 
   @Override

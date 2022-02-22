@@ -17,12 +17,12 @@ public class ShootDiscard extends CommandBase {
 
   @Override
   public void execute() {
-    shooterSubsystem.shoot(ShooterConstants.discardSpeedRPM);
+    //shooterSubsystem.shoot(ShooterConstants.discardSpeedRPM);
   }
 
   @Override
   public void end(boolean interrupted) {
-    shooterSubsystem.shoot(0);
+    //shooterSubsystem.shoot(0);
   }
 
   @Override

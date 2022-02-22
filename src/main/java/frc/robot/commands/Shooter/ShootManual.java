@@ -14,7 +14,7 @@ public class ShootManual extends CommandBase {
 
   @Override
   public void execute() {
-    shooterSubsystem.shoot(100);
+    shooterSubsystem.shoot();
   }
 
   @Override

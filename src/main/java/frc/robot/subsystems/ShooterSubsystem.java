@@ -9,23 +9,23 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
 
 public class ShooterSubsystem extends SubsystemBase {
-  private WPI_TalonFX shooterMotor = new WPI_TalonFX(ShooterConstants.shooterMotorChannel);
+  public WPI_TalonFX shooterMotor = new WPI_TalonFX(ShooterConstants.shooterMotorChannel);
   public static ShuffleboardTab tab = Shuffleboard.getTab("Shooter");
   
   private NetworkTableEntry kFEntry = tab.add("Shooter Motor kF", getkF()) .getEntry();
-
   private NetworkTableEntry kPEntry = tab.add("Shooter Motor kP", getkP()) .getEntry();
-
   private NetworkTableEntry kIEntry = tab.add("Shooter Motor kI", getkI()) .getEntry(); 
-
   private NetworkTableEntry kDEntry = tab.add("Shooter Motor kD", getkD()) .getEntry(); 
 
-  private NetworkTableEntry shooterRPMEntry = tab.add("Shooter Motor RPM", getShooterRPM()) .getEntry(); 
+  // private NetworkTableEntry shooterRPMEntry = tab.add("Shooter Motor RPM", getShooterRPM()) .getEntry(); 
+  double RPMSpeed = 0;
+
 
   public ShooterSubsystem() {
     shooterMotor.configFactoryDefault();
@@ -42,9 +42,14 @@ public class ShooterSubsystem extends SubsystemBase {
     
   }
 
-  public void shoot(double shooterSpeedRPM) {
+  public void shoot() {
     // V = Pulses / 100 ms => 1000 ms / 1 s * 60 s / 1 min * 1 rev / 2048 pulses
-    double velocityPer100ms = (shooterSpeedRPM*2048)/600;
+    
+    double A = SmartDashboard.getNumber("RPM Speed A", RPMSpeed);
+    if (A != RPMSpeed) RPMSpeed = A;
+
+    double velocityPer100ms = (RPMSpeed*2048)/600;
+
     shooterMotor.set(ControlMode.Velocity, velocityPer100ms);
   }
 
@@ -69,6 +74,8 @@ public class ShooterSubsystem extends SubsystemBase {
     kPEntry.setDouble(ShooterConstants.kP);
     kIEntry.setDouble(ShooterConstants.kI);
     kDEntry.setDouble(ShooterConstants.kD);
-    shooterRPMEntry.setDouble(getShooterRPM());
+    // shooterRPMEntry.setDouble(getShooterRPM());
+
+    SmartDashboard.putNumber("Talon Velocity (RPM): ", shooterMotor.getSelectedSensorVelocity()*600/2048);  
   }
 }

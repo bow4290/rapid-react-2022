@@ -13,12 +13,12 @@ public class ShootStop extends CommandBase {
 
   @Override
   public void initialize() {
-    shooterSubsystem.shoot(0.0);
+    //shooterSubsystem.shoot(0.0);
   }
 
   @Override
   public void execute() {
-    shooterSubsystem.shoot(0.0);
+    //shooterSubsystem.shoot(0.0);
   }
   
   @Override

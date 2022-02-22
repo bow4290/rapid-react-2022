@@ -24,37 +24,13 @@ public class Robot extends TimedRobot {
   JoystickButton xboxXButton = new JoystickButton(xboxController, 3);
   JoystickButton xboxYButton = new JoystickButton(xboxController, 4);
 
-  WPI_TalonFX myTalon = new WPI_TalonFX(ShooterConstants.myFalconChannel);
-
-  double speedA = 0;
-  double speedB = 0;
-  double speedX = 0;
-  double speedY = 0;
-
+  double RPMSpeed = 0;
+  
   private RobotContainer m_robotContainer;
 
   @Override
   public void robotInit() {
-    myTalon.configFactoryDefault();
-    myTalon.configVoltageCompSaturation(11);
-    myTalon.enableVoltageCompensation(true);
-    myTalon.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 0);
-    myTalon.setNeutralMode(NeutralMode.Coast);
-    myTalon.configNominalOutputForward(0);
-    myTalon.configNominalOutputReverse(0);
-    myTalon.configPeakOutputForward(1);
-    myTalon.configPeakOutputReverse(-1);
-    myTalon.setInverted(TalonFXInvertType.Clockwise);
-
-    myTalon.config_kF(0, speedA);
-    myTalon.config_kP(0, speedB);
-    myTalon.config_kI(0, speedX);
-    myTalon.config_kD(0, speedY);
-
-    SmartDashboard.putNumber("Speed A", speedA);
-    SmartDashboard.putNumber("Speed B", speedB);
-    SmartDashboard.putNumber("Speed x", speedX);
-    SmartDashboard.putNumber("Speed Y", speedY);
+    SmartDashboard.putNumber("RPM Speed A", RPMSpeed);
 
     m_robotContainer = new RobotContainer();
   }
@@ -62,8 +38,6 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
-
-    SmartDashboard.putNumber("Talon Velocity (RPM): ", myTalon.getSelectedSensorVelocity()*600/2048);  
   }
 
   @Override
@@ -93,30 +67,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    double A = SmartDashboard.getNumber("Speed A", speedA);
-    double B = SmartDashboard.getNumber("Speed B", speedB);
-    double X = SmartDashboard.getNumber("Speed X", speedX);
-    double Y = SmartDashboard.getNumber("Speed Y", speedY);
-
-    if (A != speedA) speedA = A;
-    if (B != speedB) speedB = B;
-    if (X != speedX) speedX = X;
-    if (Y != speedY) speedY = Y;
-
-    // NOTE: Not actually RPM!
-    double motorRPM = 0;
-
-    if(xboxAButton.get()) {
-      motorRPM = speedA;
-    } else if(xboxBButton.get()) {
-      motorRPM = speedB;
-    } else if(xboxXButton.get()) {
-      motorRPM = speedX;
-    } else if(xboxYButton.get()) {
-      motorRPM = speedY;
-    }
-
-    myTalon.set(TalonFXControlMode.PercentOutput, motorRPM);
   }
 
   @Override
