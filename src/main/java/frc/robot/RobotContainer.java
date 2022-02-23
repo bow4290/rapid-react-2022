@@ -8,6 +8,8 @@ import frc.robot.commands.Shooter.ShootManual;
 import frc.robot.commands.Shooter.ShootStop;
 import frc.robot.Constants.Flags;
 import frc.robot.commands.Indexer.*;
+import frc.robot.commands.Intake.IntakeIn;
+import frc.robot.commands.Intake.IntakeStop;
 import frc.robot.sensors.BallIdentification;
 import frc.robot.sensors.Limelight;
 import frc.robot.sensors.RevColorSensor;
@@ -26,6 +28,7 @@ public class RobotContainer {
   
   private ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   private IndexerSubsystem indexerSubsystem = new IndexerSubsystem(ballUpper, ballLower);
+  private IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 
   // public Limelight limelight = new Limelight();
   // public RevColorSensor redBallColorSensor;
@@ -36,6 +39,7 @@ public class RobotContainer {
 
     shooterSubsystem.setDefaultCommand(new ShootStop(shooterSubsystem));
     indexerSubsystem.setDefaultCommand(new DefaultIndexerCommand(indexerSubsystem, ballUpper, ballLower, () -> new JoystickButton(xboxController, 2).get()));
+    intakeSubsystem.setDefaultCommand(new IntakeStop(intakeSubsystem));
 
     // if (Flags.colors) {
     //   redBallColorSensor = new RevColorSensor(80, 180, 50, 80, 15, 40, 0, 2048);
@@ -66,6 +70,7 @@ public class RobotContainer {
     // setJoystickButtonWhileHeld(xboxController, 6, new ShootHigh(ball, limelight, shooterSubsystem));
     setJoystickButtonWhileHeld(xboxController, 1, new ShootManual(shooterSubsystem));
     setJoystickButtonWhileHeld(xboxController, 2, new ManualIndexerCommand(indexerSubsystem));
+    setJoystickButtonWhileHeld(xboxController, 3, new IntakeIn(intakeSubsystem));
 
     //TODO: configure the shooting to RT configure the indexer to A
   }

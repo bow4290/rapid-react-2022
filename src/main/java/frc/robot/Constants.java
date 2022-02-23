@@ -16,6 +16,12 @@ public final class Constants {
     public static double lowerIntakingIndexSpeed = 0.5;
   }
 
+  public static final class IntakeConstants {
+    public static int intakeMotorChannel = 44;
+    public static int intakeUpChannel = 6;
+    public static int intakeDownChannel = 7;
+  }
+
   public static final class ShooterConstants {
     public static int shooterMotorChannel = 7;
     public static int shooterMotorVoltage = 11;
