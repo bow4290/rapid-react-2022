@@ -65,6 +65,7 @@ public class RobotContainer {
     // setJoystickButtonWhileHeld(xboxController, 5, new ShootLow(ball, limelight, shooterSubsystem));
     // setJoystickButtonWhileHeld(xboxController, 6, new ShootHigh(ball, limelight, shooterSubsystem));
     setJoystickButtonWhileHeld(xboxController, 1, new ShootManual(shooterSubsystem));
+    setJoystickButtonWhileHeld(xboxController, 2, new ManualIndexerCommand(indexerSubsystem));
 
     //TODO: configure the shooting to RT configure the indexer to A
   }
