@@ -2,14 +2,14 @@ package frc.robot;
 
 public final class Constants {
   public static final class JoystickConstants {
-    public static final int LEFT_JOYSTICK = 0;
+    public static final int LEFT_JOYSTICK = 2;
     public static final int RIGHT_JOYSTICK = 1;
-    public static final int XBOX_CONTROLLER = 2;
+    public static final int XBOX_CONTROLLER = 0;
   }
 
   public static final class IndexerConstants {
     public static int upperIndexMotorChannel = 0;
-    public static int lowerIndexMotorChannel = 0;
+    public static int lowerIndexMotorChannel = 1;
     
     public static double bothShootingIndexSpeed = 0.5;
     public static double bothIntakingIndexSpeed = 0.5;
@@ -17,13 +17,15 @@ public final class Constants {
   }
 
   public static final class IntakeConstants {
-    public static int intakeMotorChannel = 44;
+    public static int intakeMotorChannel = 2;
+
     public static int intakeUpChannel = 6;
     public static int intakeDownChannel = 7;
   }
 
   public static final class ShooterConstants {
     public static int shooterMotorChannel = 7;
+
     public static int shooterMotorVoltage = 11;
 
     // public static double discardSpeedRPM = 2500.0;

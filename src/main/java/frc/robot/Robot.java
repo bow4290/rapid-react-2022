@@ -26,7 +26,7 @@ public class Robot extends TimedRobot {
   JoystickButton xboxXButton = new JoystickButton(xboxController, 3);
   JoystickButton xboxYButton = new JoystickButton(xboxController, 4);
 
-  double RPMSpeedA = 0;
+  double RPMSpeed = 0;
   private WPI_VictorSPX victorMotor1 = new WPI_VictorSPX(IndexerConstants.upperIndexMotorChannel);
   private WPI_VictorSPX victorMotor2 = new WPI_VictorSPX(IndexerConstants.lowerIndexMotorChannel);
 
@@ -34,13 +34,16 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-    SmartDashboard.putNumber("RPM Speed A", RPMSpeedA);
+    SmartDashboard.putNumber("RPM Shooter Speed", RPMSpeed);
+
     victorMotor1.configFactoryDefault();
+    victorMotor2.configFactoryDefault();
+
     victorMotor1.setInverted(true);    
+    victorMotor2.setInverted(true);
+
     victorMotor1.configVoltageCompSaturation(11);
     victorMotor1.enableVoltageCompensation(true);
-    victorMotor2.configFactoryDefault();
-    victorMotor2.setInverted(true);
     victorMotor2.configVoltageCompSaturation(11);    
     victorMotor2.enableVoltageCompensation(true);
     m_robotContainer = new RobotContainer();

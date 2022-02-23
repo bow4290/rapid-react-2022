@@ -24,7 +24,7 @@ public class ShooterSubsystem extends SubsystemBase {
   private NetworkTableEntry kDEntry = tab.add("Shooter Motor kD", getkD()) .getEntry(); 
 
   // private NetworkTableEntry shooterRPMEntry = tab.add("Shooter Motor RPM", getShooterRPM()) .getEntry(); 
-  double RPMSpeedA = 0;
+  double RPMSpeed = 0;
 
 
   public ShooterSubsystem() {
@@ -45,8 +45,8 @@ public class ShooterSubsystem extends SubsystemBase {
   public void shoot() {
     // V = Pulses / 100 ms => 1000 ms / 1 s * 60 s / 1 min * 1 rev / 2048 pulses
     
-    double RPM = SmartDashboard.getNumber("RPM Speed A", RPMSpeedA);
-    if (RPM != RPMSpeedA) RPMSpeedA = RPM;
+    double RPM = SmartDashboard.getNumber("RPM Shooter Speed", RPMSpeed);
+    if (RPM != RPMSpeed) RPMSpeed = RPM;
 
     double velocityPer100ms = (RPM*2048)/600;
 
