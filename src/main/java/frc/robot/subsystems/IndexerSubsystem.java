@@ -20,8 +20,8 @@ public class IndexerSubsystem extends SubsystemBase {
     tab = Shuffleboard.getTab("Indexer");
     tab.add("Upper motor speed is:", upperIndexMotor);
     tab.add("Lower motor speed is:", lowerIndexMotor);
-    tab.add("Lower color sensor", lowerColorSensor);
     tab.add("Upper color sensor", upperColorSensor);
+    tab.add("Lower color sensor", lowerColorSensor);
     
     upperIndexMotor = new WPI_VictorSPX(IndexerConstants.upperIndexMotorChannel);
     lowerIndexMotor = new WPI_VictorSPX(IndexerConstants.lowerIndexMotorChannel);

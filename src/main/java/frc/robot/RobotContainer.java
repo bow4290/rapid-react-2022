@@ -20,31 +20,29 @@ public class RobotContainer {
   public static Joystick joystickLeft = new Joystick(JoystickConstants.LEFT_JOYSTICK);
   public static Joystick joystickRight = new Joystick(JoystickConstants.RIGHT_JOYSTICK);
   public static Joystick xboxController = new Joystick(JoystickConstants.XBOX_CONTROLLER);
-  
-  private ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-  private IndexerSubsystem indexerSubsystem;
-
-  public Limelight limelight = new Limelight();
-  public RevColorSensor redBallColorSensor;
-  public RevColorSensor blueBallColorSensor;
 
   public BallIdentification ballUpper;
   public BallIdentification ballLower;
+  
+  private ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  private IndexerSubsystem indexerSubsystem = new IndexerSubsystem(ballUpper, ballLower);
+
+  // public Limelight limelight = new Limelight();
+  // public RevColorSensor redBallColorSensor;
+  // public RevColorSensor blueBallColorSensor;
+
 
   public RobotContainer() {
 
     shooterSubsystem.setDefaultCommand(new ShootStop(shooterSubsystem));
-
-    indexerSubsystem = new IndexerSubsystem(ballUpper, ballLower);
     indexerSubsystem.setDefaultCommand(new DefaultIndexerCommand(indexerSubsystem, ballUpper, ballLower, () -> new JoystickButton(xboxController, 2).get()));
 
-    if (Flags.colors) {
-      redBallColorSensor = new RevColorSensor(80, 180, 50, 80, 15, 40, 0, 2048);
-      blueBallColorSensor = new RevColorSensor(10, 70, 50, 100, 40, 100, 0, 2048);
-      ballUpper = new BallIdentification(redBallColorSensor, blueBallColorSensor);
-      ballLower = new BallIdentification(redBallColorSensor, blueBallColorSensor);
-    }
-
+    // if (Flags.colors) {
+    //   redBallColorSensor = new RevColorSensor(80, 180, 50, 80, 15, 40, 0, 2048);
+    //   blueBallColorSensor = new RevColorSensor(10, 70, 50, 100, 40, 100, 0, 2048);
+    //   ballUpper = new BallIdentification(redBallColorSensor, blueBallColorSensor);
+    //   ballLower = new BallIdentification(redBallColorSensor, blueBallColorSensor);
+    // }
 
     configureButtonBindings();
   }
@@ -67,6 +65,8 @@ public class RobotContainer {
     // setJoystickButtonWhileHeld(xboxController, 5, new ShootLow(ball, limelight, shooterSubsystem));
     // setJoystickButtonWhileHeld(xboxController, 6, new ShootHigh(ball, limelight, shooterSubsystem));
     setJoystickButtonWhileHeld(xboxController, 1, new ShootManual(shooterSubsystem));
+
+    //TODO: configure the shooting to RT configure the indexer to A
   }
 
 
