@@ -6,6 +6,8 @@ import frc.robot.commands.Shooter.ShootHigh;
 import frc.robot.commands.Shooter.ShootLow;
 import frc.robot.commands.Shooter.ShootManual;
 import frc.robot.commands.Shooter.ShootStop;
+import frc.robot.Constants.Flags;
+import frc.robot.commands.Indexer.*;
 import frc.robot.sensors.BallIdentification;
 import frc.robot.sensors.Limelight;
 import frc.robot.sensors.RevColorSensor;
@@ -15,18 +17,34 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
-  public static Joystick xboxController;
-
-  private Limelight limelight = new Limelight();
-
-  public BallIdentification ball;
-
+  public static Joystick joystickLeft = new Joystick(JoystickConstants.LEFT_JOYSTICK);
+  public static Joystick joystickRight = new Joystick(JoystickConstants.RIGHT_JOYSTICK);
+  public static Joystick xboxController = new Joystick(JoystickConstants.XBOX_CONTROLLER);
+  
   private ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  private IndexerSubsystem indexerSubsystem;
+
+  public Limelight limelight = new Limelight();
+  public RevColorSensor redBallColorSensor;
+  public RevColorSensor blueBallColorSensor;
+
+  public BallIdentification ballUpper;
+  public BallIdentification ballLower;
 
   public RobotContainer() {
-    xboxController = new Joystick(JoystickConstants.XBOX_CONTROLLER);
 
     shooterSubsystem.setDefaultCommand(new ShootStop(shooterSubsystem));
+
+    indexerSubsystem = new IndexerSubsystem(ballUpper, ballLower);
+    indexerSubsystem.setDefaultCommand(new DefaultIndexerCommand(indexerSubsystem, ballUpper, ballLower, () -> new JoystickButton(xboxController, 2).get()));
+
+    if (Flags.colors) {
+      redBallColorSensor = new RevColorSensor(80, 180, 50, 80, 15, 40, 0, 2048);
+      blueBallColorSensor = new RevColorSensor(10, 70, 50, 100, 40, 100, 0, 2048);
+      ballUpper = new BallIdentification(redBallColorSensor, blueBallColorSensor);
+      ballLower = new BallIdentification(redBallColorSensor, blueBallColorSensor);
+    }
+
 
     configureButtonBindings();
   }
@@ -51,9 +69,9 @@ public class RobotContainer {
     setJoystickButtonWhileHeld(xboxController, 1, new ShootManual(shooterSubsystem));
   }
 
+
   public Command getAutonomousCommand() { return null; }
 
-  /** WhenPressed runs the command once at the moment the button is pressed. */
   private void setJoystickButtonWhenPressed(Joystick joystick, int button, CommandBase command) {
     new JoystickButton(joystick, button).whenPressed(command);
   }
@@ -73,6 +91,7 @@ public class RobotContainer {
   private void setJoystickButtonWhenHeld(Joystick joystick, int button, CommandBase command) {
     new JoystickButton(joystick, button).whenHeld(command);
   }
+
 
   private void setJoystickButtonToggleWhenPressed(Joystick joystick, int button, CommandBase command) {
     new JoystickButton(joystick, button).toggleWhenPressed(command);

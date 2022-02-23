@@ -1,4 +1,3 @@
-
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -15,6 +14,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.ShooterConstants;
 
+import frc.robot.Constants.Flags;
+
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
@@ -25,7 +26,7 @@ public class Robot extends TimedRobot {
   JoystickButton xboxYButton = new JoystickButton(xboxController, 4);
 
   double RPMSpeedA = 0;
-  
+
   private RobotContainer m_robotContainer;
 
   @Override
@@ -38,6 +39,10 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
+
+    // SmartDashboard.putBoolean("Is Ball Red?", m_robotContainer.redBallColorSensor.isTarget());
+    // SmartDashboard.putBoolean("Is Ball Blue?", m_robotContainer.blueBallColorSensor.isTarget());
+    // SmartDashboard.putBoolean("Is Ball Team Color?", m_robotContainer.ball.isBallTeamColor());
   }
 
   @Override
