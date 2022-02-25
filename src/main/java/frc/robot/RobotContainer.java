@@ -1,15 +1,16 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.Constants.Flags;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.commands.Shooter.ShootHigh;
 import frc.robot.commands.Shooter.ShootLow;
 import frc.robot.commands.Shooter.ShootManual;
 import frc.robot.commands.Shooter.ShootStop;
-import frc.robot.Constants.Flags;
 import frc.robot.commands.Indexer.*;
 import frc.robot.commands.Intake.IntakeIn;
-import frc.robot.commands.Intake.IntakeStop;
+import frc.robot.commands.Intake.*;
+import frc.robot.commands.Drivetrain.*;
 import frc.robot.sensors.BallIdentification;
 import frc.robot.sensors.Limelight;
 import frc.robot.sensors.RevColorSensor;
@@ -26,6 +27,7 @@ public class RobotContainer {
   public BallIdentification ballUpper;
   public BallIdentification ballLower;
   
+  DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
   private ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   private IndexerSubsystem indexerSubsystem = new IndexerSubsystem(ballUpper, ballLower);
   private IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
@@ -36,7 +38,7 @@ public class RobotContainer {
 
 
   public RobotContainer() {
-
+    drivetrainSubsystem.setDefaultCommand(new Drive(() -> -joystickLeft.getY(), () -> -joystickRight.getY(), drivetrainSubsystem));
     shooterSubsystem.setDefaultCommand(new ShootStop(shooterSubsystem));
     indexerSubsystem.setDefaultCommand(new DefaultIndexerCommand(indexerSubsystem, ballUpper, ballLower, () -> new JoystickButton(xboxController, 2).get()));
     intakeSubsystem.setDefaultCommand(new IntakeStop(intakeSubsystem));
@@ -68,9 +70,12 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // setJoystickButtonWhileHeld(xboxController, 5, new ShootLow(ball, limelight, shooterSubsystem));
     // setJoystickButtonWhileHeld(xboxController, 6, new ShootHigh(ball, limelight, shooterSubsystem));
+    setJoystickButtonWhenPressed(joystickLeft, 1, new ShiftGearDown(drivetrainSubsystem));
+    setJoystickButtonWhenPressed(joystickRight, 1, new ShiftGearUp(drivetrainSubsystem));
     setJoystickButtonWhileHeld(xboxController, 6, new ShootManual(shooterSubsystem));
     setJoystickButtonWhileHeld(xboxController, 1, new ManualIndexerCommand(indexerSubsystem));
     setJoystickButtonWhileHeld(xboxController, 5, new IntakeIn(intakeSubsystem));  
+    setJoystickButtonWhileHeld(xboxController, 2, new IntakeToggle(intakeSubsystem));
   }
 
 
