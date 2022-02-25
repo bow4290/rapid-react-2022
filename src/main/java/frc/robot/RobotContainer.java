@@ -14,9 +14,8 @@ import frc.robot.commands.Drivetrain.*;
 import frc.robot.sensors.BallIdentification;
 import frc.robot.sensors.Limelight;
 import frc.robot.sensors.RevColorSensor;
+import frc.robot.commands.Hood.DefaultHoodCommand;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
@@ -36,6 +35,9 @@ public class RobotContainer {
   // public RevColorSensor redBallColorSensor;
   // public RevColorSensor blueBallColorSensor;
 
+  public Limelight limelight = new Limelight();
+
+  private HoodSubsystem hoodSubsystem = new HoodSubsystem();
 
   public RobotContainer() {
     drivetrainSubsystem.setDefaultCommand(new Drive(() -> -joystickLeft.getY(), () -> -joystickRight.getY(), drivetrainSubsystem));
@@ -48,6 +50,7 @@ public class RobotContainer {
     //   blueBallColorSensor = new RevColorSensor(10, 70, 50, 100, 40, 100, 0, 2048);
     //   ballUpper = new BallIdentification(redBallColorSensor, blueBallColorSensor);
     //   ballLower = new BallIdentification(redBallColorSensor, blueBallColorSensor);
+    hoodSubsystem.setDefaultCommand(new DefaultHoodCommand(limelight, hoodSubsystem));
     // }
 
     configureButtonBindings();
