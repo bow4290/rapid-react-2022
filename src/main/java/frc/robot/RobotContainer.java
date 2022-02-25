@@ -1,7 +1,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import frc.robot.Constants.Flags;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.commands.Shooter.ShootHigh;
 import frc.robot.commands.Shooter.ShootLow;
@@ -17,6 +16,8 @@ import frc.robot.sensors.RevColorSensor;
 import frc.robot.commands.Hood.DefaultHoodCommand;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 public class RobotContainer {
   public static Joystick joystickLeft = new Joystick(JoystickConstants.LEFT_JOYSTICK);
@@ -27,31 +28,27 @@ public class RobotContainer {
   public BallIdentification ballLower;
   
   DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
-  private ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  private HoodSubsystem hoodSubsystem = new HoodSubsystem();
   private IndexerSubsystem indexerSubsystem = new IndexerSubsystem(ballUpper, ballLower);
   private IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  private ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+ 
+  public Limelight limelight = new Limelight();
 
-  // public Limelight limelight = new Limelight();
   // public RevColorSensor redBallColorSensor;
   // public RevColorSensor blueBallColorSensor;
 
-  public Limelight limelight = new Limelight();
-
-  private HoodSubsystem hoodSubsystem = new HoodSubsystem();
-
   public RobotContainer() {
     drivetrainSubsystem.setDefaultCommand(new Drive(() -> -joystickLeft.getY(), () -> -joystickRight.getY(), drivetrainSubsystem));
-    shooterSubsystem.setDefaultCommand(new ShootStop(shooterSubsystem));
+    hoodSubsystem.setDefaultCommand(new DefaultHoodCommand(limelight, hoodSubsystem));
     indexerSubsystem.setDefaultCommand(new DefaultIndexerCommand(indexerSubsystem, ballUpper, ballLower, () -> new JoystickButton(xboxController, 2).get()));
     intakeSubsystem.setDefaultCommand(new IntakeStop(intakeSubsystem));
+    shooterSubsystem.setDefaultCommand(new ShootStop(shooterSubsystem));
 
-    // if (Flags.colors) {
     //   redBallColorSensor = new RevColorSensor(80, 180, 50, 80, 15, 40, 0, 2048);
     //   blueBallColorSensor = new RevColorSensor(10, 70, 50, 100, 40, 100, 0, 2048);
     //   ballUpper = new BallIdentification(redBallColorSensor, blueBallColorSensor);
     //   ballLower = new BallIdentification(redBallColorSensor, blueBallColorSensor);
-    hoodSubsystem.setDefaultCommand(new DefaultHoodCommand(limelight, hoodSubsystem));
-    // }
 
     configureButtonBindings();
   }

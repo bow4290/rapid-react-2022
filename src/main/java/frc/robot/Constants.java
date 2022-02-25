@@ -1,6 +1,12 @@
 package frc.robot;
 
 public final class Constants {
+  public static final class JoystickConstants {
+    public static final int LEFT_JOYSTICK = 2;
+    public static final int RIGHT_JOYSTICK = 1;
+    public static final int XBOX_CONTROLLER = 0;
+  }
+
   public static final class DriveConstants {
     public static final int leftMotor1Channel = 7;
     public static final int leftMotor2Channel = 8;
@@ -25,17 +31,13 @@ public final class Constants {
     public static final double encoderLowDistanceConversion = wheelCircum/(stage1Ratio * stage2Ratio * lowSpreadRatio * encoderCPR);
     public static final double encoderHighDistanceConversion = wheelCircum/(stage1Ratio * stage2Ratio * highSpreadRatio * encoderCPR);
   }
-  
-  public static final class JoystickConstants {
-    public static final int LEFT_JOYSTICK = 2;
-    public static final int RIGHT_JOYSTICK = 1;
-    public static final int XBOX_CONTROLLER = 0;
-  }
 
   public static final class HoodConstants {
     public static int hoodSolenoidExtendChannel = 6;
     public static int hoodSolenoidRetractChannel = 7;
     public static double hoodExtendDistance = 125;    // Distance in inches
+  }
+
   public static final class IndexerConstants {
     public static int upperIndexMotorChannel = 0;
     public static int lowerIndexMotorChannel = 1;
@@ -69,11 +71,5 @@ public final class Constants {
     public static final double h1 = 24;             // Distance from ground to limelight
     public static final double h2 = 8*12+8;         // Distance from ground to target (8'8")
     public static final double a1 = 30;             // Limelight mount angle (0 = facing forward, 90 = facing the ceiling)
-  }
-
-  public static final class Flags {
-    // public static final boolean drivetrain = false;
-    // public static final boolean intake = false;
-    public static final boolean colors = false;
   }
 }
