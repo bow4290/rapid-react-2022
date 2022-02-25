@@ -41,7 +41,7 @@ public class RobotContainer {
   public RobotContainer() {
     drivetrainSubsystem.setDefaultCommand(new Drive(() -> -joystickLeft.getY(), () -> -joystickRight.getY(), drivetrainSubsystem));
     hoodSubsystem.setDefaultCommand(new DefaultHoodCommand(limelight, hoodSubsystem));
-    indexerSubsystem.setDefaultCommand(new DefaultIndexerCommand(indexerSubsystem, ballUpper, ballLower, () -> new JoystickButton(xboxController, 2).get()));
+    indexerSubsystem.setDefaultCommand(new DefaultIndexerCommand(indexerSubsystem, shooterSubsystem, ballUpper, ballLower, () -> new JoystickButton(xboxController, 2).get()));
     intakeSubsystem.setDefaultCommand(new IntakeStop(intakeSubsystem));
     shooterSubsystem.setDefaultCommand(new ShootStop(shooterSubsystem));
 
