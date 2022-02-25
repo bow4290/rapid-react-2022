@@ -11,34 +11,28 @@ import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.revrobotics.ColorSensorV3;
 
 public class RevColorSensor implements Sendable {
-  private final I2C.Port i2cPort = I2C.Port.kOnboard;
-  private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
+  private final ColorSensorV3 colorSensor;
 
-  private int redLowThresh;
-  private int redHighThresh;
-  private int greenLowThresh;
-  private int greenHighThresh;
-  private int blueLowThresh;
-  private int blueHighThresh;
+  private double redLowThresh;
+  private double redHighThresh;
+  private double greenLowThresh;
+  private double greenHighThresh;
+  private double blueLowThresh;
+  private double blueHighThresh;
   private int proxLowThresh;
   private int proxHighThresh;
 
-  private static ShuffleboardTab tab = Shuffleboard.getTab("Color Sensors");
   private static int idGen = 0;
+  private int id = ++idGen;
 
-  public RevColorSensor(int redLowThresh, int redHighThresh, int greenLowThresh,
-                        int greenHighThresh, int blueLowThresh, int blueHighThresh,
-                        int proxLowThresh, int proxHighThresh) {
-    this(redLowThresh, redHighThresh, greenLowThresh, greenHighThresh, blueLowThresh, blueHighThresh, proxLowThresh, proxHighThresh, null);
-  }
-
-  public RevColorSensor(int redLowThresh, int redHighThresh, int greenLowThresh,
-                        int greenHighThresh, int blueLowThresh, int blueHighThresh,
-                        int proxLowThresh, int proxHighThresh, String name) {
+  public RevColorSensor(double redLowThresh, double redHighThresh, double greenLowThresh,
+                        double greenHighThresh, double blueLowThresh, double blueHighThresh,
+                        int proxLowThresh, int proxHighThresh, Boolean onboard) {
     this.redLowThresh    = redLowThresh;
     this.redHighThresh   = redHighThresh;
     this.greenLowThresh  = greenLowThresh;
@@ -48,9 +42,13 @@ public class RevColorSensor implements Sendable {
     this.proxLowThresh   = proxLowThresh;
     this.proxHighThresh  = proxHighThresh;
 
-    // TODO: Should the ids start at 0 or 1?
-    tab.add(name != null ? name : ("ID: " + idGen), this);
-    idGen++;
+    colorSensor = new ColorSensorV3(onboard ? I2C.Port.kOnboard : I2C.Port.kMXP);
+  }
+
+  public void update() {
+    SmartDashboard.putNumber("R" + id, getRed());
+    SmartDashboard.putNumber("G" + id, getGreen());
+    SmartDashboard.putNumber("B" + id, getBlue());
   }
 
   public boolean isTarget() {
@@ -74,11 +72,11 @@ public class RevColorSensor implements Sendable {
     return (getProximity() > proxLowThresh && getProximity() < proxHighThresh);
   }
 
-  public int getRed() { return colorSensor.getRed(); }
+  public double getRed() { return colorSensor.getColor().red; }
 
-  public int getGreen() { return colorSensor.getGreen(); }
+  public double getGreen() { return colorSensor.getColor().green; }
 
-  public int getBlue() { return colorSensor.getBlue(); }
+  public double getBlue() { return colorSensor.getColor().blue; }
 
   public double getIR() { return colorSensor.getIR(); }
 

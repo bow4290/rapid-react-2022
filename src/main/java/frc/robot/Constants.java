@@ -28,7 +28,7 @@ public final class Constants {
 
   public static final class IndexerConstants {
     public static int upperIndexMotorChannel = 0;
-    public static int lowerIndexMotorChannel = 0;
+    public static int lowerIndexMotorChannel = 1;
     
     public static double bothShootingIndexSpeed = 0.5;
     public static double bothIntakingIndexSpeed = 0.5;
@@ -54,8 +54,8 @@ public final class Constants {
   }
 
   public static final class Flags {
-    public static final boolean drivetrain = true;
-    public static final boolean intake = true;
+    public static final boolean drivetrain = false;
+    public static final boolean intake = false;
     public static final boolean colors = true;
   }
 }

@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IndexerConstants;
 import frc.robot.sensors.BallIdentification;
@@ -16,12 +17,17 @@ public class IndexerSubsystem extends SubsystemBase {
   private WPI_VictorSPX upperIndexMotor;
   private WPI_VictorSPX lowerIndexMotor;
 
+  private BallIdentification down;
+  private BallIdentification up;
+
   public IndexerSubsystem(BallIdentification upperColorSensor, BallIdentification lowerColorSensor){
     tab = Shuffleboard.getTab("Indexer");
-    tab.add("Upper motor speed is:", upperIndexMotor);
-    tab.add("Lower motor speed is:", lowerIndexMotor);
-    tab.add("Lower color sensor", lowerColorSensor);
-    tab.add("Upper color sensor", upperColorSensor);
+    up = upperColorSensor;
+    down = lowerColorSensor;
+    // tab.add("Upper motor speed is:", upperIndexMotor);
+    // tab.add("Lower motor speed is:", lowerIndexMotor);
+    // tab.add("Lower color sensor", lowerColorSensor);
+    // tab.add("Upper color sensor", upperColorSensor);
     
     upperIndexMotor = new WPI_VictorSPX(IndexerConstants.upperIndexMotorChannel);
     lowerIndexMotor = new WPI_VictorSPX(IndexerConstants.lowerIndexMotorChannel);
@@ -50,5 +56,11 @@ public class IndexerSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    SmartDashboard.putString("Low", down.getBallColor().toString());
+    SmartDashboard.putString("Upper", up.getBallColor().toString());
+    SmartDashboard.putBoolean("Lowp", down.isBallPresent());
+    SmartDashboard.putBoolean("Upperp", up.isBallPresent());
+    down.update();
+    up.update();
   }
 }

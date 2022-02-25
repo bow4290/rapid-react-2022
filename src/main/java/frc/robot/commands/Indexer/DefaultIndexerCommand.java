@@ -21,6 +21,7 @@ public class DefaultIndexerCommand extends CommandBase {
     this.ballUpper = ballUpper;
     this.ballLower = ballLower;
     this.isIntakeButtonPressed = isIntakeButtonPressed;
+    addRequirements(indexerSubsystem);
   }
 
   @Override
