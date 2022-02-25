@@ -30,26 +30,31 @@ public class RobotContainer {
   DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
   private HoodSubsystem hoodSubsystem = new HoodSubsystem();
   private IndexerSubsystem indexerSubsystem = new IndexerSubsystem(ballUpper, ballLower);
+
   private IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
  
   public Limelight limelight = new Limelight();
 
-  // public RevColorSensor redBallColorSensor;
-  // public RevColorSensor blueBallColorSensor;
+  public RevColorSensor redBallColorSensorI2C;
+  public RevColorSensor blueBallColorSensorI2C;
+  public RevColorSensor redBallColorSensorMXP;
+  public RevColorSensor blueBallColorSensorMXP;
 
   public RobotContainer() {
     drivetrainSubsystem.setDefaultCommand(new Drive(() -> -joystickLeft.getY(), () -> -joystickRight.getY(), drivetrainSubsystem));
     hoodSubsystem.setDefaultCommand(new DefaultHoodCommand(limelight, hoodSubsystem));
-    indexerSubsystem.setDefaultCommand(new DefaultIndexerCommand(indexerSubsystem, shooterSubsystem, ballUpper, ballLower, () -> new JoystickButton(xboxController, 2).get()));
+    indexerSubsystem.setDefaultCommand(new DefaultIndexerCommand(indexerSubsystem, ballUpper, ballLower, new JoystickButton(xboxController, 2)::get));
     intakeSubsystem.setDefaultCommand(new IntakeStop(intakeSubsystem));
     shooterSubsystem.setDefaultCommand(new ShootStop(shooterSubsystem));
 
-    //   redBallColorSensor = new RevColorSensor(80, 180, 50, 80, 15, 40, 0, 2048);
-    //   blueBallColorSensor = new RevColorSensor(10, 70, 50, 100, 40, 100, 0, 2048);
-    //   ballUpper = new BallIdentification(redBallColorSensor, blueBallColorSensor);
-    //   ballLower = new BallIdentification(redBallColorSensor, blueBallColorSensor);
-
+    redBallColorSensorI2C  = new RevColorSensor(0.32, 1, 0.29, 0.34, 0.09, 0.25, 0, 2047, true);
+    blueBallColorSensorI2C = new RevColorSensor(0.145, 0.23, 0.37, 0.47, 0.325, 1, 0, 2047, true);
+    redBallColorSensorMXP  = new RevColorSensor(0.32, 1, 0.29, 0.34, 0.09, 0.25, 0, 2047, false);
+    blueBallColorSensorMXP = new RevColorSensor(0.15, 0.23, 0.39, 0.47, 0.325, 0.43, 0, 2047, false);
+    ballUpper = new BallIdentification(redBallColorSensorMXP, blueBallColorSensorMXP);
+    ballLower = new BallIdentification(redBallColorSensorI2C, blueBallColorSensorI2C);
+    
     configureButtonBindings();
   }
 

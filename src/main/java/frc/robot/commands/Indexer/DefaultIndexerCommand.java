@@ -16,13 +16,15 @@ public class DefaultIndexerCommand extends CommandBase {
   private BooleanSupplier isIntakeButtonPressed;
   private ShooterSubsystem shooterSubsystem;
 
-  public DefaultIndexerCommand(IndexerSubsystem indexerSubsystem, ShooterSubsystem shooterSubsystem, BallIdentification ballUpper, BallIdentification ballLower, BooleanSupplier isIntakeButtonPressed) {
+  public DefaultIndexerCommand(IndexerSubsystem indexerSubsystem, BallIdentification ballUpper, BallIdentification ballLower, BooleanSupplier isIntakeButtonPressed) {
     this.indexerSubsystem = indexerSubsystem;
     this.ballUpper = ballUpper;
     this.ballLower = ballLower;
     this.isIntakeButtonPressed = isIntakeButtonPressed;
 
     this.shooterSubsystem = shooterSubsystem;
+
+    addRequirements(indexerSubsystem);
   }
 
 @Override
