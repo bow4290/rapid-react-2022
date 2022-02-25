@@ -6,15 +6,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.IndexerConstants;
 import frc.robot.sensors.BallIdentification;
 import frc.robot.subsystems.IndexerSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
+
 
 public class DefaultIndexerCommand extends CommandBase {
   private IndexerSubsystem indexerSubsystem;
   private BallIdentification ballUpper;
   private BallIdentification ballLower;
   private BooleanSupplier isIntakeButtonPressed;
-
-  private Boolean isShooterReady = false;
-  // TODO: make the above into a global variable, setting it true when the shooter reaches firing speed.
 
   public DefaultIndexerCommand(IndexerSubsystem indexerSubsystem, BallIdentification ballUpper, BallIdentification ballLower, BooleanSupplier isIntakeButtonPressed) {
     this.indexerSubsystem = indexerSubsystem;

@@ -10,7 +10,6 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
 
@@ -26,7 +25,6 @@ public class ShooterSubsystem extends SubsystemBase {
   // private NetworkTableEntry shooterRPMEntry = tab.add("Shooter Motor RPM", getShooterRPM()) .getEntry(); 
   double RPMSpeed = 0;
 
-
   public ShooterSubsystem() {
     shooterMotor.configFactoryDefault();
     shooterMotor.setInverted(TalonFXInvertType.Clockwise);
@@ -39,7 +37,6 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterMotor.config_kP(0, ShooterConstants.kP);
     shooterMotor.config_kI(0, ShooterConstants.kI);
     shooterMotor.config_kD(0, ShooterConstants.kD);
-    
   }
 
   public void shoot() {
@@ -56,6 +53,18 @@ public class ShooterSubsystem extends SubsystemBase {
   private double getShooterVelocityRaw() { return shooterMotor.getSelectedSensorVelocity(); }
 
   public double getShooterRPM() { return getShooterVelocityRaw()*600/2048; }
+
+  public boolean isShooterReady() { 
+    double targetSpeed = SmartDashboard.getNumber("RPM Shooter Speed", RPMSpeed);
+    double actualSpeed = shooterMotor.getSelectedSensorVelocity();
+
+    double errorRatio = actualSpeed/targetSpeed;
+    if (errorRatio > 0.9) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   public double getkF() { return ShooterConstants.kF; }
   public double getkP() { return ShooterConstants.kP; }
