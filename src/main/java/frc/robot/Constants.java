@@ -1,10 +1,11 @@
 package frc.robot;
 
 public final class Constants {
-  public static final class ClimberConstants {
-    public static int rearClimberMotorChannel = 5;
-    public static int rearClimberSolenoidUpChannel = 0;
-    public static int rearClimberSolenoidDownChannel = 0;
+  public static final class ElevatorConstants { 
+    public static int elevatorClimbMotorChannel = 0;
+
+    public static int elevatorPivotMotorChannel = 1;
+    public static float pivotSoftLimit = 1f; //this value is measured in rotations
   }
 
   public static final class JoystickConstants {
