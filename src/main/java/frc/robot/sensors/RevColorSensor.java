@@ -49,6 +49,7 @@ public class RevColorSensor implements Sendable {
     SmartDashboard.putNumber("R" + id, getRed());
     SmartDashboard.putNumber("G" + id, getGreen());
     SmartDashboard.putNumber("B" + id, getBlue());
+    SmartDashboard.putNumber("Prox" + id, getProximity());
   }
 
   public boolean isTarget() {
