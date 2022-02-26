@@ -11,12 +11,12 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
   public static Joystick xboxController;
 
-  private ClimberFrontSubsystem climberFrontSubsystem =  new ClimberFrontSubsystem();
+  private TelescopeSubsystem telescopeSubsystem =  new TelescopeSubsystem();
 
   public RobotContainer() {
     xboxController = new Joystick(JoystickConstants.XBOX_CONTROLLER);
 
-    climberFrontSubsystem.setDefaultCommand(new StopFrontClimber(climberFrontSubsystem));
+    telescopeSubsystem.setDefaultCommand(new StopTelescope(telescopeSubsystem));
 
     configureButtonBindings();
   }
@@ -35,8 +35,8 @@ public class RobotContainer {
       2 - LeftTrig    5 - RightY
   */
   private void configureButtonBindings() {
-    setJoystickButtonWhenHeld(xboxController, 3, new ExtendFrontClimber(0.5, climberFrontSubsystem));
-    setJoystickButtonWhenHeld(xboxController, 4, new RetractFrontClimber(0.5, climberFrontSubsystem));
+    setJoystickButtonWhenHeld(xboxController, 3, new ExtendTelescope(0.5, telescopeSubsystem));
+    setJoystickButtonWhenHeld(xboxController, 4, new RetractTelescope(0.5, telescopeSubsystem));
   }
 
   public Command getAutonomousCommand() { return null; }

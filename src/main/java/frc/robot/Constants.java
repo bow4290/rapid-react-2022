@@ -1,16 +1,13 @@
 package frc.robot;
 
 public final class Constants {
-  public static final class ClimberConstants{
-    public static int frontClimberMotorChannel = 4;
-    public static int rearClimberMotorChannel = 10;
+  public static final class TelescopeConstants{
+    public static int telescopeMotorChannel = 4;
 
-    public static int rearClimberSolenoidUpChannel = 1;
-    public static int rearClimberSolenoidDownChannel = 0;
-
-    public static double rearClimberExtendDistance = 30; //Distance converted to inches 
-    public static double rearClimberRetractDistance = 1; //Extra inch allowance to compensate for encoder
-    public static double rearClimberEncoderDistanceConversion = 1.0;
+    //TODO Find realistic softLimits (Most likely rotations)
+    public static float telescopeExtendSoftLimit = 3000.0f; //Distance converted to inches 
+    public static float telescopeRetractSoftLimit = -10.0f; //Extra inch allowance to compensate for encoder
+    public static double telescopeEncoderDistanceConversion = 1.0;
   }
 
   public static final class JoystickConstants {
@@ -22,4 +19,5 @@ public final class Constants {
     public static final double h2 = 0;  // Distance from ground to target
     public static final double a1 = 0;  // Limelight mount angle
   }
+
 }
