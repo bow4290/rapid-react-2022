@@ -78,7 +78,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     m_robotContainer.drivetrainSubsystem.resetDriveEncoders();
-    m_robotContainer.turretSubsystem.encoder.setPosition(0);
+    // m_robotContainer.turretSubsystem.encoder.setPosition(0);
   }
 
   @Override

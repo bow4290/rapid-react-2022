@@ -34,8 +34,8 @@ public class IndexerSubsystem extends SubsystemBase {
     upperIndexMotor = new WPI_VictorSPX(IndexerConstants.upperIndexMotorChannel);
     lowerIndexMotor = new WPI_VictorSPX(IndexerConstants.lowerIndexMotorChannel);
 
-    upperIndexMotor.setInverted(false);
-    lowerIndexMotor.setInverted(true);
+    upperIndexMotor.setInverted(true);
+    lowerIndexMotor.setInverted(false);
 
     upperIndexMotor.configVoltageCompSaturation(11);
     lowerIndexMotor.configVoltageCompSaturation(11);

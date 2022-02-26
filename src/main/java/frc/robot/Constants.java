@@ -2,16 +2,17 @@ package frc.robot;
 
 public final class Constants {
   public static final class JoystickConstants {
-    public static final int LEFT_JOYSTICK = 2;
+    public static final int LEFT_JOYSTICK = 0;
     public static final int RIGHT_JOYSTICK = 1;
-    public static final int XBOX_CONTROLLER = 0;
+    public static final int XBOX_CONTROLLER = 2;
   }
 
   public static final class DriveConstants {
-    public static final int leftMotor1Channel = 7;
-    public static final int leftMotor2Channel = 8;
     public static final int rightMotor1Channel = 5;
     public static final int rightMotor2Channel = 6;
+    public static final int leftMotor1Channel = 7;
+    public static final int leftMotor2Channel = 8;
+ 
 
     public static final int gearShiftUpChannel = 0;
     public static final int gearShiftDownChannel = 1;
@@ -33,8 +34,8 @@ public final class Constants {
   }
 
   public static final class HoodConstants {
-    public static int hoodSolenoidExtendChannel = 6;
-    public static int hoodSolenoidRetractChannel = 7;
+    public static int hoodSolenoidExtendChannel = 2;
+    public static int hoodSolenoidRetractChannel = 3;
     public static double hoodExtendDistance = 125;    // Distance in inches
   }
 
@@ -48,14 +49,14 @@ public final class Constants {
   }
 
   public static final class IntakeConstants {
-    public static int intakeMotorChannel = 2;
+    public static int intakeMotorChannel = 13;
 
     public static int intakeUpChannel = 6;
     public static int intakeDownChannel = 7;
   }
 
   public static final class ShooterConstants {
-    public static int shooterMotorChannel = 7;
+    public static int shooterMotorChannel = 2;
 
     public static int shooterMotorVoltage = 11;
 
@@ -68,7 +69,7 @@ public final class Constants {
   }
 
   public static final class TurretConstants {
-    public static int deviceID = 1;
+    public static int deviceID = 11;
     public static int forwardRotations = 30;
     public static int reverseRotations = -30;
   }
