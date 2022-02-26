@@ -8,6 +8,8 @@ import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.FaultID;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import frc.robot.Constants.Flags;
 import frc.robot.Constants.TurretConstants;
 
 public class TurretSubsystem extends SubsystemBase {
@@ -19,6 +21,8 @@ public class TurretSubsystem extends SubsystemBase {
   private double kP, kI, kD, kF, kMaxOutput, kMinOutput, setpoint;
 
   public TurretSubsystem() {
+    if (!Flags.turret) throw new Error("Turret flag must be set to create a TurretSubsystem!");
+
     motor = new CANSparkMax(TurretConstants.deviceID, MotorType.kBrushless);
     motor.restoreFactoryDefaults();
 

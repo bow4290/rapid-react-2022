@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.Flags;
 import frc.robot.Constants.IndexerConstants;
 import frc.robot.sensors.BallIdentification;
 import frc.robot.sensors.RevColorSensor;
@@ -21,6 +22,7 @@ public class IndexerSubsystem extends SubsystemBase {
   private BallIdentification up;
 
   public IndexerSubsystem(BallIdentification upperColorSensor, BallIdentification lowerColorSensor){
+    if (!Flags.indexer) throw new Error("Indexer flag must be set to create an IndexerSubsystem!");
     tab = Shuffleboard.getTab("Indexer");
     up = upperColorSensor;
     down = lowerColorSensor;

@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import frc.robot.Constants.Flags;
 import frc.robot.Constants.IntakeConstants;
 
 public class IntakeSubsystem extends SubsystemBase {
@@ -18,6 +18,7 @@ public class IntakeSubsystem extends SubsystemBase {
   public static IntakeStatus intakeStatus;
 
   public IntakeSubsystem() {
+    if (!Flags.intake) throw new Error("Intake flag must be set to create an IntakeSubsystem!");
     intakeMotor = new CANSparkMax(IntakeConstants.intakeMotorChannel, MotorType.kBrushless);
     intakeMotor.restoreFactoryDefaults();
     intakeMotor.setInverted(false);

@@ -14,6 +14,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.Flags;
 
 public class DrivetrainSubsystem extends SubsystemBase {
   private WPI_TalonFX leftMotor1 = new WPI_TalonFX(DriveConstants.leftMotor1Channel);
@@ -30,6 +31,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
   private static GearShiftPosition gearShiftPosition;
 
   public DrivetrainSubsystem() {
+    if (!Flags.drivetrain) throw new Error("Drivetrain flag must be set to create a DrivetrainSubsystem!");
+
     leftMotor1.setInverted(TalonFXInvertType.CounterClockwise);
     leftMotor2.follow(leftMotor1);
     leftMotor2.setInverted(InvertType.FollowMaster);

@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.Constants.Flags;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.commands.Shooter.ShootHigh;
 import frc.robot.commands.Shooter.ShootLow;
@@ -24,17 +25,14 @@ public class RobotContainer {
   public static Joystick joystickRight = new Joystick(JoystickConstants.RIGHT_JOYSTICK);
   public static Joystick xboxController = new Joystick(JoystickConstants.XBOX_CONTROLLER);
 
-  public BallIdentification ballUpper;
-  public BallIdentification ballLower;
-  
-  DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
   private HoodSubsystem hoodSubsystem = new HoodSubsystem();
-  private IndexerSubsystem indexerSubsystem = new IndexerSubsystem(ballUpper, ballLower);
+  private IndexerSubsystem indexerSubsystem;
+  public DrivetrainSubsystem drivetrainSubsystem;
   public TurretSubsystem turretSubsystem;
 
-  private IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  private IntakeSubsystem intakeSubsystem;
   private ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
- 
+
   public Limelight limelight = new Limelight();
 
   public RevColorSensor redBallColorSensorI2C;
@@ -43,21 +41,34 @@ public class RobotContainer {
   public RevColorSensor blueBallColorSensorMXP;
 
   public RobotContainer() {
-    drivetrainSubsystem.setDefaultCommand(new Drive(() -> -joystickLeft.getY(), () -> -joystickRight.getY(), drivetrainSubsystem));
-    hoodSubsystem.setDefaultCommand(new DefaultHoodCommand(limelight, hoodSubsystem));
-    indexerSubsystem.setDefaultCommand(new DefaultIndexerCommand(indexerSubsystem, ballUpper, ballLower, new JoystickButton(xboxController, 2)::get));
-    intakeSubsystem.setDefaultCommand(new IntakeStop(intakeSubsystem));
-    shooterSubsystem.setDefaultCommand(new ShootStop(shooterSubsystem));
-    turretSubsystem = new TurretSubsystem();
-    turretSubsystem.setDefaultCommand(new TurretCommand(limelight, turretSubsystem));
+    if (Flags.drivetrain) {
+      drivetrainSubsystem = new DrivetrainSubsystem();
+      drivetrainSubsystem.setDefaultCommand(new Drive(() -> -joystickLeft.getY(), () -> -joystickRight.getY(), drivetrainSubsystem));
+    }
 
-    redBallColorSensorI2C  = new RevColorSensor(0.30, 1, 0.25, 0.425, 0.05, 0.25, 0, 2047, true);
-    blueBallColorSensorI2C = new RevColorSensor(0.145, 0.275, 0.37, 0.47, 0.2, 1, 0, 2047, true);
-    redBallColorSensorMXP  = new RevColorSensor(0.30, 1, 0.25, 0.425, 0.05, 0.25, 0, 2047, false);
-    blueBallColorSensorMXP = new RevColorSensor(0.145, 0.275, 0.37, 0.47, 0.2, 1, 0, 2047, false);
-    ballUpper = new BallIdentification(redBallColorSensorMXP, blueBallColorSensorMXP);
-    ballLower = new BallIdentification(redBallColorSensorI2C, blueBallColorSensorI2C);
-    
+    if (Flags.intake) {
+      intakeSubsystem = new IntakeSubsystem();
+    }
+
+    if (Flags.indexer) {
+      redBallColorSensorI2C  = new RevColorSensor(0.30, 1, 0.25, 0.425, 0.05, 0.25, 0, 2047, true);
+      blueBallColorSensorI2C = new RevColorSensor(0.145, 0.275, 0.37, 0.47, 0.2, 1, 0, 2047, true);
+      redBallColorSensorMXP  = new RevColorSensor(0.30, 1, 0.25, 0.425, 0.05, 0.25, 0, 2047, false);
+      blueBallColorSensorMXP = new RevColorSensor(0.145, 0.275, 0.37, 0.47, 0.2, 1, 0, 2047, false);
+      BallIdentification ballUpper = new BallIdentification(redBallColorSensorMXP, blueBallColorSensorMXP);
+      BallIdentification ballLower = new BallIdentification(redBallColorSensorI2C, blueBallColorSensorI2C);
+      indexerSubsystem = new IndexerSubsystem(ballUpper, ballLower);
+      indexerSubsystem.setDefaultCommand(new DefaultIndexerCommand(indexerSubsystem, ballUpper, ballLower, new JoystickButton(xboxController, 2)::get));
+    }
+
+    hoodSubsystem.setDefaultCommand(new DefaultHoodCommand(limelight, hoodSubsystem));
+    shooterSubsystem.setDefaultCommand(new ShootStop(shooterSubsystem));
+
+    if (Flags.turret) {
+      turretSubsystem = new TurretSubsystem();
+      turretSubsystem.setDefaultCommand(new TurretCommand(limelight, turretSubsystem));
+    }
+
     configureButtonBindings();
   }
 
@@ -78,12 +89,21 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // setJoystickButtonWhileHeld(xboxController, 5, new ShootLow(ball, limelight, shooterSubsystem));
     // setJoystickButtonWhileHeld(xboxController, 6, new ShootHigh(ball, limelight, shooterSubsystem));
-    setJoystickButtonWhenPressed(joystickLeft, 1, new ShiftGearDown(drivetrainSubsystem));
-    setJoystickButtonWhenPressed(joystickRight, 1, new ShiftGearUp(drivetrainSubsystem));
+    if (Flags.drivetrain) {
+      setJoystickButtonWhenPressed(joystickLeft, 1, new ShiftGearDown(drivetrainSubsystem));
+      setJoystickButtonWhenPressed(joystickRight, 1, new ShiftGearUp(drivetrainSubsystem));
+    }
+
+    if (Flags.intake) {
+      setJoystickButtonWhileHeld(xboxController, 5, new IntakeIn(intakeSubsystem));
+      setJoystickButtonWhileHeld(xboxController, 2, new IntakeToggle(intakeSubsystem));
+    }
+
+    if (Flags.indexer) {
+      setJoystickButtonWhileHeld(xboxController, 1, new ManualIndexerCommand(indexerSubsystem));
+    }
+
     setJoystickButtonWhileHeld(xboxController, 6, new ShootManual(shooterSubsystem));
-    setJoystickButtonWhileHeld(xboxController, 1, new ManualIndexerCommand(indexerSubsystem));
-    setJoystickButtonWhileHeld(xboxController, 5, new IntakeIn(intakeSubsystem));  
-    setJoystickButtonWhileHeld(xboxController, 2, new IntakeToggle(intakeSubsystem));
   }
 
 

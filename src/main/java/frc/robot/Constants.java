@@ -78,4 +78,11 @@ public final class Constants {
     public static final double h2 = 8*12+8;         // Distance from ground to target (8'8")
     public static final double a1 = 30;             // Limelight mount angle (0 = facing forward, 90 = facing the ceiling)
   }
+
+  public static final class Flags {
+    public static final boolean drivetrain = true;
+    public static final boolean intake = true;
+    public static final boolean indexer = true;
+    public static final boolean turret = false;
+  }
 }
