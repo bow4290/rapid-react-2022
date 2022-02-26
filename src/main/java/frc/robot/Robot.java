@@ -50,7 +50,6 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
-
     // SmartDashboard.putBoolean("Is Ball Red?", m_robotContainer.redBallColorSensor.isTarget());
     // SmartDashboard.putBoolean("Is Ball Blue?", m_robotContainer.blueBallColorSensor.isTarget());
     // SmartDashboard.putBoolean("Is Ball Team Color?", m_robotContainer.ball.isBallTeamColor());
@@ -64,7 +63,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
@@ -80,6 +78,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     m_robotContainer.drivetrainSubsystem.resetDriveEncoders();
+    m_robotContainer.turretSubsystem.encoder.setPosition(0);
   }
 
   @Override

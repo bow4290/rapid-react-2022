@@ -7,7 +7,6 @@ import frc.robot.commands.Shooter.ShootLow;
 import frc.robot.commands.Shooter.ShootManual;
 import frc.robot.commands.Shooter.ShootStop;
 import frc.robot.commands.Indexer.*;
-import frc.robot.commands.Intake.IntakeIn;
 import frc.robot.commands.Intake.*;
 import frc.robot.commands.Drivetrain.*;
 import frc.robot.sensors.BallIdentification;
@@ -18,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.Turret.TurretCommand;
 
 public class RobotContainer {
   public static Joystick joystickLeft = new Joystick(JoystickConstants.LEFT_JOYSTICK);
@@ -30,6 +30,7 @@ public class RobotContainer {
   DrivetrainSubsystem drivetrainSubsystem = new DrivetrainSubsystem();
   private HoodSubsystem hoodSubsystem = new HoodSubsystem();
   private IndexerSubsystem indexerSubsystem = new IndexerSubsystem(ballUpper, ballLower);
+  public TurretSubsystem turretSubsystem;
 
   private IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
@@ -47,6 +48,8 @@ public class RobotContainer {
     indexerSubsystem.setDefaultCommand(new DefaultIndexerCommand(indexerSubsystem, ballUpper, ballLower, new JoystickButton(xboxController, 2)::get));
     intakeSubsystem.setDefaultCommand(new IntakeStop(intakeSubsystem));
     shooterSubsystem.setDefaultCommand(new ShootStop(shooterSubsystem));
+    turretSubsystem = new TurretSubsystem();
+    turretSubsystem.setDefaultCommand(new TurretCommand(limelight, turretSubsystem));
 
     redBallColorSensorI2C  = new RevColorSensor(0.30, 1, 0.25, 0.425, 0.05, 0.25, 0, 2047, true);
     blueBallColorSensorI2C = new RevColorSensor(0.145, 0.275, 0.37, 0.47, 0.2, 1, 0, 2047, true);
