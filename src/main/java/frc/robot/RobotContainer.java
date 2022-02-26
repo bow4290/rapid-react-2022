@@ -45,9 +45,9 @@ public class RobotContainer {
 
     if (Flags.colors) {
       redBallColorSensorI2C  = new RevColorSensor(0.30, 1, 0.25, 0.425, 0.05, 0.25, 0, 2047, true);
-      blueBallColorSensorI2C = new RevColorSensor(0.145, 0.23, 0.37, 0.47, 0.325, 1, 0, 2047, true);
+      blueBallColorSensorI2C = new RevColorSensor(0.145, 0.275, 0.37, 0.47, 0.2, 1, 0, 2047, true);
       redBallColorSensorMXP  = new RevColorSensor(0.30, 1, 0.25, 0.425, 0.05, 0.25, 0, 2047, false);
-      blueBallColorSensorMXP = new RevColorSensor(0.15, 0.23, 0.39, 0.47, 0.325, 0.43, 0, 2047, false);
+      blueBallColorSensorMXP = new RevColorSensor(0.145, 0.275, 0.37, 0.47, 0.2, 1, 0, 2047, false);
       ballUpper = new BallIdentification(redBallColorSensorMXP, blueBallColorSensorMXP);
       ballLower = new BallIdentification(redBallColorSensorI2C, blueBallColorSensorI2C);
     }    
