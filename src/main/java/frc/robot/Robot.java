@@ -18,33 +18,10 @@ import frc.robot.Constants.IndexerConstants;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-
-  Joystick xboxController = new Joystick(0);
-  JoystickButton xboxAButton = new JoystickButton(xboxController, 1);
-  JoystickButton xboxBButton = new JoystickButton(xboxController, 2);
-  JoystickButton xboxXButton = new JoystickButton(xboxController, 3);
-  JoystickButton xboxYButton = new JoystickButton(xboxController, 4);
-
-  double RPMSpeed = 0;
-  private WPI_VictorSPX victorMotor1 = new WPI_VictorSPX(IndexerConstants.upperIndexMotorChannel);
-  private WPI_VictorSPX victorMotor2 = new WPI_VictorSPX(IndexerConstants.lowerIndexMotorChannel);
-
   private RobotContainer m_robotContainer;
 
   @Override
   public void robotInit() {
-    SmartDashboard.putNumber("RPM Shooter Speed", RPMSpeed);
-
-    victorMotor1.configFactoryDefault();
-    victorMotor2.configFactoryDefault();
-
-    victorMotor1.setInverted(true);    
-    victorMotor2.setInverted(true);
-
-    victorMotor1.configVoltageCompSaturation(11);
-    victorMotor1.enableVoltageCompensation(true);
-    victorMotor2.configVoltageCompSaturation(11);    
-    victorMotor2.enableVoltageCompensation(true);
     m_robotContainer = new RobotContainer();
   }
 
@@ -64,7 +41,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
