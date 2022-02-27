@@ -30,12 +30,6 @@ public class RevColorSensor implements Sendable {
   private static int idGen = 0;
   private int id = ++idGen;
 
-  public RevColorSensor(int redLowThresh, int redHighThresh, int greenLowThresh,
-                        int greenHighThresh, int blueLowThresh, int blueHighThresh,
-                        int proxLowThresh, int proxHighThresh) {
-    this(redLowThresh, redHighThresh, greenLowThresh, greenHighThresh, blueLowThresh, blueHighThresh, proxLowThresh, proxHighThresh, null);
-  }
-
   public RevColorSensor(double redLowThresh, double redHighThresh, double greenLowThresh,
                         double greenHighThresh, double blueLowThresh, double blueHighThresh,
                         int proxLowThresh, int proxHighThresh, Boolean onboard) {
@@ -78,11 +72,11 @@ public class RevColorSensor implements Sendable {
     return (getProximity() > proxLowThresh && getProximity() < proxHighThresh);
   }
 
-  public double getRed() { return colorSensor.getRed(); }
+  public double getRed() { return colorSensor.getColor().red; }
 
-  public double getGreen() { return colorSensor.getGreen(); }
+  public double getGreen() { return colorSensor.getColor().green; }
 
-  public double getBlue() { return colorSensor.getBlue(); }
+  public double getBlue() { return colorSensor.getColor().blue; }
 
   public double getIR() { return colorSensor.getIR(); }
 

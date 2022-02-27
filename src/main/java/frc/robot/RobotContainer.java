@@ -61,7 +61,7 @@ public class RobotContainer {
       ballUpper = new BallIdentification(redBallColorSensorMXP, blueBallColorSensorMXP);
       ballLower = new BallIdentification(redBallColorSensorI2C, blueBallColorSensorI2C);
       indexerSubsystem = new IndexerSubsystem(ballUpper, ballLower);
-      indexerSubsystem.setDefaultCommand(new DefaultIndexerCommand(indexerSubsystem, shooterSubsystem, ballUpper, ballLower, new JoystickButton(xboxController, 2)::get));
+      indexerSubsystem.setDefaultCommand(new DefaultIndexerCommand(indexerSubsystem, shooterSubsystem, ballUpper, ballLower, new JoystickButton(xboxController, 3)::get));
     }
 
     if (Flags.hood){

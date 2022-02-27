@@ -56,7 +56,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public boolean isShooterReady() { 
     double targetSpeed = SmartDashboard.getNumber("RPM Shooter Speed", RPMSpeed);
-    double actualSpeed = shooterMotor.getSelectedSensorVelocity();
+    double actualSpeed = getShooterRPM();
 
     double errorRatio = actualSpeed/(targetSpeed*600/2048);
     if (errorRatio > 0.9) {
