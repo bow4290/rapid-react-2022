@@ -14,8 +14,8 @@ public final class Constants {
     public static final int leftMotor2Channel = 8;
  
 
-    public static final int gearShiftUpChannel = 0;
-    public static final int gearShiftDownChannel = 1;
+    public static final int gearShiftUpChannel = 4;
+    public static final int gearShiftDownChannel = 5;
 
     public static final double targetLinearDistance = 60;
     private static final double stage1Ratio = 60/12;
@@ -51,8 +51,8 @@ public final class Constants {
   public static final class IntakeConstants {
     public static int intakeMotorChannel = 13;
 
-    public static int intakeUpChannel = 01;
-    public static int intakeDownChannel = 23;
+    public static int intakeUpChannel = 0;
+    public static int intakeDownChannel = 1;
   }
 
   public static final class ShooterConstants {
