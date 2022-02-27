@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.Constants.Flags;
 import frc.robot.Constants.IndexerConstants;
 
 public class Robot extends TimedRobot {
@@ -77,7 +78,9 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    m_robotContainer.drivetrainSubsystem.resetDriveEncoders();
+    if (Flags.drivetrain){
+      m_robotContainer.drivetrainSubsystem.resetDriveEncoders();
+    }
     // m_robotContainer.turretSubsystem.encoder.setPosition(0);
   }
 

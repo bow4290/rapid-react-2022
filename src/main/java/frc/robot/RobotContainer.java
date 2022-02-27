@@ -25,7 +25,7 @@ public class RobotContainer {
   public static Joystick joystickRight = new Joystick(JoystickConstants.RIGHT_JOYSTICK);
   public static Joystick xboxController = new Joystick(JoystickConstants.XBOX_CONTROLLER);
 
-  private HoodSubsystem hoodSubsystem = new HoodSubsystem();
+  private HoodSubsystem hoodSubsystem;
   private IndexerSubsystem indexerSubsystem;
   public DrivetrainSubsystem drivetrainSubsystem;
   public TurretSubsystem turretSubsystem;
@@ -61,7 +61,11 @@ public class RobotContainer {
       indexerSubsystem.setDefaultCommand(new DefaultIndexerCommand(indexerSubsystem, shooterSubsystem, ballUpper, ballLower, new JoystickButton(xboxController, 2)::get));
     }
 
-    hoodSubsystem.setDefaultCommand(new DefaultHoodCommand(limelight, hoodSubsystem));
+    if (Flags.hood){
+      hoodSubsystem.setDefaultCommand(new DefaultHoodCommand(limelight, hoodSubsystem));
+      hoodSubsystem = new HoodSubsystem();
+    }
+
     shooterSubsystem.setDefaultCommand(new ShootStop(shooterSubsystem));
 
     if (Flags.turret) {
