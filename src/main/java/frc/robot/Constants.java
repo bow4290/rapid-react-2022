@@ -81,9 +81,9 @@ public final class Constants {
   }
 
   public static final class Flags {
-    public static final boolean drivetrain = false;
-    public static final boolean intake = false;
-    public static final boolean indexer = false;
+    public static final boolean drivetrain = true;
+    public static final boolean intake = true;
+    public static final boolean indexer = true;
     public static final boolean turret = false;
     public static final boolean hood = false;
   }

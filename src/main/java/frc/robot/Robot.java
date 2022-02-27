@@ -51,13 +51,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
-    }
-    if (Flags.drivetrain){
-      m_robotContainer.drivetrainSubsystem.resetDriveEncoders();
-    }
-    // m_robotContainer.turretSubsystem.encoder.setPosition(0);
+    if (m_autonomousCommand != null) m_autonomousCommand.cancel();
+    if (Flags.drivetrain) m_robotContainer.drivetrainSubsystem.resetDriveEncoders();
+    if (Flags.turret) m_robotContainer.turretSubsystem.encoder.setPosition(0);
   }
 
   @Override
