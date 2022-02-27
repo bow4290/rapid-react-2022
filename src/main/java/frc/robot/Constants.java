@@ -51,8 +51,8 @@ public final class Constants {
   public static final class IntakeConstants {
     public static int intakeMotorChannel = 13;
 
-    public static int intakeUpChannel = 6;
-    public static int intakeDownChannel = 7;
+    public static int intakeUpChannel = 01;
+    public static int intakeDownChannel = 23;
   }
 
   public static final class ShooterConstants {

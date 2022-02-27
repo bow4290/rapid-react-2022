@@ -58,7 +58,7 @@ public class ShooterSubsystem extends SubsystemBase {
     double targetSpeed = SmartDashboard.getNumber("RPM Shooter Speed", RPMSpeed);
     double actualSpeed = getShooterRPM();
 
-    double errorRatio = actualSpeed/(targetSpeed*600/2048);
+    double errorRatio = actualSpeed/targetSpeed;
     if (errorRatio > 0.9) {
       return true;
     } else {
