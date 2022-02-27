@@ -23,9 +23,11 @@ public class ShooterSubsystem extends SubsystemBase {
   private NetworkTableEntry kDEntry = tab.add("Shooter Motor kD", getkD()) .getEntry(); 
 
   // private NetworkTableEntry shooterRPMEntry = tab.add("Shooter Motor RPM", getShooterRPM()) .getEntry(); 
-  double RPMSpeed = 0;
+  double RPMSpeed = 3000;
 
   public ShooterSubsystem() {
+    SmartDashboard.putNumber("RPM Shooter Speed", RPMSpeed);
+
     shooterMotor.configFactoryDefault();
     shooterMotor.setInverted(TalonFXInvertType.Clockwise);
     shooterMotor.setNeutralMode(NeutralMode.Coast);
