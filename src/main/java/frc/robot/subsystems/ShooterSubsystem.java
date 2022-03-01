@@ -41,14 +41,17 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterMotor.config_kD(0, ShooterConstants.kD);
   }
 
-  public void shoot() {
+  public void shoot(double shooterRPM) {
     // V = Pulses / 100 ms => 1000 ms / 1 s * 60 s / 1 min * 1 rev / 2048 pulses
-    
+    double velocityPer100ms = (shooterRPM*2048)/600;
+    shooterMotor.set(ControlMode.Velocity, velocityPer100ms);
+  }
+
+  public void manualShoot() {
+    // V = Pulses / 100 ms => 1000 ms / 1 s * 60 s / 1 min * 1 rev / 2048 pulses
     double RPM = SmartDashboard.getNumber("RPM Shooter Speed", RPMSpeed);
     if (RPM != RPMSpeed) RPMSpeed = RPM;
-
     double velocityPer100ms = (RPM*2048)/600;
-
     shooterMotor.set(ControlMode.Velocity, velocityPer100ms);
   }
 

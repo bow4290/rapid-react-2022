@@ -60,7 +60,7 @@ public final class Constants {
 
     public static int shooterMotorVoltage = 11;
 
-    // public static double discardSpeedRPM = 2500.0;
+    public static double discardSpeedRPM = 1500.0;
 
     public static double kF = 1023.0/20330.0;
     public static double kP = 0.1;
