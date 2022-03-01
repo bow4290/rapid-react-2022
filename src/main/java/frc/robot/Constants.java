@@ -36,14 +36,14 @@ public final class Constants {
   public static final class HoodConstants {
     public static int hoodSolenoidExtendChannel = 2;
     public static int hoodSolenoidRetractChannel = 3;
-    public static double hoodExtendDistance = 125;    // Distance in inches
+    public static double hoodExtendDistance = 150;    // Distance in inches
   }
 
   public static final class IndexerConstants {
     public static int upperIndexMotorChannel = 0;
     public static int lowerIndexMotorChannel = 1;
     
-    public static double bothShootingIndexSpeed = 0.5;
+    public static double bothShootingIndexSpeed = 1;
     public static double bothIntakingIndexSpeed = 0.5;
     public static double lowerIntakingIndexSpeed = 0.5;
   }
@@ -63,7 +63,7 @@ public final class Constants {
     // public static double discardSpeedRPM = 2500.0;
 
     public static double kF = 1023.0/20330.0;
-    public static double kP = 0.01;
+    public static double kP = 0.1;
     public static double kI = 0;
     public static double kD = 0;
   }
@@ -75,9 +75,9 @@ public final class Constants {
   }
 
   public static final class LimelightConstants {
-    public static final double h1 = 24;             // Distance from ground to limelight
+    public static final double h1 = 29.5;             // Distance from ground to limelight
     public static final double h2 = 8*12+8;         // Distance from ground to target (8'8")
-    public static final double a1 = 30;             // Limelight mount angle (0 = facing forward, 90 = facing the ceiling)
+    public static final double a1 = 33.5;             // Limelight mount angle (0 = facing forward, 90 = facing the ceiling)
   }
 
   public static final class Flags {
