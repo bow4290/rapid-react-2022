@@ -61,12 +61,12 @@ public class RobotContainer {
       ballUpper = new BallIdentification(redBallColorSensorMXP, blueBallColorSensorMXP);
       ballLower = new BallIdentification(redBallColorSensorI2C, blueBallColorSensorI2C);
       indexerSubsystem = new IndexerSubsystem(ballUpper, ballLower);
-      indexerSubsystem.setDefaultCommand(new DefaultIndexerCommand(indexerSubsystem, shooterSubsystem, ballUpper, ballLower, new JoystickButton(xboxController, 3)::get));
+      indexerSubsystem.setDefaultCommand(new DefaultIndexerCommand(indexerSubsystem, shooterSubsystem, ballUpper, ballLower, new JoystickButton(xboxController, 5)::get));
     }
 
     if (Flags.hood){
-      hoodSubsystem.setDefaultCommand(new DefaultHoodCommand(limelight, hoodSubsystem));
       hoodSubsystem = new HoodSubsystem();
+      hoodSubsystem.setDefaultCommand(new DefaultHoodCommand(limelight, hoodSubsystem));
     }
 
     shooterSubsystem.setDefaultCommand(new ShootStop(shooterSubsystem));
@@ -110,7 +110,8 @@ public class RobotContainer {
       setJoystickButtonWhenHeld(xboxController, 1, new ManualIndexerCommand(indexerSubsystem));
     }
 
-    setJoystickButtonWhenHeld(xboxController, 6, new ShootManual(shooterSubsystem));
+    setJoystickButtonWhenHeld(xboxController, 6, new ShootHigh(ballUpper, limelight, shooterSubsystem));
+    setJoystickButtonWhenHeld(xboxController, 10, new ShootManual(shooterSubsystem));
   }
 
 

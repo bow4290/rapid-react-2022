@@ -1,6 +1,7 @@
 package frc.robot.commands.Shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.HoodConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.sensors.BallIdentification;
 import frc.robot.sensors.Limelight;
@@ -46,8 +47,12 @@ public class ShootHigh extends CommandBase {
   }
 
   private double calculateShooterSpeedRPM(double distance) {
-    // equation
-    
-    return 4000;
+    if(distance < HoodConstants.hoodExtendDistance){
+      // Hood Retracted Equation
+      return (3538*(Math.pow(1.002, distance))-200);
+    } else{
+      // Hood Extended Equation
+      return (1);
+    }
   }
 }

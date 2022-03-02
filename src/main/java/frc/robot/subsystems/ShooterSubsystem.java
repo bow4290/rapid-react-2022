@@ -24,6 +24,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   // private NetworkTableEntry shooterRPMEntry = tab.add("Shooter Motor RPM", getShooterRPM()) .getEntry(); 
   double RPMSpeed = 6000;
+  double targetSpeed = 0;
 
   public ShooterSubsystem() {
     SmartDashboard.putNumber("RPM Shooter Speed", RPMSpeed);
@@ -43,16 +44,16 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void shoot(double shooterRPM) {
     // V = Pulses / 100 ms => 1000 ms / 1 s * 60 s / 1 min * 1 rev / 2048 pulses
-    double velocityPer100ms = (shooterRPM*2048)/600;
-    shooterMotor.set(ControlMode.Velocity, velocityPer100ms);
+    targetSpeed = (shooterRPM*2048)/600;
+    shooterMotor.set(ControlMode.Velocity, targetSpeed);
   }
 
   public void manualShoot() {
     // V = Pulses / 100 ms => 1000 ms / 1 s * 60 s / 1 min * 1 rev / 2048 pulses
     double RPM = SmartDashboard.getNumber("RPM Shooter Speed", RPMSpeed);
     if (RPM != RPMSpeed) RPMSpeed = RPM;
-    double velocityPer100ms = (RPM*2048)/600;
-    shooterMotor.set(ControlMode.Velocity, velocityPer100ms);
+    targetSpeed = (RPM*2048)/600;
+    shooterMotor.set(ControlMode.Velocity, targetSpeed);
   }
 
   private double getShooterVelocityRaw() { return shooterMotor.getSelectedSensorVelocity(); }
@@ -60,7 +61,7 @@ public class ShooterSubsystem extends SubsystemBase {
   public double getShooterRPM() { return getShooterVelocityRaw()*600/2048; }
 
   public boolean isShooterReady() { 
-    double targetSpeed = SmartDashboard.getNumber("RPM Shooter Speed", RPMSpeed);
+    //double targetSpeed = SmartDashboard.getNumber("RPM Shooter Speed", RPMSpeed);
     double actualSpeed = getShooterRPM();
 
     double errorRatio = actualSpeed/targetSpeed;
@@ -78,17 +79,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    //SmartDashboard.putNumber("Shooter Motors RPM", getShooterRPM());
-    //SmartDashboard.putNumber("Shooter Motors kF", ShooterConstants.kF);
-    //SmartDashboard.putNumber("Shooter Motors kP", ShooterConstants.kP);
-    //SmartDashboard.putNumber("Shooter Motors kI", ShooterConstants.kI);
-    //SmartDashboard.putNumber("Shooter Motors kD", ShooterConstants.kD);
-
     kFEntry.setDouble(ShooterConstants.kF);
     kPEntry.setDouble(ShooterConstants.kP);
     kIEntry.setDouble(ShooterConstants.kI);
     kDEntry.setDouble(ShooterConstants.kD);
-    // shooterRPMEntry.setDouble(getShooterRPM());
 
     SmartDashboard.putNumber("Talon Velocity (RPM): ", shooterMotor.getSelectedSensorVelocity()*600/2048);  
   }
