@@ -20,7 +20,7 @@ public class ShootStop extends CommandBase {
 
   @Override
   public void execute() {
-    ShooterSubsystem.shooterMotor.set(ControlMode.Velocity, 0);
+    shooterSubsystem.shoot(0);
   }
   
   @Override
