@@ -2,9 +2,9 @@ package frc.robot;
 
 public final class Constants {
   public static final class JoystickConstants {
-    public static final int XBOX_CONTROLLER = 0;
-    public static final int LEFT_JOYSTICK = 1;
-    public static final int RIGHT_JOYSTICK = 2;
+    public static final int LEFT_JOYSTICK = 0;
+    public static final int RIGHT_JOYSTICK = 1;
+    public static final int XBOX_CONTROLLER = 2;
   }
 
   public static final class DriveConstants {
@@ -44,8 +44,8 @@ public final class Constants {
     public static int lowerIndexMotorChannel = 1;
     
     public static double bothShootingIndexSpeed = 1;
-    public static double bothIntakingIndexSpeed = 0.5;
-    public static double lowerIntakingIndexSpeed = 0.5;
+    public static double bothIntakingIndexSpeed = 0.2;
+    public static double lowerIntakingIndexSpeed = 0.2;
   }
 
   public static final class IntakeConstants {
