@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import java.lang.annotation.Target;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -57,14 +59,18 @@ public class ShooterSubsystem extends SubsystemBase {
   public double getShooterRPM() { return getShooterVelocityRaw()*600/2048; }
 
   public boolean isShooterReady() { 
-    double targetSpeed = SmartDashboard.getNumber("RPM Shooter Speed", RPMSpeed);
-    double actualSpeed = getShooterRPM();
-
-    double errorRatio = actualSpeed/targetSpeed;
-    if (errorRatio > 0.9) {
-      return true;
-    } else {
+      double targetSpeed = SmartDashboard.getNumber("RPM Shooter Speed", RPMSpeed);
+      double actualSpeed = getShooterRPM();
+      
+    if (targetSpeed == 0) {
       return false;
+    } else {
+      double errorRatio = actualSpeed/targetSpeed;
+      if (errorRatio > 0.9) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 
