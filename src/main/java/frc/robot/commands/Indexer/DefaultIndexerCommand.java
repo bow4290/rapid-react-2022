@@ -32,31 +32,31 @@ public class DefaultIndexerCommand extends CommandBase {
   @Override
   public void execute() {
     if(shooterSubsystem.isShooterReady()){
-      indexerSubsystem.turnBothIndexMotors(IndexerConstants.bothShootingIndexSpeed);
+      indexerSubsystem.turnBothIndexMotors(IndexerConstants.bothShootingIndexSpeed, IndexerConstants.bothShootingIndexSpeed);
       // when shooting, turn both motors at a constant pace
 
     } else if (isIntakeButtonPressed.getAsBoolean()) {
       System.out.println(ballLower.isBallPresent());
       System.out.println(ballUpper.isBallPresent());
       if (!ballLower.isBallPresent() && !ballUpper.isBallPresent()){
-        indexerSubsystem.turnBothIndexMotors(IndexerConstants.bothIntakingIndexSpeed);
+        indexerSubsystem.turnBothIndexMotors(IndexerConstants.upperIntakingIndexSpeed, IndexerConstants.upperIntakingIndexSpeed);
         //if no ball is present turn both motors until ballUpper is true
       
       } else if (ballLower.isBallPresent() && !ballUpper.isBallPresent()) {
-        indexerSubsystem.turnBothIndexMotors(IndexerConstants.bothIntakingIndexSpeed);
+        indexerSubsystem.turnBothIndexMotors(IndexerConstants.upperIntakingIndexSpeed, IndexerConstants.upperIntakingIndexSpeed);
         //if ball is in bottom indexer slot (& not upper slot) turn both motors until ballUpper true
       
       } else if (!ballLower.isBallPresent() && ballUpper.isBallPresent()) {
-        indexerSubsystem.turnUpperIndexMotor(0);
-        indexerSubsystem.turnLowerIndexMotor(IndexerConstants.lowerIntakingIndexSpeed);
+        indexerSubsystem.turnBothIndexMotors(0, IndexerConstants.upperIntakingIndexSpeed);
+
         //if ball is in top indexer slot (& not lower slot) turn lower motor until ballLower is true
 
       } else if (ballLower.isBallPresent() && ballUpper.isBallPresent()) {
-        indexerSubsystem.turnBothIndexMotors(0);
+        indexerSubsystem.turnBothIndexMotors(0, 0);
         //if ball is in both indexer slots do nothing
       }
     } else {
-      indexerSubsystem.turnBothIndexMotors(0);
+      indexerSubsystem.turnBothIndexMotors(0, 0);
       //if not shooting and not intaking, do nothing.
     }
   }

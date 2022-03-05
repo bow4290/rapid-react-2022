@@ -17,12 +17,12 @@ public class ManualIndexerCommand extends CommandBase {
 
   @Override
   public void execute() {
-    indexerSubsystem.turnBothIndexMotors(0.5);
+    indexerSubsystem.turnBothIndexMotors(0.5, 0.5);
   }
 
   @Override
   public void end(boolean interrupted) {    
-    indexerSubsystem.turnBothIndexMotors(0);
+    indexerSubsystem.turnBothIndexMotors(0, 0);
   }
 
   @Override

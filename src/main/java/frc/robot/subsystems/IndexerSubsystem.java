@@ -43,9 +43,9 @@ public class IndexerSubsystem extends SubsystemBase {
     lowerIndexMotor.enableVoltageCompensation(true);
   }
 
-  public void turnBothIndexMotors(double indexSpeed){
-    turnUpperIndexMotor(indexSpeed);
-    turnLowerIndexMotor(indexSpeed);
+  public void turnBothIndexMotors(double upperIndexSpeed, double lowerIndexSpeed){
+    turnUpperIndexMotor(upperIndexSpeed);
+    turnLowerIndexMotor(lowerIndexSpeed);
   }
 
   public void turnUpperIndexMotor(double upperIndexSpeed){
