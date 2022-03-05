@@ -44,7 +44,7 @@ public final class Constants {
     public static int lowerIndexMotorChannel = 1;
     
     public static double bothShootingIndexSpeed = 1;
-    public static double upperIntakingIndexSpeed = 0.225;
+    public static double upperIntakingIndexSpeed = 0.200;
     public static double lowerIntakingIndexSpeed = 0.275;
     public static double slowIndexSpeed = 0.15;
   }
