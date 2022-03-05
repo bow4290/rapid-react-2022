@@ -34,8 +34,8 @@ public final class Constants {
   }
 
   public static final class HoodConstants {
-    public static int hoodSolenoidExtendChannel = 2;
-    public static int hoodSolenoidRetractChannel = 3;
+    public static int hoodSolenoidExtendChannel = 3;
+    public static int hoodSolenoidRetractChannel = 2;
     public static double hoodExtendDistance = 150;    // Distance in inches
   }
 

@@ -12,8 +12,8 @@ public class TurretCommand extends CommandBase {
   private TurretState turretState = TurretState.INIT;
   private TurretState newTurretState;
   private double setpoint = 0.0;
-  private double defaultTrackRPM = 0.0;
-  private double searchRPM = 0.2;
+  private double defaultTrackSpeed = 0.3;
+  private double searchSpeed = 0.3;
 
   public TurretCommand(Limelight limelight, TurretSubsystem turretSubsystem) {
     this.limelight = limelight;
@@ -32,9 +32,9 @@ public class TurretCommand extends CommandBase {
 
     if (newTurretState != turretState) {
       if (newTurretState == TurretState.SEARCH) {
-        setpoint = searchRPM;
+        setpoint = searchSpeed;
       } else {
-        setpoint = defaultTrackRPM;
+        setpoint = defaultTrackSpeed;
       }
       turretState = newTurretState;
     }

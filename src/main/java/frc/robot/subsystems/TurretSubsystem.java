@@ -43,6 +43,8 @@ public class TurretSubsystem extends SubsystemBase {
     encoder.setPosition(0);
 
     // TODO: Configure constants
+    // TODO: there's 320 teeth on the turret gear btw. 
+
     // F-PID
     kF = 0.05;
     kP = 0.01;

@@ -65,8 +65,8 @@ public class RobotContainer {
     }
 
     if (Flags.hood){
-      hoodSubsystem.setDefaultCommand(new DefaultHoodCommand(limelight, hoodSubsystem));
       hoodSubsystem = new HoodSubsystem();
+      hoodSubsystem.setDefaultCommand(new DefaultHoodCommand(limelight, hoodSubsystem));
     }
 
     shooterSubsystem.setDefaultCommand(new ShootStop(shooterSubsystem));
