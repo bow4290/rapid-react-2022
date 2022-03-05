@@ -72,6 +72,10 @@ public class TurretSubsystem extends SubsystemBase {
     //pid.setReference(setpoint, CANSparkMax.ControlType.kVelocity);
   }
 
+  public void turnManual(double speed){
+    motor.set(speed);
+  }
+
   public boolean getHitLeftLimitSwitch() {
     return motor.getFault(FaultID.kSoftLimitRev);
   }
