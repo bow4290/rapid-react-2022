@@ -52,7 +52,7 @@ public class ShootHigh extends CommandBase {
       return (3538*(Math.pow(1.002, distance))-100);
     } else{
       // Hood Extended Equation
-      return (5000);
+      return (5800);
     }
   }
 }
