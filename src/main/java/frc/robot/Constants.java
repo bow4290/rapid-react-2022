@@ -38,6 +38,9 @@ public final class Constants {
 
     public static int elevatorLockChannel = 4;
     public static int elevatorUnlockChannel = 5; 
+
+    public static double elevatorSpeed = 0.2;
+    //elevatorSpeed is measured in percent output
   }
 
   public static final class HoodConstants {

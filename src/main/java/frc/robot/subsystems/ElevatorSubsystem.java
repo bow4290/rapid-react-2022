@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorConstants;
 
@@ -28,23 +29,30 @@ public class ElevatorSubsystem extends SubsystemBase {
   }
 
   public void extendElevator(double climbSpeed){
-
+    elevatorClimbMotor.set(ControlMode.PercentOutput, ElevatorConstants.elevatorSpeed);
   }
 
   public void retractElevator(double climbSpeed){
-
+    elevatorClimbMotor.set(ControlMode.PercentOutput, -ElevatorConstants.elevatorSpeed);
   }
 
   public void stopElevator(double climbSpeed){
-
+    elevatorClimbMotor.set(ControlMode.PercentOutput, 0);
   }
 
   public void lockElevator(boolean isElevatorLocked){
-
+    if (isElevatorLocked == true){
+      elevatorSolenoid.set(DoubleSolenoid.Value.kForward);
+      elevatorStatus = elevatorStatus.LOCKED;
+    } else {
+      elevatorSolenoid.set(DoubleSolenoid.Value.kReverse);
+      elevatorStatus = elevatorStatus.UNLOCKED;
+    }
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putString("elevator locked?", elevatorStatus.toString());
   }
 }
