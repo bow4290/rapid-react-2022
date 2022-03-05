@@ -33,6 +33,10 @@ public final class Constants {
     public static final double encoderHighDistanceConversion = wheelCircum/(stage1Ratio * stage2Ratio * highSpreadRatio * encoderCPR);
   }
 
+  public static final class ElevatorConstants {
+    public static int elevatorClimbMotorChannel = 0;
+  }
+
   public static final class HoodConstants {
     public static int hoodSolenoidExtendChannel = 2;
     public static int hoodSolenoidRetractChannel = 3;
