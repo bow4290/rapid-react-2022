@@ -35,6 +35,9 @@ public final class Constants {
 
   public static final class ElevatorConstants {
     public static int elevatorClimbMotorChannel = 0;
+
+    public static int elevatorLockChannel = 4;
+    public static int elevatorUnlockChannel = 5; 
   }
 
   public static final class HoodConstants {
