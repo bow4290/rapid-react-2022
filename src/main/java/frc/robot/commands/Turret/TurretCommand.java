@@ -46,6 +46,7 @@ public class TurretCommand extends CommandBase {
     } 
     
     // turretSubsystem.turn(setpoint);
+    turretSubsystem.turnManual(setpoint);
   }
 
   @Override
@@ -59,6 +60,8 @@ public class TurretCommand extends CommandBase {
   private void updateSearchSetpoint() {
     if (turretSubsystem.getHitLeftLimitSwitch()) { setpoint = Math.abs(setpoint); }
     else if (turretSubsystem.getHitRightLimitSwitch()) { setpoint = -1 * Math.abs(setpoint); }
+
+    //FIXME: we need to see whats up with the direction change. 
   }
 
   private void updateTrackSetpoint() {

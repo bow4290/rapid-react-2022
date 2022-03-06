@@ -75,7 +75,7 @@ public class RobotContainer {
 
     if (Flags.turret) {
       turretSubsystem = new TurretSubsystem();
-      // turretSubsystem.setDefaultCommand(new TurretCommand(limelight, turretSubsystem));
+      turretSubsystem.setDefaultCommand(new TurretCommand(limelight, turretSubsystem));
     }
 
     configureButtonBindings();
