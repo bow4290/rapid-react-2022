@@ -70,8 +70,9 @@ public final class Constants {
 
   public static final class TurretConstants {
     public static int deviceID = 11;
-    public static int forwardRotations = 30;
-    public static int reverseRotations = -30;
+    public static int forwardRotations = 115; //120 is 90 degrees CW
+    public static int reverseRotations = -115; //-120 is 90 degrees CCW
+    public static double manualTurnSpeed = 0.5;
   }
 
   public static final class LimelightConstants {
@@ -81,10 +82,10 @@ public final class Constants {
   }
 
   public static final class Flags {
-    public static final boolean drivetrain = true;
-    public static final boolean intake = true;
-    public static final boolean indexer = true;
-    public static final boolean turret = false;
+    public static final boolean drivetrain = false;
+    public static final boolean intake = false;
+    public static final boolean indexer = false;
+    public static final boolean turret = true;
     public static final boolean hood = true;
   }
 }

@@ -18,6 +18,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.Turret.ManualTurretClockwiseCommand;
+import frc.robot.commands.Turret.ManualTurretCounterClockwiseCommand;
 import frc.robot.commands.Turret.TurretCommand;
 
 public class RobotContainer {
@@ -73,7 +75,7 @@ public class RobotContainer {
 
     if (Flags.turret) {
       turretSubsystem = new TurretSubsystem();
-      turretSubsystem.setDefaultCommand(new TurretCommand(limelight, turretSubsystem));
+      // turretSubsystem.setDefaultCommand(new TurretCommand(limelight, turretSubsystem));
     }
 
     configureButtonBindings();
@@ -96,22 +98,25 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // setJoystickButtonWhileHeld(xboxController, 5, new ShootLow(ball, limelight, shooterSubsystem));
     // setJoystickButtonWhileHeld(xboxController, 6, new ShootHigh(ball, limelight, shooterSubsystem));
+    setJoystickButtonWhenHeld(xboxController, 5, new ManualTurretClockwiseCommand(turretSubsystem));
+    setJoystickButtonWhenHeld(xboxController, 6, new ManualTurretCounterClockwiseCommand(turretSubsystem));
+
     if (Flags.drivetrain) {
       setJoystickButtonWhenPressed(joystickLeft, 1, new ShiftGearDown(drivetrainSubsystem));
       setJoystickButtonWhenPressed(joystickRight, 1, new ShiftGearUp(drivetrainSubsystem));
     }
 
     if (Flags.intake) {
-      setJoystickButtonWhenHeld(xboxController, 5, new IntakeIn(intakeSubsystem));
-      setJoystickButtonWhenHeld(xboxController, 2, new IntakeToggle(intakeSubsystem));
+      // setJoystickButtonWhenHeld(xboxController, 5, new IntakeIn(intakeSubsystem));
+      // setJoystickButtonWhenHeld(xboxController, 2, new IntakeToggle(intakeSubsystem));
     }
 
     if (Flags.indexer) {
-      setJoystickButtonWhenHeld(xboxController, 1, new ManualIndexerCommand(indexerSubsystem));
+      // setJoystickButtonWhenHeld(xboxController, 1, new ManualIndexerCommand(indexerSubsystem));
     }
 
-    setJoystickButtonWhenHeld(xboxController, 6, new ShootHigh(ballUpper, limelight, shooterSubsystem));
-    setJoystickButtonWhenHeld(xboxController, 10, new ShootManual(shooterSubsystem));
+    // setJoystickButtonWhenHeld(xboxController, 6, new ShootHigh(ballUpper, limelight, shooterSubsystem));
+    // setJoystickButtonWhenHeld(xboxController, 10, new ShootManual(shooterSubsystem));
   }
 
 

@@ -45,7 +45,7 @@ public class TurretCommand extends CommandBase {
       updateTrackSetpoint();
     } 
     
-    turretSubsystem.turn(setpoint);
+    // turretSubsystem.turn(setpoint);
   }
 
   @Override
