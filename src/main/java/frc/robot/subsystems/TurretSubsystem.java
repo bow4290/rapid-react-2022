@@ -18,7 +18,7 @@ public class TurretSubsystem extends SubsystemBase {
   public RelativeEncoder encoder;
   private SparkMaxPIDController pid;
 
-  private double kP, kI, kD, kF, kMaxOutput, kMinOutput, setpoint;
+  // private double kP, kI, kD, kF, kMaxOutput, kMinOutput, setpoint;
 
   public TurretSubsystem() {
     if (!Flags.turret) throw new Error("Turret flag must be set to create a TurretSubsystem!");
@@ -37,7 +37,7 @@ public class TurretSubsystem extends SubsystemBase {
     motor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, TurretConstants.forwardRotations);
     motor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, TurretConstants.reverseRotations);
 
-    pid = motor.getPIDController();
+    // pid = motor.getPIDController();
 
     encoder = motor.getEncoder();
     encoder.setPosition(0);
@@ -45,32 +45,32 @@ public class TurretSubsystem extends SubsystemBase {
     // TODO: Configure constants
     // TODO: there's 320 teeth on the turret gear btw. 
     // F-PID
-    kF = 0.05;
-    kP = 0.01;
-    kI = 0.0;
-    kD = 0.0;
-    kMaxOutput = 1.0;
-    kMinOutput = -1.0;
+    // kF = 0.05;
+    // kP = 0.01;
+    // kI = 0.0;
+    // kD = 0.0;
+    // kMaxOutput = 1.0;
+    // kMinOutput = -1.0;
 
-    pid.setFF(kF);
-    pid.setP(kP);
-    pid.setI(kI);
-    pid.setD(kD);
-    pid.setOutputRange(kMinOutput, kMaxOutput);
+    // pid.setFF(kF);
+    // pid.setP(kP);
+    // pid.setI(kI);
+    // pid.setD(kD);
+    // pid.setOutputRange(kMinOutput, kMaxOutput);
 
-    SmartDashboard.putNumber("P Gain", kP);
-    SmartDashboard.putNumber("I Gain", kI);
-    SmartDashboard.putNumber("D Gain", kD);
-    SmartDashboard.putNumber("Feed Forward", kF);
-    SmartDashboard.putNumber("Max Output", kMaxOutput);
-    SmartDashboard.putNumber("Min Output", kMinOutput);
+    // SmartDashboard.putNumber("P Gain", kP);
+    // SmartDashboard.putNumber("I Gain", kI);
+    // SmartDashboard.putNumber("D Gain", kD);
+    // SmartDashboard.putNumber("Feed Forward", kF);
+    // SmartDashboard.putNumber("Max Output", kMaxOutput);
+    // SmartDashboard.putNumber("Min Output", kMinOutput);
   }
 
-  public void turn(double setpoint) {
-    setSetPoint(setpoint);
-    motor.set(setpoint);
+  // public void turn(double setpoint) {
+  //   setSetPoint(setpoint);
+  //   motor.set(setpoint);
     //pid.setReference(setpoint, CANSparkMax.ControlType.kVelocity);
-  }
+  // }
 
   public void turnManual(double speed){
     motor.set(speed);
@@ -84,32 +84,32 @@ public class TurretSubsystem extends SubsystemBase {
     return motor.getFault(FaultID.kSoftLimitFwd);
   }
 
-  public double getSetPoint() {
-    return setpoint;
-  }
+  // public double getSetPoint() {
+    // return setpoint;
+  // }
 
-  public void setSetPoint(double setpoint) {
-    this.setpoint = setpoint;
-  }
+  // public void setSetPoint(double setpoint) {
+    // this.setpoint = setpoint;
+  // }
 
   @Override
   public void periodic() {
-    double p = SmartDashboard.getNumber("P Gain", 0);
-    double i = SmartDashboard.getNumber("I Gain", 0);
-    double d = SmartDashboard.getNumber("D Gain", 0);
-    double ff = SmartDashboard.getNumber("Feed Forward", 0);
-    double max = SmartDashboard.getNumber("Max Output", 0);
-    double min = SmartDashboard.getNumber("Min Output", 0);
+    // double p = SmartDashboard.getNumber("P Gain", 0);
+    // double i = SmartDashboard.getNumber("I Gain", 0);
+    // double d = SmartDashboard.getNumber("D Gain", 0);
+    // double ff = SmartDashboard.getNumber("Feed Forward", 0);
+    // double max = SmartDashboard.getNumber("Max Output", 0);
+    // double min = SmartDashboard.getNumber("Min Output", 0);
 
-    if((p != kP)) { pid.setP(p); kP = p; }
-    if((i != kI)) { pid.setI(i); kI = i; }
-    if((d != kD)) { pid.setD(d); kD = d; }
-    if((ff != kF)) { pid.setFF(ff); kF = ff; }
-    if((max != kMaxOutput) || (min != kMinOutput)) { 
-      pid.setOutputRange(min, max); 
-      kMinOutput = min; kMaxOutput = max; 
-    }
-    SmartDashboard.putNumber("SetPoint", setpoint);
-    SmartDashboard.putNumber("ProcessVariable", encoder.getVelocity());
+    // if((p != kP)) { pid.setP(p); kP = p; }
+    // if((i != kI)) { pid.setI(i); kI = i; }
+    // if((d != kD)) { pid.setD(d); kD = d; }
+    // if((ff != kF)) { pid.setFF(ff); kF = ff; }
+    // if((max != kMaxOutput) || (min != kMinOutput)) { 
+    //   pid.setOutputRange(min, max); 
+    //   kMinOutput = min; kMaxOutput = max; 
+    // }
+    // SmartDashboard.putNumber("SetPoint", setpoint);
+    // SmartDashboard.putNumber("ProcessVariable", encoder.getVelocity());
   }
 }

@@ -98,8 +98,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // setJoystickButtonWhileHeld(xboxController, 5, new ShootLow(ball, limelight, shooterSubsystem));
     // setJoystickButtonWhileHeld(xboxController, 6, new ShootHigh(ball, limelight, shooterSubsystem));
-    setJoystickButtonWhenPressed(xboxController, 5, new ManualTurretClockwiseCommand(turretSubsystem));
-    setJoystickButtonWhenPressed(xboxController, 6, new ManualTurretCounterClockwiseCommand(turretSubsystem));
+    setJoystickButtonWhenHeld(xboxController, 5, new ManualTurretClockwiseCommand(turretSubsystem));
+    setJoystickButtonWhenHeld(xboxController, 6, new ManualTurretCounterClockwiseCommand(turretSubsystem));
 
     if (Flags.drivetrain) {
       setJoystickButtonWhenPressed(joystickLeft, 1, new ShiftGearDown(drivetrainSubsystem));
