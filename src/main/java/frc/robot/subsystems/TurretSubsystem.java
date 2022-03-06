@@ -16,7 +16,7 @@ public class TurretSubsystem extends SubsystemBase {
 
   private CANSparkMax motor;
   public RelativeEncoder encoder;
-  private SparkMaxPIDController pid;
+  // private SparkMaxPIDController pid;
 
   // private double kP, kI, kD, kF, kMaxOutput, kMinOutput, setpoint;
 
@@ -26,7 +26,7 @@ public class TurretSubsystem extends SubsystemBase {
     motor = new CANSparkMax(TurretConstants.deviceID, MotorType.kBrushless);
     motor.restoreFactoryDefaults();
 
-    motor.setInverted(true); // Not sure which orientation we want
+    motor.setInverted(true);
     motor.setIdleMode(IdleMode.kBrake);
     motor.enableVoltageCompensation(11.0);
 
