@@ -2,9 +2,9 @@ package frc.robot;
 
 public final class Constants {
   public static final class JoystickConstants {
-    public static final int XBOX_CONTROLLER = 0;
-    public static final int LEFT_JOYSTICK = 1;
-    public static final int RIGHT_JOYSTICK = 2;
+    public static final int LEFT_JOYSTICK = 0;
+    public static final int RIGHT_JOYSTICK = 1;
+    public static final int XBOX_CONTROLLER = 2;
   }
 
   public static final class DriveConstants {
@@ -36,12 +36,12 @@ public final class Constants {
   public static final class ElevatorConstants {
     public static int elevatorClimbMotorChannel = 10;
 
-    public static double forwardSoftLimit = 200000; //revolutions the motor can rotate CW (should be up)
-    public static double reverseSoftLimit = 0; //revolutions the motor can rotate CCW (should be down)
+    public static double forwardSoftLimit = 175000; //revolutions the motor can rotate CW (should be up)
+    public static double reverseSoftLimit = 5000; //revolutions the motor can rotate CCW (should be down)
     // public static int elevatorLockChannel = 4;
     // public static int elevatorUnlockChannel = 5; 
 
-    public static double elevatorSpeed = 0.3;
+    public static double elevatorSpeed = 0.75;
     //elevatorSpeed is measured in percent output
   }
 
