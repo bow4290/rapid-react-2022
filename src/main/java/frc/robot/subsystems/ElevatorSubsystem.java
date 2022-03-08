@@ -16,16 +16,24 @@ import frc.robot.Constants.ElevatorConstants;
 public class ElevatorSubsystem extends SubsystemBase {
   /** Creates a new ElevatorSubsystem. */
   private WPI_TalonFX elevatorClimbMotor = new WPI_TalonFX(ElevatorConstants.elevatorClimbMotorChannel);
-  private final DoubleSolenoid elevatorSolenoid;
+  // private final DoubleSolenoid elevatorSolenoid;
 
-  public enum ElevatorStatus { LOCKED, UNLOCKED }
-  public static ElevatorStatus elevatorStatus;
+  // public enum ElevatorStatus { LOCKED, UNLOCKED }
+  // public static ElevatorStatus elevatorStatus;
   public ElevatorSubsystem() {
     elevatorClimbMotor.setNeutralMode(NeutralMode.Brake);
-    elevatorClimbMotor.setInverted(TalonFXInvertType.Clockwise);
+    elevatorClimbMotor.setInverted(TalonFXInvertType.CounterClockwise);
 
-    elevatorSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, ElevatorConstants.elevatorLockChannel, ElevatorConstants.elevatorUnlockChannel);
-    elevatorStatus = ElevatorStatus.UNLOCKED;
+    elevatorClimbMotor.configForwardSoftLimitEnable(true);
+    elevatorClimbMotor.configReverseSoftLimitEnable(true);
+
+    elevatorClimbMotor.configForwardSoftLimitThreshold(ElevatorConstants.forwardSoftLimit);
+    elevatorClimbMotor.configReverseSoftLimitThreshold(ElevatorConstants.reverseSoftLimit);
+
+    elevatorClimbMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
+    elevatorClimbMotor.setSelectedSensorPosition(0);
+    // elevatorSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, ElevatorConstants.elevatorLockChannel, ElevatorConstants.elevatorUnlockChannel);
+    // elevatorStatus = ElevatorStatus.UNLOCKED;
   }
 
   public void extendElevator(double climbSpeed){
@@ -36,23 +44,28 @@ public class ElevatorSubsystem extends SubsystemBase {
     elevatorClimbMotor.set(ControlMode.PercentOutput, -ElevatorConstants.elevatorSpeed);
   }
 
-  public void stopElevator(double climbSpeed){
+  public void stopElevator(){
     elevatorClimbMotor.set(ControlMode.PercentOutput, 0);
   }
 
-  public void lockElevator(boolean isElevatorLocked){
-    if (isElevatorLocked == true){
-      elevatorSolenoid.set(DoubleSolenoid.Value.kForward);
-      elevatorStatus = elevatorStatus.LOCKED;
-    } else {
-      elevatorSolenoid.set(DoubleSolenoid.Value.kReverse);
-      elevatorStatus = elevatorStatus.UNLOCKED;
-    }
+  public double getEncoderposition(){
+    double position = elevatorClimbMotor.getSelectedSensorPosition();
+    return position;
   }
+
+  // public void lockElevator(boolean isElevatorLocked){
+  //   if (isElevatorLocked == true){
+  //     elevatorSolenoid.set(DoubleSolenoid.Value.kForward);
+  //     elevatorStatus = elevatorStatus.LOCKED;
+  //   } else {
+  //     elevatorSolenoid.set(DoubleSolenoid.Value.kReverse);
+  //     elevatorStatus = elevatorStatus.UNLOCKED;
+  //   }
+  // }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putString("elevator locked?", elevatorStatus.toString());
+    // SmartDashboard.putString("elevator locked?", elevatorStatus.toString());
   }
 }

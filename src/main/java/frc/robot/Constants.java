@@ -34,12 +34,14 @@ public final class Constants {
   }
 
   public static final class ElevatorConstants {
-    public static int elevatorClimbMotorChannel = 0;
+    public static int elevatorClimbMotorChannel = 10;
 
-    public static int elevatorLockChannel = 4;
-    public static int elevatorUnlockChannel = 5; 
+    public static double forwardSoftLimit = 200000; //revolutions the motor can rotate CW (should be up)
+    public static double reverseSoftLimit = 0; //revolutions the motor can rotate CCW (should be down)
+    // public static int elevatorLockChannel = 4;
+    // public static int elevatorUnlockChannel = 5; 
 
-    public static double elevatorSpeed = 0.2;
+    public static double elevatorSpeed = 0.3;
     //elevatorSpeed is measured in percent output
   }
 
@@ -91,8 +93,8 @@ public final class Constants {
   }
 
   public static final class Flags {
-    public static final boolean drivetrain = true;
-    public static final boolean intake = false;
+    public static final boolean drivetrain = false;
+    public static final boolean intake = true;
     public static final boolean indexer = false;
     public static final boolean turret = false;
     public static final boolean hood = false;
