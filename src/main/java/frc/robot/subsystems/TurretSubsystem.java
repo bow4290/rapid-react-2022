@@ -26,7 +26,7 @@ public class TurretSubsystem extends SubsystemBase {
     motor = new CANSparkMax(TurretConstants.deviceID, MotorType.kBrushless);
     motor.restoreFactoryDefaults();
 
-    motor.setInverted(true);
+    motor.setInverted(false);
     motor.setIdleMode(IdleMode.kBrake);
     motor.enableVoltageCompensation(11.0);
 

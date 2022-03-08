@@ -70,8 +70,8 @@ public final class Constants {
 
   public static final class TurretConstants {
     public static int deviceID = 11;
-    public static int forwardRotations = 60;
-    public static int reverseRotations = -60;  // +/-115
+    public static int forwardRotations = 110;
+    public static int reverseRotations = -110;
     public static double manualTurnSpeed = 0.5;
   }
 

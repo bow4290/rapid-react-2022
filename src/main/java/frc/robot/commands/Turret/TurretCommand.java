@@ -58,11 +58,9 @@ public class TurretCommand extends CommandBase {
   }
 
   private void updateSearchSetpoint() {
-    private void updateSearchSetpoint() {
-      if (turretSubsystem.getHitLeftLimitSwitch()) { setpoint = -1* Math.abs(setpoint); }
-      else if (turretSubsystem.getHitRightLimitSwitch()) { setpoint = Math.abs(setpoint); }
-    }
-    System.out.println("motor speed is" + setpoint);
+    if (turretSubsystem.getHitLeftLimitSwitch()) { setpoint = Math.abs(setpoint); }
+    else if (turretSubsystem.getHitRightLimitSwitch()) { setpoint = -1 * Math.abs(setpoint); }
+
     //FIXME: we need to see whats up with the direction change. 
   }
 
