@@ -33,6 +33,18 @@ public final class Constants {
     public static final double encoderHighDistanceConversion = wheelCircum/(stage1Ratio * stage2Ratio * highSpreadRatio * encoderCPR);
   }
 
+  public static final class ElevatorConstants {
+    public static int elevatorClimbMotorChannel = 10;
+
+    public static double forwardSoftLimit = 175000; //revolutions the motor can rotate CW (should be up)
+    public static double reverseSoftLimit = 5000; //revolutions the motor can rotate CCW (should be down)
+    // public static int elevatorLockChannel = 4;
+    // public static int elevatorUnlockChannel = 5; 
+
+    public static double elevatorSpeed = 0.75;
+    //elevatorSpeed is measured in percent output
+  }
+
   public static final class HoodConstants {
     public static int hoodSolenoidExtendChannel = 3;
     public static int hoodSolenoidRetractChannel = 2;

@@ -10,6 +10,7 @@ import frc.robot.commands.Shooter.ShootStop;
 import frc.robot.commands.Indexer.*;
 import frc.robot.commands.Intake.*;
 import frc.robot.commands.Drivetrain.*;
+import frc.robot.commands.Elevator.*;
 import frc.robot.sensors.BallIdentification;
 import frc.robot.sensors.Limelight;
 import frc.robot.sensors.RevColorSensor;
@@ -31,7 +32,7 @@ public class RobotContainer {
   private IndexerSubsystem indexerSubsystem;
   public DrivetrainSubsystem drivetrainSubsystem;
   public TurretSubsystem turretSubsystem;
-
+  private ElevatorSubsystem elevatorSubsystem;
   private IntakeSubsystem intakeSubsystem;
   private ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
 
@@ -78,6 +79,8 @@ public class RobotContainer {
       turretSubsystem.setDefaultCommand(new TurretCommand(limelight, turretSubsystem));
     }
 
+    elevatorSubsystem = new ElevatorSubsystem();
+
     configureButtonBindings();
   }
 
@@ -107,16 +110,15 @@ public class RobotContainer {
     }
 
     if (Flags.intake) {
-      // setJoystickButtonWhenHeld(xboxController, 5, new IntakeIn(intakeSubsystem));
-      // setJoystickButtonWhenHeld(xboxController, 2, new IntakeToggle(intakeSubsystem));
+      setJoystickButtonWhenHeld(xboxController, 1, new IntakeIn(intakeSubsystem));
+      setJoystickButtonWhenHeld(xboxController, 2, new IntakeToggle(intakeSubsystem));
     }
 
     if (Flags.indexer) {
       // setJoystickButtonWhenHeld(xboxController, 1, new ManualIndexerCommand(indexerSubsystem));
     }
 
-    // setJoystickButtonWhenHeld(xboxController, 6, new ShootHigh(ballUpper, limelight, shooterSubsystem));
-    // setJoystickButtonWhenHeld(xboxController, 10, new ShootManual(shooterSubsystem));
+    setJoystickButtonWhenHeld(xboxController, 6, new ShootManual(shooterSubsystem));
   }
 
 
