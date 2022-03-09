@@ -16,6 +16,8 @@ public class TurretSubsystem extends SubsystemBase {
 
   private CANSparkMax motor;
   public RelativeEncoder encoder;
+
+  public boolean isTurretStopped = false;
   // private SparkMaxPIDController pid;
 
   // private double kP, kI, kD, kF, kMaxOutput, kMinOutput, setpoint;
@@ -75,6 +77,10 @@ public class TurretSubsystem extends SubsystemBase {
   public void turnManual(double speed){
     motor.set(speed);
   }
+  public void stopTurret(){
+    motor.set(0);
+  }
+  //FIXME: I want to add a "turnToPosition" method for convenience sake.
 
   public boolean getHitLeftLimitSwitch() {
     return motor.getFault(FaultID.kSoftLimitRev);

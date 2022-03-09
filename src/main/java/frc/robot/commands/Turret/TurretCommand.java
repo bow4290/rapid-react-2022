@@ -1,6 +1,8 @@
 package frc.robot.commands.Turret;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.TurretConstants;
 import frc.robot.sensors.Limelight;
 import frc.robot.subsystems.TurretSubsystem;
 
@@ -12,8 +14,8 @@ public class TurretCommand extends CommandBase {
   private TurretState turretState = TurretState.INIT;
   private TurretState newTurretState;
   private double setpoint = 0.0;
-  private double defaultTrackSpeed = 0.3;
-  private double searchSpeed = 0.3;
+  private double localTrackSpeed = TurretConstants.defaultTrackSpeed;
+  private double localSearchSpeed = TurretConstants.defaultSearchSpeed;
 
   public TurretCommand(Limelight limelight, TurretSubsystem turretSubsystem) {
     this.limelight = limelight;
@@ -28,25 +30,29 @@ public class TurretCommand extends CommandBase {
 
   @Override
   public void execute() {
-    newTurretState = determineTurretState();
+    if (turretSubsystem.isTurretStopped == false){
+      newTurretState = determineTurretState();
 
-    if (newTurretState != turretState) {
-      if (newTurretState == TurretState.SEARCH) {
-        setpoint = searchSpeed;
-      } else {
-        setpoint = defaultTrackSpeed;
+      if (newTurretState != turretState) {
+        if (newTurretState == TurretState.SEARCH) {
+          setpoint = localSearchSpeed;
+        } else {
+          setpoint = localTrackSpeed;
+        }
+        turretState = newTurretState;
       }
-      turretState = newTurretState;
-    }
 
-    if (turretState == TurretState.SEARCH) {
-      updateSearchSetpoint();
-    } else {
-      updateTrackSetpoint();
-    } 
-    
-    // turretSubsystem.turn(setpoint);
-    turretSubsystem.turnManual(setpoint);
+      if (turretState == TurretState.SEARCH) {
+        updateSearchSetpoint();
+      } else {
+        updateTrackSetpoint();
+      } 
+      
+      // turretSubsystem.turn(setpoint);
+      turretSubsystem.turnManual(setpoint);
+    } else if (turretSubsystem.isTurretStopped == true) {
+      turretSubsystem.stopTurret();
+    }
   }
 
   @Override
@@ -60,12 +66,10 @@ public class TurretCommand extends CommandBase {
   private void updateSearchSetpoint() {
     if (turretSubsystem.getHitLeftLimitSwitch()) { setpoint = Math.abs(setpoint); }
     else if (turretSubsystem.getHitRightLimitSwitch()) { setpoint = -1 * Math.abs(setpoint); }
-
-    //FIXME: we need to see whats up with the direction change. 
   }
 
   private void updateTrackSetpoint() {
-    setpoint = limelight.getXError()/10; 
+    setpoint = limelight.getXError()*TurretConstants.turretKP; 
   }
 
   private TurretState determineTurretState(){

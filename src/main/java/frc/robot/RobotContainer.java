@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Turret.ManualTurretClockwiseCommand;
 import frc.robot.commands.Turret.ManualTurretCounterClockwiseCommand;
+import frc.robot.commands.Turret.StopTurretCommand;
 import frc.robot.commands.Turret.TurretCommand;
 
 public class RobotContainer {
@@ -101,8 +102,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // setJoystickButtonWhileHeld(xboxController, 5, new ShootLow(ball, limelight, shooterSubsystem));
     // setJoystickButtonWhileHeld(xboxController, 6, new ShootHigh(ball, limelight, shooterSubsystem));
-    setJoystickButtonWhenHeld(xboxController, 5, new ManualTurretClockwiseCommand(turretSubsystem));
-    setJoystickButtonWhenHeld(xboxController, 6, new ManualTurretCounterClockwiseCommand(turretSubsystem));
+    // setJoystickButtonWhenHeld(xboxController, 5, new ManualTurretClockwiseCommand(turretSubsystem));
+    // setJoystickButtonWhenHeld(xboxController, 6, new ManualTurretCounterClockwiseCommand(turretSubsystem));
 
     if (Flags.drivetrain) {
       setJoystickButtonWhenPressed(joystickLeft, 1, new ShiftGearDown(drivetrainSubsystem));
@@ -110,15 +111,22 @@ public class RobotContainer {
     }
 
     if (Flags.intake) {
-      setJoystickButtonWhenHeld(xboxController, 1, new IntakeIn(intakeSubsystem));
+      setJoystickButtonWhenHeld(xboxController, 5, new IntakeIn(intakeSubsystem));
       setJoystickButtonWhenHeld(xboxController, 2, new IntakeToggle(intakeSubsystem));
     }
 
     if (Flags.indexer) {
-      // setJoystickButtonWhenHeld(xboxController, 1, new ManualIndexerCommand(indexerSubsystem));
+      setJoystickButtonWhenHeld(xboxController, 9, new ManualIndexerCommand(indexerSubsystem));
+      setJoystickButtonWhenHeld(xboxController, 7, new ReverseIndexerCommand(indexerSubsystem));
     }
 
-    setJoystickButtonWhenHeld(xboxController, 6, new ShootManual(shooterSubsystem));
+    setJoystickButtonWhenHeld(xboxController, 3, new StopTurretCommand(turretSubsystem));
+
+    setJoystickButtonWhenHeld(xboxController, 4, new ElevatorUpCommand(elevatorSubsystem));
+    setJoystickButtonWhenHeld(xboxController, 1, new ElevatorDownCommand(elevatorSubsystem));
+
+    setJoystickButtonWhenHeld(xboxController, 10, new ShootManual(shooterSubsystem));
+    setJoystickButtonWhenHeld(xboxController, 6, new ShootHigh(ballUpper, limelight, shooterSubsystem));
   }
 
 

@@ -31,6 +31,8 @@ public final class Constants {
     private static final double highGearTargetCounts = highCountsPerWheelRev * targetLinearDistance * wheelCircum;
     public static final double encoderLowDistanceConversion = wheelCircum/(stage1Ratio * stage2Ratio * lowSpreadRatio * encoderCPR);
     public static final double encoderHighDistanceConversion = wheelCircum/(stage1Ratio * stage2Ratio * highSpreadRatio * encoderCPR);
+  
+    public static final double autonomousDriveSpeed = 0.5;
   }
 
   public static final class ElevatorConstants {
@@ -84,7 +86,10 @@ public final class Constants {
     public static int deviceID = 11;
     public static int forwardRotations = 110;
     public static int reverseRotations = -110;
-    public static double manualTurnSpeed = 0.5;
+    public static double manualTurnSpeed = 0.3;
+    public static double defaultTrackSpeed = 0.3;
+    public static double defaultSearchSpeed = 0.5;
+    public static double turretKP = 0.09;
   }
 
   public static final class LimelightConstants {
@@ -94,9 +99,9 @@ public final class Constants {
   }
 
   public static final class Flags {
-    public static final boolean drivetrain = false;
-    public static final boolean intake = false;
-    public static final boolean indexer = false;
+    public static final boolean drivetrain = true;
+    public static final boolean intake = true;
+    public static final boolean indexer = true;
     public static final boolean turret = true;
     public static final boolean hood = true;
   }
