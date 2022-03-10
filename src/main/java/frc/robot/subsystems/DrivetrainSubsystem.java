@@ -25,9 +25,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
   private final DifferentialDrive drivetrain;
 
   private final DoubleSolenoid gearShiftSolenoid;
-
   public enum GearShiftPosition { UP, DOWN }
-
   private static GearShiftPosition gearShiftPosition;
 
   public DrivetrainSubsystem() {
@@ -94,14 +92,12 @@ public class DrivetrainSubsystem extends SubsystemBase {
     gearShiftPosition = GearShiftPosition.UP;
   }
 
-  /** Returns the calculated distance in inches. Currently only calculates when in LOW gear */
   public double getLeftCalculatedPosition() {
     if(gearShiftPosition == GearShiftPosition.DOWN) {
       return (getLeftRawEncoderPosition() * (DriveConstants.encoderLowDistanceConversion));
     } else {
       return (getLeftRawEncoderPosition() * (DriveConstants.encoderHighDistanceConversion));
     }
-    
   }
 
   public double getRightCalculatedPosition() {
@@ -112,7 +108,22 @@ public class DrivetrainSubsystem extends SubsystemBase {
     }
   }
 
-  /** Returns the raw encoder counts. */
+  public double getTurnLeftDegrees(){
+    if(gearShiftPosition == GearShiftPosition.DOWN) {
+      return (getRightRawEncoderPosition() / (DriveConstants.driveLowCountsPerDeg));
+    } else {
+      return (getRightRawEncoderPosition() / (DriveConstants.driveHighCountsPerDeg));
+    }
+  }
+
+  public double getTurnRightDegrees(){
+    if(gearShiftPosition == GearShiftPosition.DOWN) {
+      return (getLeftRawEncoderPosition() / (DriveConstants.driveLowCountsPerDeg));
+    } else {
+      return (getLeftRawEncoderPosition() / (DriveConstants.driveHighCountsPerDeg));
+    }
+  }
+
   private double getLeftRawEncoderPosition() { return leftMotor1.getSelectedSensorPosition(); }
   private double getRightRawEncoderPosition() { return rightMotor1.getSelectedSensorPosition(); }
 
@@ -122,7 +133,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Right Drive Distance", getRightCalculatedPosition());
     SmartDashboard.putNumber("Left Raw Drive Distance", getLeftRawEncoderPosition());
     SmartDashboard.putNumber("Right Raw Drive Distance", getRightRawEncoderPosition());
-    SmartDashboard.putNumber("Left Motor RPM: ", leftMotor1.getSelectedSensorVelocity()*600/2048);
-    SmartDashboard.putNumber("Right Motor RPM: ", rightMotor1.getSelectedSensorVelocity()*600/2048);
+    //SmartDashboard.putNumber("Left Motor RPM: ", leftMotor1.getSelectedSensorVelocity()*600/2048);
+    //SmartDashboard.putNumber("Right Motor RPM: ", rightMotor1.getSelectedSensorVelocity()*600/2048);
   }
 }

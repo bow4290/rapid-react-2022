@@ -1,14 +1,17 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.Flags;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.commands.Shooter.ShootHigh;
-import frc.robot.commands.Shooter.ShootLow;
 import frc.robot.commands.Shooter.ShootManual;
 import frc.robot.commands.Shooter.ShootStop;
 import frc.robot.commands.Indexer.*;
 import frc.robot.commands.Intake.*;
+import frc.robot.commands.Auto.AutoDriveForDistanceCommand;
+import frc.robot.commands.Auto.AutoTurnLeftAngleCommand;
 import frc.robot.commands.Drivetrain.*;
 import frc.robot.commands.Elevator.*;
 import frc.robot.sensors.BallIdentification;
@@ -18,6 +21,9 @@ import frc.robot.commands.Hood.DefaultHoodCommand;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Turret.ManualTurretClockwiseCommand;
 import frc.robot.commands.Turret.ManualTurretCounterClockwiseCommand;
@@ -47,10 +53,28 @@ public class RobotContainer {
   public BallIdentification ballUpper;
   public BallIdentification ballLower;
 
+  private Command AutoDriveCollectAndShoot;
+  private Command AutoDriveAndShoot;
+  private Command AutoDriveAndCollect;
+  private Command AutoDriveOnly;
+  private Command AutoNothing;
+
+  SendableChooser<Command> chooser = new SendableChooser<>();
+
   public RobotContainer() {
+
+    autoCommands();
+
+    chooser.setDefaultOption("FULL AUTO", AutoDriveCollectAndShoot);
+    chooser.addOption("Drive and Shoot", AutoDriveAndShoot);
+    chooser.addOption("Drive and Collect", AutoDriveAndCollect);
+    chooser.addOption("Drive Only", AutoDriveOnly);
+    chooser.addOption("Do Nothing", AutoNothing);
+    SmartDashboard.putData(chooser);
+
     if (Flags.drivetrain) {
       drivetrainSubsystem = new DrivetrainSubsystem();
-      drivetrainSubsystem.setDefaultCommand(new Drive(() -> -joystickLeft.getY(), () -> -joystickRight.getY(), drivetrainSubsystem));
+      drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(() -> -joystickLeft.getY(), () -> -joystickRight.getY(), drivetrainSubsystem));
     }
 
     if (Flags.intake) {
@@ -100,7 +124,6 @@ public class RobotContainer {
       2 - LeftTrig    5 - RightY
   */
   private void configureButtonBindings() {
-    // setJoystickButtonWhileHeld(xboxController, 5, new ShootLow(ball, limelight, shooterSubsystem));
     // setJoystickButtonWhileHeld(xboxController, 6, new ShootHigh(ball, limelight, shooterSubsystem));
     // setJoystickButtonWhenHeld(xboxController, 5, new ManualTurretClockwiseCommand(turretSubsystem));
     // setJoystickButtonWhenHeld(xboxController, 6, new ManualTurretCounterClockwiseCommand(turretSubsystem));
@@ -130,7 +153,9 @@ public class RobotContainer {
   }
 
 
-  public Command getAutonomousCommand() { return null; }
+  public Command getAutonomousCommand() {
+    return chooser.getSelected();
+  }
 
   private void setJoystickButtonWhenPressed(Joystick joystick, int button, CommandBase command) {
     new JoystickButton(joystick, button).whenPressed(command);
@@ -155,5 +180,40 @@ public class RobotContainer {
 
   private void setJoystickButtonToggleWhenPressed(Joystick joystick, int button, CommandBase command) {
     new JoystickButton(joystick, button).toggleWhenPressed(command);
+  }
+
+  private void autoCommands(){
+    AutoDriveCollectAndShoot = 
+      new SequentialCommandGroup(
+        new ParallelRaceGroup(
+          new AutoDriveForDistanceCommand(drivetrainSubsystem, 60),
+          new IntakeIn(intakeSubsystem)
+        ),
+        new AutoTurnLeftAngleCommand(drivetrainSubsystem, 180),
+        new ParallelRaceGroup(
+          new ShootHigh(ballUpper, limelight, shooterSubsystem),
+          new WaitCommand(4)
+        )
+      );
+
+    AutoDriveAndShoot =
+      new SequentialCommandGroup(
+        new AutoDriveForDistanceCommand(drivetrainSubsystem, 60),
+        new AutoTurnLeftAngleCommand(drivetrainSubsystem, 180),
+        new ParallelRaceGroup(
+          new ShootHigh(ballUpper, limelight, shooterSubsystem),
+          new WaitCommand(4)
+        )
+      );
+    
+    AutoDriveAndCollect =
+      new ParallelRaceGroup(
+        new AutoDriveForDistanceCommand(drivetrainSubsystem, 60),
+        new IntakeIn(intakeSubsystem)
+      );
+    
+    AutoDriveOnly = new AutoDriveForDistanceCommand(drivetrainSubsystem, 60);
+    
+    AutoNothing = null;
   }
 }

@@ -8,49 +8,59 @@ public final class Constants {
   }
 
   public static final class DriveConstants {
+    // Drive Motor Channels
     public static final int rightMotor1Channel = 5;
     public static final int rightMotor2Channel = 6;
     public static final int leftMotor1Channel = 7;
     public static final int leftMotor2Channel = 8;
  
-
+    // Drive Pneumatic Channels
     public static final int gearShiftUpChannel = 4;
     public static final int gearShiftDownChannel = 5;
 
-    public static final double targetLinearDistance = 60;
+    // Drive Gear Ratio Values
     private static final double stage1Ratio = 60/12;
     private static final double stage2Ratio = 28/28;
     private static final double lowSpreadRatio = 44/22;
     private static final double highSpreadRatio = 34/32;
+
+    // Drive Calculations
     private static final double wheelDiameter = 3.75;
     private static final double wheelCircum = wheelDiameter*Math.PI;
+    private static final double driveWidth = 25;
+    private static final double driveCircum = driveWidth *Math.PI;    // Only for "zero-point" turns
+
+    // Drive Distance Calculations
     private static final int encoderCPR = 2048;
     private static final double lowCountsPerWheelRev = stage1Ratio * stage2Ratio * lowSpreadRatio * encoderCPR;
     private static final double highCountsPerWheelRev = stage1Ratio * stage2Ratio * highSpreadRatio * encoderCPR;
-    private static final double lowGearTargetCounts = lowCountsPerWheelRev * targetLinearDistance * wheelCircum;
-    private static final double highGearTargetCounts = highCountsPerWheelRev * targetLinearDistance * wheelCircum;
-    public static final double encoderLowDistanceConversion = wheelCircum/(stage1Ratio * stage2Ratio * lowSpreadRatio * encoderCPR);
-    public static final double encoderHighDistanceConversion = wheelCircum/(stage1Ratio * stage2Ratio * highSpreadRatio * encoderCPR);
-  
+    public static final double encoderLowDistanceConversion = wheelCircum/lowCountsPerWheelRev;     // inches per 1 encoder count (low gear)
+    public static final double encoderHighDistanceConversion = wheelCircum/highCountsPerWheelRev;   // inches per 1 encoder count (high gear)
+    
+    // To turn x degrees, run turn command until encoderCounts >= (driveLowCountsPerDeg*x).
+    public static final double driveLowCountsPerDeg = driveCircum/encoderLowDistanceConversion/360;    // counts per 1 degrees (low gear)
+    public static final double driveHighCountsPerDeg = driveCircum/encoderHighDistanceConversion/360;    // counts per 1 degrees (high gear)
+
+    // Auto Drive Speeds
     public static final double autonomousDriveSpeed = 0.5;
+    public static final double autonomousTurnSpeed = 0.5;
   }
 
   public static final class ElevatorConstants {
     public static int elevatorClimbMotorChannel = 10;
 
-    public static double forwardSoftLimit = 175000; //revolutions the motor can rotate CW (should be up)
-    public static double reverseSoftLimit = 5000; //revolutions the motor can rotate CCW (should be down)
+    public static double forwardSoftLimit = 175000;     // Revolutions the motor can rotate CW (should be up)
+    public static double reverseSoftLimit = 5000;       // Revolutions the motor can rotate CCW (should be down)
     // public static int elevatorLockChannel = 4;
     // public static int elevatorUnlockChannel = 5; 
 
-    public static double elevatorSpeed = 0.75;
-    //elevatorSpeed is measured in percent output
+    public static double elevatorSpeed = 0.75;          // -1 to 1 (Percent Output)
   }
 
   public static final class HoodConstants {
     public static int hoodSolenoidExtendChannel = 3;
     public static int hoodSolenoidRetractChannel = 2;
-    public static double hoodExtendDistance = 150;    // Distance in inches
+    public static double hoodExtendDistance = 150;      // Distance in inches
   }
 
   public static final class IndexerConstants {
@@ -71,7 +81,6 @@ public final class Constants {
 
   public static final class ShooterConstants {
     public static int shooterMotorChannel = 2;
-
     public static int shooterMotorVoltage = 11;
 
     public static double discardSpeedRPM = 1500.0;
@@ -84,8 +93,10 @@ public final class Constants {
 
   public static final class TurretConstants {
     public static int deviceID = 11;
+
     public static int forwardRotations = 110;
     public static int reverseRotations = -110;
+
     public static double manualTurnSpeed = 0.3;
     public static double defaultTrackSpeed = 0.3;
     public static double defaultSearchSpeed = 0.5;
@@ -94,7 +105,7 @@ public final class Constants {
 
   public static final class LimelightConstants {
     public static final double h1 = 29.5;             // Distance from ground to limelight
-    public static final double h2 = 8*12+8;         // Distance from ground to target (8'8")
+    public static final double h2 = 8*12+8;           // Distance from ground to target (8'8")
     public static final double a1 = 33.5;             // Limelight mount angle (0 = facing forward, 90 = facing the ceiling)
   }
 
