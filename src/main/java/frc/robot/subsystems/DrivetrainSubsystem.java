@@ -129,10 +129,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Left Drive Distance", getLeftCalculatedPosition());
-    SmartDashboard.putNumber("Right Drive Distance", getRightCalculatedPosition());
-    SmartDashboard.putNumber("Left Raw Drive Distance", getLeftRawEncoderPosition());
-    SmartDashboard.putNumber("Right Raw Drive Distance", getRightRawEncoderPosition());
+    // SmartDashboard.putNumber("Left Drive Distance", getLeftCalculatedPosition());
+    // SmartDashboard.putNumber("Right Drive Distance", getRightCalculatedPosition());
+    // SmartDashboard.putNumber("Left Raw Drive Distance", getLeftRawEncoderPosition());
+    // SmartDashboard.putNumber("Right Raw Drive Distance", getRightRawEncoderPosition());
     //SmartDashboard.putNumber("Left Motor RPM: ", leftMotor1.getSelectedSensorVelocity()*600/2048);
     //SmartDashboard.putNumber("Right Motor RPM: ", rightMotor1.getSelectedSensorVelocity()*600/2048);
   }

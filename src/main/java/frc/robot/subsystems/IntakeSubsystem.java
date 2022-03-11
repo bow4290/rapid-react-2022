@@ -52,6 +52,6 @@ public class IntakeSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // TODO: Should we also display the current intake speed? (maybe in intakeSpin)
-    SmartDashboard.putString("Intake Status", intakeStatus == IntakeStatus.UP ? "Up" : "Down");
+    // SmartDashboard.putString("Intake Status", intakeStatus == IntakeStatus.UP ? "Up" : "Down");
   }
 }

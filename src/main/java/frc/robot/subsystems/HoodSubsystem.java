@@ -34,6 +34,6 @@ public class HoodSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putString("Hood Status", hoodStatus == HoodStatus.EXTENDED ? "EXTENDED" : "RETRACTED");
+    // SmartDashboard.putString("Hood Status", hoodStatus == HoodStatus.EXTENDED ? "EXTENDED" : "RETRACTED");
   }
 }
