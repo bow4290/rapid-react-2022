@@ -93,7 +93,7 @@ public class RobotContainer {
     shooterSubsystem.setDefaultCommand(new ShootStop(shooterSubsystem));
 
     if (Flags.turret) {
-      turretSubsystem = new TurretSubsystem();
+      turretSubsystem = new TurretSubsystem(limelight);
       turretSubsystem.setDefaultCommand(new TurretCommand(limelight, turretSubsystem));
     }
 
@@ -151,7 +151,7 @@ public class RobotContainer {
     setJoystickButtonWhenHeld(xboxController, 1, new ElevatorDownCommand(elevatorSubsystem));
 
     setJoystickButtonWhenHeld(xboxController, 10, new ShootManual(shooterSubsystem));
-    setJoystickButtonWhenHeld(xboxController, 6, new ShootHigh(ballUpper, limelight, shooterSubsystem));
+    setJoystickButtonWhenHeld(xboxController, 6, new ShootHigh(ballUpper, limelight, shooterSubsystem, turretSubsystem));
   }
 
 
@@ -197,14 +197,13 @@ public class RobotContainer {
       new SequentialCommandGroup(
         new ShiftGearDown(drivetrainSubsystem),
         new IntakeDown(intakeSubsystem),
-        new ToggleTurretCommand(turretSubsystem),     // turn turret on
         new ParallelRaceGroup(
           new AutoDriveForDistanceCommand(drivetrainSubsystem, 60),
           new IntakeIn(intakeSubsystem)
         ),
         new AutoTurnLeftAngleCommand(drivetrainSubsystem, 180),
         new ParallelRaceGroup(
-          new ShootHigh(ballUpper, limelight, shooterSubsystem),
+          new ShootHigh(ballUpper, limelight, shooterSubsystem, turretSubsystem),
           new WaitCommand(4)
         )
       );
@@ -212,11 +211,10 @@ public class RobotContainer {
     AutoDriveAndShoot =
       new SequentialCommandGroup(
         new ShiftGearDown(drivetrainSubsystem),
-        new ToggleTurretCommand(turretSubsystem),       // turn turret on
         new AutoDriveForDistanceCommand(drivetrainSubsystem, 60),
         new AutoTurnLeftAngleCommand(drivetrainSubsystem, 180),
         new ParallelRaceGroup(
-          new ShootHigh(ballUpper, limelight, shooterSubsystem),
+          new ShootHigh(ballUpper, limelight, shooterSubsystem, turretSubsystem),
           new WaitCommand(4)
         )
       );

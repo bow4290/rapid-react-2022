@@ -6,17 +6,21 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.sensors.BallIdentification;
 import frc.robot.sensors.Limelight;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.TurretSubsystem;
 
 
 public class ShootHigh extends CommandBase {
   private BallIdentification ball;
   private Limelight limelight;
   private ShooterSubsystem shooterSubsystem;
+  private TurretSubsystem turretSubsystem;
 
-  public ShootHigh(BallIdentification ball, Limelight limelight, ShooterSubsystem shooterSubsystem) {
+  public ShootHigh(BallIdentification ball, Limelight limelight, ShooterSubsystem shooterSubsystem, TurretSubsystem turretSubsystem
+  ) {
     this.ball = ball;
     this.limelight = limelight;
     this.shooterSubsystem = shooterSubsystem;
+    this.turretSubsystem = turretSubsystem;
     addRequirements(shooterSubsystem);
   }
 
@@ -25,7 +29,7 @@ public class ShootHigh extends CommandBase {
 
   @Override
   public void execute() {
-    if(limelight.isTarget() && ball.isBallTeamColor()) {
+    if(turretSubsystem.isTurretReady() && ball.isBallTeamColor()) {
       double distance = limelight.getDistance();
       double calculatedRPM = calculateShooterSpeedRPM(distance);
       shooterSubsystem.shoot(calculatedRPM);

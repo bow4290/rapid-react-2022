@@ -11,19 +11,23 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import frc.robot.Constants.Flags;
 import frc.robot.Constants.TurretConstants;
+import frc.robot.sensors.Limelight;
 
 public class TurretSubsystem extends SubsystemBase {
 
   private CANSparkMax motor;
   public RelativeEncoder encoder;
 
-  public boolean isTurretStopped = true;
+  private Limelight limelight;
+  public boolean isTurretStopped = false;
   // private SparkMaxPIDController pid;
 
   // private double kP, kI, kD, kF, kMaxOutput, kMinOutput, setpoint;
 
-  public TurretSubsystem() {
+  public TurretSubsystem(Limelight limelight) {
     if (!Flags.turret) throw new Error("Turret flag must be set to create a TurretSubsystem!");
+
+    this.limelight = limelight;
 
     motor = new CANSparkMax(TurretConstants.deviceID, MotorType.kBrushless);
     motor.restoreFactoryDefaults();
@@ -88,6 +92,14 @@ public class TurretSubsystem extends SubsystemBase {
 
   public boolean getHitRightLimitSwitch() {
     return motor.getFault(FaultID.kSoftLimitFwd);
+  }
+
+  public boolean isTurretReady(){
+    if (limelight.isTarget() && (limelight.getXError() < 2)){
+      return true;
+    } else {
+      return false;
+    }
   }
 
   // public double getSetPoint() {
