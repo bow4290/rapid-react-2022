@@ -27,7 +27,7 @@ public final class Constants {
     // Drive Calculations
     private static final double wheelDiameter = 3.75;
     private static final double wheelCircum = wheelDiameter*Math.PI;
-    private static final double driveWidth = 25;
+    private static final double driveWidth = 25.5;
     private static final double driveCircum = driveWidth *Math.PI;    // Only for "zero-point" turns
 
     // Drive Distance Calculations
