@@ -11,6 +11,7 @@ public class AutoTurnLeftAngleCommand extends CommandBase {
   public AutoTurnLeftAngleCommand(DrivetrainSubsystem drivetrainSubsystem, double degrees) {
     this.drivetrainSubsystem = drivetrainSubsystem;
     this.degrees = degrees;
+    addRequirements(drivetrainSubsystem);
   }
 
   @Override

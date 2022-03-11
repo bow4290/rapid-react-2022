@@ -7,11 +7,11 @@ package frc.robot.commands.Turret;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.TurretSubsystem;
 
-public class StopTurretCommand extends CommandBase {
+public class ToggleTurretCommand extends CommandBase {
   private TurretSubsystem turretSubsystem;
 
   /** Creates a new StopTurretCommand. */
-  public StopTurretCommand(TurretSubsystem turretSubsystem) {
+  public ToggleTurretCommand(TurretSubsystem turretSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
 
     this.turretSubsystem = turretSubsystem;
@@ -25,11 +25,7 @@ public class StopTurretCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (turretSubsystem.isTurretStopped == true){
-      turretSubsystem.isTurretStopped = false;
-    } else if (turretSubsystem.isTurretStopped == false){
-      turretSubsystem.isTurretStopped = true;
-    }
+    turretSubsystem.isTurretStopped = !turretSubsystem.isTurretStopped;
   }
 
   // Called once the command ends or is interrupted.

@@ -17,7 +17,7 @@ public class TurretSubsystem extends SubsystemBase {
   private CANSparkMax motor;
   public RelativeEncoder encoder;
 
-  public boolean isTurretStopped = false;
+  public boolean isTurretStopped = true;
   // private SparkMaxPIDController pid;
 
   // private double kP, kI, kD, kF, kMaxOutput, kMinOutput, setpoint;

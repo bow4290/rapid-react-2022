@@ -18,16 +18,18 @@ import frc.robot.sensors.BallIdentification;
 import frc.robot.sensors.Limelight;
 import frc.robot.sensors.RevColorSensor;
 import frc.robot.commands.Hood.DefaultHoodCommand;
+import frc.robot.commands.Hood.HoodRetractCommand;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.Turret.ManualTurretClockwiseCommand;
 import frc.robot.commands.Turret.ManualTurretCounterClockwiseCommand;
-import frc.robot.commands.Turret.StopTurretCommand;
+import frc.robot.commands.Turret.ToggleTurretCommand;
 import frc.robot.commands.Turret.TurretCommand;
 
 public class RobotContainer {
@@ -62,16 +64,6 @@ public class RobotContainer {
   SendableChooser<Command> chooser = new SendableChooser<>();
 
   public RobotContainer() {
-
-    autoCommands();
-
-    chooser.setDefaultOption("FULL AUTO", AutoDriveCollectAndShoot);
-    chooser.addOption("Drive and Shoot", AutoDriveAndShoot);
-    chooser.addOption("Drive and Collect", AutoDriveAndCollect);
-    chooser.addOption("Drive Only", AutoDriveOnly);
-    chooser.addOption("Do Nothing", AutoNothing);
-    SmartDashboard.putData(chooser);
-
     if (Flags.drivetrain) {
       drivetrainSubsystem = new DrivetrainSubsystem();
       drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(() -> -joystickLeft.getY(), () -> -joystickRight.getY(), drivetrainSubsystem));
@@ -79,6 +71,7 @@ public class RobotContainer {
 
     if (Flags.intake) {
       intakeSubsystem = new IntakeSubsystem();
+      intakeSubsystem.setDefaultCommand(new IntakeStop(intakeSubsystem).perpetually());
     }
 
     if (Flags.indexer) {
@@ -89,7 +82,7 @@ public class RobotContainer {
       ballUpper = new BallIdentification(redBallColorSensorMXP, blueBallColorSensorMXP);
       ballLower = new BallIdentification(redBallColorSensorI2C, blueBallColorSensorI2C);
       indexerSubsystem = new IndexerSubsystem(ballUpper, ballLower);
-      indexerSubsystem.setDefaultCommand(new DefaultIndexerCommand(indexerSubsystem, shooterSubsystem, ballUpper, ballLower, new JoystickButton(xboxController, 5)::get));
+      indexerSubsystem.setDefaultCommand(new DefaultIndexerCommand(indexerSubsystem, shooterSubsystem, intakeSubsystem, ballUpper, ballLower));
     }
 
     if (Flags.hood){
@@ -105,6 +98,15 @@ public class RobotContainer {
     }
 
     elevatorSubsystem = new ElevatorSubsystem();
+
+    autoCommands();
+
+    chooser.setDefaultOption("FULL AUTO", AutoDriveCollectAndShoot);
+    chooser.addOption("Drive and Shoot", AutoDriveAndShoot);
+    chooser.addOption("Drive and Collect", AutoDriveAndCollect);
+    chooser.addOption("Drive Only", AutoDriveOnly);
+    chooser.addOption("Do Nothing", AutoNothing);
+    SmartDashboard.putData(chooser);
 
     configureButtonBindings();
   }
@@ -143,7 +145,7 @@ public class RobotContainer {
       setJoystickButtonWhenHeld(xboxController, 7, new ReverseIndexerCommand(indexerSubsystem));
     }
 
-    setJoystickButtonWhenHeld(xboxController, 3, new StopTurretCommand(turretSubsystem));
+    setJoystickButtonWhenHeld(xboxController, 3, new ToggleTurretCommand(turretSubsystem));
 
     setJoystickButtonWhenHeld(xboxController, 4, new ElevatorUpCommand(elevatorSubsystem));
     setJoystickButtonWhenHeld(xboxController, 1, new ElevatorDownCommand(elevatorSubsystem));
@@ -155,6 +157,14 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     return chooser.getSelected();
+  }
+
+  public Command defaultPneumaticsCommand(){
+    return new ParallelCommandGroup(
+            new IntakeUp(intakeSubsystem),
+            new ShiftGearDown(drivetrainSubsystem),
+            new HoodRetractCommand(hoodSubsystem)
+          );
   }
 
   private void setJoystickButtonWhenPressed(Joystick joystick, int button, CommandBase command) {
@@ -185,6 +195,9 @@ public class RobotContainer {
   private void autoCommands(){
     AutoDriveCollectAndShoot = 
       new SequentialCommandGroup(
+        new ShiftGearDown(drivetrainSubsystem),
+        new IntakeDown(intakeSubsystem),
+        new ToggleTurretCommand(turretSubsystem),     // turn turret on
         new ParallelRaceGroup(
           new AutoDriveForDistanceCommand(drivetrainSubsystem, 60),
           new IntakeIn(intakeSubsystem)
@@ -198,6 +211,8 @@ public class RobotContainer {
 
     AutoDriveAndShoot =
       new SequentialCommandGroup(
+        new ShiftGearDown(drivetrainSubsystem),
+        new ToggleTurretCommand(turretSubsystem),       // turn turret on
         new AutoDriveForDistanceCommand(drivetrainSubsystem, 60),
         new AutoTurnLeftAngleCommand(drivetrainSubsystem, 180),
         new ParallelRaceGroup(
@@ -207,12 +222,20 @@ public class RobotContainer {
       );
     
     AutoDriveAndCollect =
-      new ParallelRaceGroup(
-        new AutoDriveForDistanceCommand(drivetrainSubsystem, 60),
-        new IntakeIn(intakeSubsystem)
+      new SequentialCommandGroup(
+        new ShiftGearDown(drivetrainSubsystem),
+        new IntakeDown(intakeSubsystem),
+        new ParallelRaceGroup(
+          new AutoDriveForDistanceCommand(drivetrainSubsystem, 60),
+          new IntakeIn(intakeSubsystem)
+        )
       );
     
-    AutoDriveOnly = new AutoDriveForDistanceCommand(drivetrainSubsystem, 60);
+    AutoDriveOnly =
+      new SequentialCommandGroup(
+        new ShiftGearDown(drivetrainSubsystem),
+        new AutoDriveForDistanceCommand(drivetrainSubsystem, 60)
+      );
     
     AutoNothing = null;
   }

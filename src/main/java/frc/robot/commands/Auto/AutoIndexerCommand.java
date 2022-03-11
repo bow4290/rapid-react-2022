@@ -1,4 +1,4 @@
-package frc.robot.commands.Indexer;
+package frc.robot.commands.Auto;
 
 import java.util.function.BooleanSupplier;
 
@@ -6,23 +6,18 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.IndexerConstants;
 import frc.robot.sensors.BallIdentification;
 import frc.robot.subsystems.IndexerSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 
-public class DefaultIndexerCommand extends CommandBase {
+public class AutoIndexerCommand extends CommandBase {
   private IndexerSubsystem indexerSubsystem;
-  private ShooterSubsystem shooterSubsystem;
-  private IntakeSubsystem intakeSubsystem;
   private BallIdentification ballUpper;
   private BallIdentification ballLower;
+  private ShooterSubsystem shooterSubsystem;
 
-  public DefaultIndexerCommand(IndexerSubsystem indexerSubsystem, ShooterSubsystem shooterSubsystem, 
-                               IntakeSubsystem intakeSubsystem, BallIdentification ballUpper, 
-                               BallIdentification ballLower) {
+  public AutoIndexerCommand(IndexerSubsystem indexerSubsystem, ShooterSubsystem shooterSubsystem, BallIdentification ballUpper, BallIdentification ballLower) {
     this.indexerSubsystem = indexerSubsystem;
     this.shooterSubsystem = shooterSubsystem;
-    this.intakeSubsystem = intakeSubsystem;
     this.ballUpper = ballUpper;
     this.ballLower = ballLower;
 
@@ -38,7 +33,7 @@ public class DefaultIndexerCommand extends CommandBase {
       indexerSubsystem.turnBothIndexMotors(IndexerConstants.bothShootingIndexSpeed, IndexerConstants.bothShootingIndexSpeed);
       // when shooting, turn both motors at a constant pace
 
-    } else if (intakeSubsystem.isIntakeSpinning()) {
+    } else {
       System.out.println(ballLower.isBallPresent());
       System.out.println(ballUpper.isBallPresent());
       if (!ballLower.isBallPresent() && !ballUpper.isBallPresent()){
@@ -58,15 +53,14 @@ public class DefaultIndexerCommand extends CommandBase {
         indexerSubsystem.turnBothIndexMotors(0, 0);
         //if ball is in both indexer slots do nothing
       }
-    } else {
-      indexerSubsystem.turnBothIndexMotors(0, 0);
-      //if not shooting and not intaking, do nothing.
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    indexerSubsystem.turnBothIndexMotors(0, 0);
+  }
 
   // Returns true when the command should end.
   @Override

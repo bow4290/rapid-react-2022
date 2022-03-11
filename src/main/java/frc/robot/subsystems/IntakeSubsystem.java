@@ -43,6 +43,10 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeMotor.set(intakeSpeed);
   }
 
+  public boolean isIntakeSpinning(){
+    return Math.abs(intakeMotor.get()) > 0 ? true : false;
+  }
+
   public static IntakeStatus getIntakePosition() { return intakeStatus; }
 
   @Override

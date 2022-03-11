@@ -11,6 +11,7 @@ public class AutoDriveForDistanceCommand extends CommandBase {
   public AutoDriveForDistanceCommand(DrivetrainSubsystem drivetrainSubsystem, double inches) {
     this.drivetrainSubsystem = drivetrainSubsystem;
     this.inches = inches;
+    addRequirements(drivetrainSubsystem);
   }
 
   @Override

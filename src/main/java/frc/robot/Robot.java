@@ -27,6 +27,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
@@ -38,8 +40,9 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     if (m_autonomousCommand != null) m_autonomousCommand.cancel();
-    if (Flags.drivetrain) m_robotContainer.drivetrainSubsystem.resetDriveEncoders();
     if (Flags.turret) m_robotContainer.turretSubsystem.encoder.setPosition(0);
+
+    m_robotContainer.defaultPneumaticsCommand().schedule();
   }
 
   @Override
