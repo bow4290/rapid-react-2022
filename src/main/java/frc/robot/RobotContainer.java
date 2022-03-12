@@ -27,8 +27,6 @@ import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.Turret.ManualTurretClockwiseCommand;
-import frc.robot.commands.Turret.ManualTurretCounterClockwiseCommand;
 import frc.robot.commands.Turret.ToggleTurretCommand;
 import frc.robot.commands.Turret.TurretCommand;
 
@@ -81,7 +79,7 @@ public class RobotContainer {
       blueBallColorSensorMXP = new RevColorSensor(0.00, 0.26, 0.00, 1.00, 0.275, 1.00, 0, 2047, false);
       ballUpper = new BallIdentification(redBallColorSensorMXP, blueBallColorSensorMXP);
       ballLower = new BallIdentification(redBallColorSensorI2C, blueBallColorSensorI2C);
-      indexerSubsystem = new IndexerSubsystem(ballUpper, ballLower);
+      indexerSubsystem = new IndexerSubsystem();
       indexerSubsystem.setDefaultCommand(new DefaultIndexerCommand(indexerSubsystem, shooterSubsystem, intakeSubsystem, ballUpper, ballLower));
     }
 

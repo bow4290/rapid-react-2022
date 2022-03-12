@@ -5,7 +5,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -129,11 +128,5 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // SmartDashboard.putNumber("Left Drive Distance", getLeftCalculatedPosition());
-    // SmartDashboard.putNumber("Right Drive Distance", getRightCalculatedPosition());
-    // SmartDashboard.putNumber("Left Raw Drive Distance", getLeftRawEncoderPosition());
-    // SmartDashboard.putNumber("Right Raw Drive Distance", getRightRawEncoderPosition());
-    //SmartDashboard.putNumber("Left Motor RPM: ", leftMotor1.getSelectedSensorVelocity()*600/2048);
-    //SmartDashboard.putNumber("Right Motor RPM: ", rightMotor1.getSelectedSensorVelocity()*600/2048);
   }
 }
