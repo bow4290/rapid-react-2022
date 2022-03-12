@@ -1,7 +1,5 @@
 package frc.robot.commands.Indexer;
 
-import java.util.function.BooleanSupplier;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.IndexerConstants;
 import frc.robot.sensors.BallIdentification;

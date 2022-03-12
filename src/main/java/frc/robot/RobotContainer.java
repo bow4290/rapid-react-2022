@@ -173,9 +173,9 @@ public class RobotContainer {
    * WhileHeld constantly starts the command and repeatedly schedules while the
    * button is held. Cancels when button is released.
    */
-  private void setJoystickButtonWhileHeld(Joystick joystick, int button, CommandBase command) {
-    new JoystickButton(joystick, button).whileHeld(command);
-  }
+  // private void setJoystickButtonWhileHeld(Joystick joystick, int button, CommandBase command) {
+  //   new JoystickButton(joystick, button).whileHeld(command);
+  // }
 
   /**
    * WhenHeld starts the command once when the button is first pressed. Command
@@ -186,9 +186,9 @@ public class RobotContainer {
   }
 
 
-  private void setJoystickButtonToggleWhenPressed(Joystick joystick, int button, CommandBase command) {
-    new JoystickButton(joystick, button).toggleWhenPressed(command);
-  }
+  // private void setJoystickButtonToggleWhenPressed(Joystick joystick, int button, CommandBase command) {
+  //   new JoystickButton(joystick, button).toggleWhenPressed(command);
+  // }
 
   private void autoCommands(){
     AutoDriveCollectAndShoot = 

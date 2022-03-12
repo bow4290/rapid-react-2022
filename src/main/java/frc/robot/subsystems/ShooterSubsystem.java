@@ -25,6 +25,7 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterMotor.configVoltageCompSaturation(ShooterConstants.shooterMotorVoltage);
     shooterMotor.enableVoltageCompensation(true);
     shooterMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
+    shooterMotor.configOpenloopRamp(0.3);
 
     shooterMotor.config_kF(0, ShooterConstants.kF);
     shooterMotor.config_kP(0, ShooterConstants.kP);

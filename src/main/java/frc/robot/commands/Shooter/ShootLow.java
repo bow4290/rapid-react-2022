@@ -1,7 +1,6 @@
 package frc.robot.commands.Shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.ShooterConstants;
 import frc.robot.sensors.BallIdentification;
 import frc.robot.sensors.Limelight;
 import frc.robot.subsystems.ShooterSubsystem;

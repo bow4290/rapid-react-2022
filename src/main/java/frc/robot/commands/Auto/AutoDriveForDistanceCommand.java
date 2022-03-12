@@ -21,6 +21,7 @@ public class AutoDriveForDistanceCommand extends CommandBase {
 
   @Override
   public void execute() {
+    System.out.println("adfdc");
     drivetrainSubsystem.drive(DriveConstants.autonomousDriveSpeed, DriveConstants.autonomousDriveSpeed);
   }
 
