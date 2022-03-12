@@ -159,7 +159,7 @@ public class RobotContainer {
     return chooser.getSelected();
   }
 
-  public Command defaultPneumaticsCommand(){
+  public Command teleopInitCommands(){
     return new ParallelCommandGroup(
             new IntakeUp(intakeSubsystem),
             new ShiftGearDown(drivetrainSubsystem),

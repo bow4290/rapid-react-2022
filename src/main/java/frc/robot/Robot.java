@@ -37,6 +37,7 @@ public class Robot extends TimedRobot {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     
     if (m_autonomousCommand != null) {
+      m_robotContainer.turretSubsystem.isTurretStopped = false;
       m_autonomousCommand.schedule();
     }
   }
@@ -47,9 +48,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     if (m_autonomousCommand != null) m_autonomousCommand.cancel();
-    if (Flags.turret) m_robotContainer.turretSubsystem.encoder.setPosition(0);
-
-    m_robotContainer.defaultPneumaticsCommand().schedule();
+    m_robotContainer.turretSubsystem.isTurretStopped = true;
+    m_robotContainer.teleopInitCommands().schedule();
   }
 
   @Override

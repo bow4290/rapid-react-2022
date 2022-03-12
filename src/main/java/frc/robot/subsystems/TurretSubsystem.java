@@ -95,7 +95,7 @@ public class TurretSubsystem extends SubsystemBase {
   }
 
   public boolean isTurretReady(){
-    if (limelight.isTarget() && (limelight.getXError() < 2)){
+    if (limelight.isTarget() && (limelight.getXError() < Math.abs(2))){
       return true;
     } else {
       return false;
