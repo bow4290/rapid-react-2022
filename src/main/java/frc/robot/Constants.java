@@ -60,7 +60,7 @@ public final class Constants {
   public static final class HoodConstants {
     public static int hoodSolenoidExtendChannel = 3;
     public static int hoodSolenoidRetractChannel = 2;
-    public static double hoodExtendDistance = 150;      // Distance in inches
+    public static double hoodExtendDistance = 165;      // Distance in inches
   }
 
   public static final class IndexerConstants {
@@ -104,7 +104,7 @@ public final class Constants {
   }
 
   public static final class LimelightConstants {
-    public static final double h1 = 29.5;             // Distance from ground to limelight
+    public static final double h1 = 29.75;             // Distance from ground to limelight
     public static final double h2 = 8*12+8;           // Distance from ground to target (8'8")
     public static final double a1 = 33.5;             // Limelight mount angle (0 = facing forward, 90 = facing the ceiling)
   }
