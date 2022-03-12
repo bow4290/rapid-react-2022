@@ -39,9 +39,9 @@ public class RobotContainer {
   private IndexerSubsystem indexerSubsystem;
   public DrivetrainSubsystem drivetrainSubsystem;
   public TurretSubsystem turretSubsystem;
-  private ElevatorSubsystem elevatorSubsystem;
   private IntakeSubsystem intakeSubsystem;
   private ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  private ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
 
   public Limelight limelight = new Limelight();
 
@@ -94,8 +94,6 @@ public class RobotContainer {
       turretSubsystem = new TurretSubsystem(limelight);
       turretSubsystem.setDefaultCommand(new TurretCommand(limelight, turretSubsystem));
     }
-
-    elevatorSubsystem = new ElevatorSubsystem();
 
     autoCommands();
 

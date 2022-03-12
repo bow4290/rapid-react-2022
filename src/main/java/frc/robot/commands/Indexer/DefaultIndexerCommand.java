@@ -38,15 +38,15 @@ public class DefaultIndexerCommand extends CommandBase {
 
     } else if (intakeSubsystem.isIntakeSpinning()) {
       if (!ballLower.isBallPresent() && !ballUpper.isBallPresent()){
-        indexerSubsystem.turnBothIndexMotors(IndexerConstants.upperIntakingIndexSpeed, IndexerConstants.upperIntakingIndexSpeed);
+        indexerSubsystem.turnBothIndexMotors(IndexerConstants.upperIntakingIndexSpeed, IndexerConstants.lowerIntakingIndexSpeed);
         //if no ball is present turn both motors until ballUpper is true
       
       } else if (ballLower.isBallPresent() && !ballUpper.isBallPresent()) {
-        indexerSubsystem.turnBothIndexMotors(IndexerConstants.upperIntakingIndexSpeed, IndexerConstants.upperIntakingIndexSpeed);
+        indexerSubsystem.turnBothIndexMotors(IndexerConstants.upperIntakingIndexSpeed, IndexerConstants.lowerIntakingIndexSpeed);
         //if ball is in bottom indexer slot (& not upper slot) turn both motors until ballUpper true
       
       } else if (!ballLower.isBallPresent() && ballUpper.isBallPresent()) {
-        indexerSubsystem.turnBothIndexMotors(0, IndexerConstants.upperIntakingIndexSpeed);
+        indexerSubsystem.turnBothIndexMotors(0, IndexerConstants.lowerIntakingIndexSpeed);
 
         //if ball is in top indexer slot (& not lower slot) turn lower motor until ballLower is true
 
