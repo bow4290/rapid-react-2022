@@ -16,11 +16,6 @@ public class BallIdentification implements Sendable {
     this.blueBallColorSensor = blueBallColorSensor;
   }
 
-  public void update() {
-    redBallColorSensor.update();
-    blueBallColorSensor.update();
-  }
-
   public boolean isBallTeamColor() { return (getAllianceColor() == getBallColor()); }
 
   public boolean isBallPresent() {

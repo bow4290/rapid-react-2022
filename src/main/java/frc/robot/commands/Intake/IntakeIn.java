@@ -18,7 +18,9 @@ public class IntakeIn extends CommandBase {
   public void execute() { intakeSubsystem.intakeSpin(1); }
 
   @Override
-  public void end(boolean interrupted) { intakeSubsystem.intakeSpin(0); }
+  public void end(boolean interrupted) { 
+    intakeSubsystem.intakeSpin(0);
+  }
 
   @Override
   public boolean isFinished() { return false; }

@@ -5,14 +5,12 @@
 
 package frc.robot.sensors;
 
-import edu.wpi.first.util.sendable.Sendable;
-import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
 
 import com.revrobotics.ColorSensorV3;
 
-public class RevColorSensor implements Sendable {
+public class RevColorSensor{
   private final ColorSensorV3 colorSensor;
 
   private double redLowThresh;
@@ -23,9 +21,6 @@ public class RevColorSensor implements Sendable {
   private double blueHighThresh;
   private int proxLowThresh;
   private int proxHighThresh;
-
-  private static int idGen = 0;
-  private int id = ++idGen;
 
   public RevColorSensor(double redLowThresh, double redHighThresh, double greenLowThresh,
                         double greenHighThresh, double blueLowThresh, double blueHighThresh,
@@ -42,27 +37,22 @@ public class RevColorSensor implements Sendable {
     colorSensor = new ColorSensorV3(onboard ? I2C.Port.kOnboard : I2C.Port.kMXP);
   }
 
-  public void update() {
-    SmartDashboard.putNumber("R" + id, getRed());
-    SmartDashboard.putNumber("G" + id, getGreen());
-    SmartDashboard.putNumber("B" + id, getBlue());
-  }
-
   public boolean isTarget() {
-    return (isRedThresholdMet() && isGreenThresholdMet() && isBlueThresholdMet() &&
+    final Color color = colorSensor.getColor();
+    return (isRedThresholdMet(color) && isGreenThresholdMet(color) && isBlueThresholdMet(color) &&
             isProximityMet());
   }
 
-  public boolean isRedThresholdMet() {
-    return (getRed() > redLowThresh && getRed() < redHighThresh);
+  public boolean isRedThresholdMet(Color color) {
+    return (color.red > redLowThresh && color.red < redHighThresh);
   }
 
-  public boolean isGreenThresholdMet() {
-    return (getGreen() > greenLowThresh && getGreen() < greenHighThresh);
+  public boolean isGreenThresholdMet(Color color) {
+    return (color.green > greenLowThresh && color.green < greenHighThresh);
   }
 
-  public boolean isBlueThresholdMet() {
-    return (getBlue() > blueLowThresh && getBlue() < blueHighThresh);
+  public boolean isBlueThresholdMet(Color color) {
+    return (color.blue > blueLowThresh && color.blue < blueHighThresh);
   }
 
   public boolean isProximityMet() {
@@ -79,20 +69,5 @@ public class RevColorSensor implements Sendable {
 
   public int getProximity() { return colorSensor.getProximity(); }
 
-  @Override
-  public void initSendable(SendableBuilder builder) {
-    builder.addDoubleProperty("Red Threshold Low",        () -> this.redLowThresh,    (val) -> this.redLowThresh    = (int)val);
-    builder.addDoubleProperty("Red Threshold High",       () -> this.redHighThresh,   (val) -> this.redHighThresh   = (int)val);
-    builder.addDoubleProperty("Blue Threshold Low",       () -> this.blueLowThresh,   (val) -> this.blueLowThresh   = (int)val);
-    builder.addDoubleProperty("Blue Threshold High",      () -> this.blueHighThresh,  (val) -> this.blueHighThresh  = (int)val);
-    builder.addDoubleProperty("Green Threshold Low",      () -> this.greenLowThresh,  (val) -> this.greenLowThresh  = (int)val);
-    builder.addDoubleProperty("Green Threshold High",     () -> this.greenHighThresh, (val) -> this.greenHighThresh = (int)val);
-    builder.addDoubleProperty("Proximity Threshold Low",  () -> this.proxLowThresh,   (val) -> this.proxLowThresh   = (int)val);
-    builder.addDoubleProperty("Proximity Threshold High", () -> this.proxHighThresh,  (val) -> this.proxHighThresh  = (int)val);
 
-    builder.addDoubleProperty("Red",       this::getRed,       null);
-    builder.addDoubleProperty("Blue",      this::getBlue,      null);
-    builder.addDoubleProperty("Green",     this::getGreen,     null);
-    builder.addDoubleProperty("Proximity", this::getProximity, null);
-  }
 }

@@ -18,7 +18,9 @@ public class ShootManual extends CommandBase {
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    shooterSubsystem.shoot(0);
+  }
 
   @Override
   public boolean isFinished() {

@@ -69,7 +69,7 @@ public class RobotContainer {
 
     if (Flags.intake) {
       intakeSubsystem = new IntakeSubsystem();
-      intakeSubsystem.setDefaultCommand(new IntakeStop(intakeSubsystem).perpetually());
+      //intakeSubsystem.setDefaultCommand(new IntakeStop(intakeSubsystem).perpetually());
     }
 
     if (Flags.indexer) {
@@ -88,7 +88,7 @@ public class RobotContainer {
       hoodSubsystem.setDefaultCommand(new DefaultHoodCommand(limelight, hoodSubsystem));
     }
 
-    shooterSubsystem.setDefaultCommand(new ShootStop(shooterSubsystem));
+    //shooterSubsystem.setDefaultCommand(new ShootStop(shooterSubsystem));
 
     if (Flags.turret) {
       turretSubsystem = new TurretSubsystem(limelight);
@@ -197,6 +197,7 @@ public class RobotContainer {
           new AutoDriveForDistanceCommand(drivetrainSubsystem, 60),
           new IntakeIn(intakeSubsystem)
         ),
+        new WaitCommand(0.20),
         new AutoTurnLeftAngleCommand(drivetrainSubsystem, 180),
         new ParallelRaceGroup(
           new ShootHigh(ballUpper, limelight, shooterSubsystem, turretSubsystem),

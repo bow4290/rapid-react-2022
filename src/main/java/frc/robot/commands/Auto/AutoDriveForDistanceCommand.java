@@ -29,6 +29,7 @@ public class AutoDriveForDistanceCommand extends CommandBase {
   public void end(boolean interrupted) {
     System.out.println("AutoDriveDistance DONE!");
     drivetrainSubsystem.drive(0,0);
+    drivetrainSubsystem.resetDriveEncoders();
   }
 
   @Override

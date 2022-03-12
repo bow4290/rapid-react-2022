@@ -33,7 +33,7 @@ public class DefaultIndexerCommand extends CommandBase {
   @Override
   public void execute() {
     if(shooterSubsystem.isShooterReady()){
-      indexerSubsystem.turnBothIndexMotors(IndexerConstants.bothShootingIndexSpeed, IndexerConstants.bothShootingIndexSpeed);
+      indexerSubsystem.turnBothIndexMotors(IndexerConstants.bothShootingIndexSpeed, IndexerConstants.lowerIntakingIndexSpeed);
       // when shooting, turn both motors at a constant pace
 
     } else if (intakeSubsystem.isIntakeSpinning()) {

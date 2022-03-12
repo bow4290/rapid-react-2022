@@ -36,6 +36,7 @@ public class AutoTurnLeftAngleCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
+    System.out.println(drivetrainSubsystem.getLeftCalculatedPosition());
     System.out.println("Finished?: " + (drivetrainSubsystem.getTurnLeftDegrees() >= degrees));
     return (drivetrainSubsystem.getTurnLeftDegrees() >= degrees);
   }
