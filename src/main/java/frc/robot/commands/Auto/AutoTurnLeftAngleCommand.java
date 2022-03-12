@@ -16,6 +16,7 @@ public class AutoTurnLeftAngleCommand extends CommandBase {
 
   @Override
   public void initialize() {
+    System.out.println("AutoDriveTurn Started!");
     drivetrainSubsystem.resetDriveEncoders();
   }
 
@@ -26,11 +27,13 @@ public class AutoTurnLeftAngleCommand extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
+    System.out.println("AutoDriveTurn DONE!");
     drivetrainSubsystem.drive(0,0);
   }
 
   @Override
   public boolean isFinished() {
+    System.out.println(drivetrainSubsystem.getTurnLeftDegrees() >= degrees);
     return (drivetrainSubsystem.getTurnLeftDegrees() >= degrees);
   }
 }

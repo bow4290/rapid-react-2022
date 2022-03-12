@@ -55,7 +55,6 @@ public class ShooterSubsystem extends SubsystemBase {
     if (targetSpeed == 0){
       return false;
     } else {
-      System.out.println(actualSpeed);
       double errorRatio = actualSpeed/targetSpeed;
       if (errorRatio > 0.95 && errorRatio < 1.1) {
         return true;

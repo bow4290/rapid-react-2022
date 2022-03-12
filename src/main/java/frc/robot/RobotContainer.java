@@ -202,7 +202,7 @@ public class RobotContainer {
         new AutoTurnLeftAngleCommand(drivetrainSubsystem, 180),
         new ParallelRaceGroup(
           new ShootHigh(ballUpper, limelight, shooterSubsystem, turretSubsystem),
-          new WaitCommand(4)
+          new WaitCommand(5)
         )
       );
 
@@ -213,7 +213,7 @@ public class RobotContainer {
         new AutoTurnLeftAngleCommand(drivetrainSubsystem, 180),
         new ParallelRaceGroup(
           new ShootHigh(ballUpper, limelight, shooterSubsystem, turretSubsystem),
-          new WaitCommand(4)
+          new WaitCommand(5)
         )
       );
     

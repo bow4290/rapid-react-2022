@@ -37,8 +37,6 @@ public class DefaultIndexerCommand extends CommandBase {
       // when shooting, turn both motors at a constant pace
 
     } else if (intakeSubsystem.isIntakeSpinning()) {
-      System.out.println(ballLower.isBallPresent());
-      System.out.println(ballUpper.isBallPresent());
       if (!ballLower.isBallPresent() && !ballUpper.isBallPresent()){
         indexerSubsystem.turnBothIndexMotors(IndexerConstants.upperIntakingIndexSpeed, IndexerConstants.upperIntakingIndexSpeed);
         //if no ball is present turn both motors until ballUpper is true

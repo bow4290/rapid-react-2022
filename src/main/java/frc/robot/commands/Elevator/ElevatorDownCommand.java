@@ -25,7 +25,6 @@ public class ElevatorDownCommand extends CommandBase {
   @Override
   public void execute() {
     elevatorSubsystem.getEncoderposition();
-    System.out.println("the encoder position is: "+ elevatorSubsystem.getEncoderposition());
 
     if(elevatorSubsystem.getEncoderposition() <= ElevatorConstants.reverseSoftLimit){
       elevatorSubsystem.stopElevator();

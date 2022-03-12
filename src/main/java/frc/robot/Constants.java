@@ -98,9 +98,9 @@ public final class Constants {
     public static int reverseRotations = -110;
 
     public static double manualTurnSpeed = 0.3;
-    public static double defaultTrackSpeed = 0.35;
+    public static double defaultTrackSpeed = 0.3;
     public static double defaultSearchSpeed = 0.6;
-    public static double turretKP = 0.09;
+    public static double turretKP = 0.1;
   }
 
   public static final class LimelightConstants {

@@ -32,8 +32,6 @@ public class AutoIndexerCommand extends CommandBase {
       // when shooting, turn both motors at a constant pace
 
     } else {
-      System.out.println(ballLower.isBallPresent());
-      System.out.println(ballUpper.isBallPresent());
       if (!ballLower.isBallPresent() && !ballUpper.isBallPresent()){
         indexerSubsystem.turnBothIndexMotors(IndexerConstants.upperIntakingIndexSpeed, IndexerConstants.upperIntakingIndexSpeed);
         //if no ball is present turn both motors until ballUpper is true

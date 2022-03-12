@@ -16,17 +16,18 @@ public class AutoDriveForDistanceCommand extends CommandBase {
 
   @Override
   public void initialize() {
+    System.out.println("AutoDriveDistance Started!");
     drivetrainSubsystem.resetDriveEncoders();
   }
 
   @Override
   public void execute() {
-    System.out.println("adfdc");
     drivetrainSubsystem.drive(DriveConstants.autonomousDriveSpeed, DriveConstants.autonomousDriveSpeed);
   }
 
   @Override
   public void end(boolean interrupted) {
+    System.out.println("AutoDriveDistance DONE!");
     drivetrainSubsystem.drive(0,0);
   }
 
