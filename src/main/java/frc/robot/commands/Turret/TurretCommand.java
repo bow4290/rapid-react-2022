@@ -12,7 +12,7 @@ public class TurretCommand extends CommandBase {
   private enum TurretState {INIT, SEARCH, TRACK};
   private TurretState turretState = TurretState.INIT;
   private TurretState newTurretState;
-  private double setpoint = 0.0;
+  private double turretSpeed = 0.0;
   private double localTrackSpeed = TurretConstants.defaultTrackSpeed;
   private double localSearchSpeed = TurretConstants.defaultSearchSpeed;
 
@@ -30,14 +30,16 @@ public class TurretCommand extends CommandBase {
 
   @Override
   public void execute() {
-    if (turretSubsystem.isTurretStopped == false){
+    if (turretSubsystem.isTurretStopped == true){
+      turretSubsystem.stopTurret();
+    } else {
       newTurretState = determineTurretState();
 
       if (newTurretState != turretState) {
         if (newTurretState == TurretState.SEARCH) {
-          setpoint = localSearchSpeed;
+          turretSpeed = localSearchSpeed;
         } else {
-          setpoint = localTrackSpeed;
+          turretSpeed = localTrackSpeed;
         }
         turretState = newTurretState;
       }
@@ -46,17 +48,15 @@ public class TurretCommand extends CommandBase {
         updateSearchSetpoint();
       } else {
         updateTrackSetpoint();
-      } 
-      
-      // turretSubsystem.turn(setpoint);
-      turretSubsystem.turnManual(setpoint);
-    } else if (turretSubsystem.isTurretStopped == true) {
-      turretSubsystem.stopTurret();
+      }
+
+      turretSubsystem.turnTurret(turretSpeed);
     }
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   @Override
   public boolean isFinished() {
@@ -64,12 +64,15 @@ public class TurretCommand extends CommandBase {
   }
 
   private void updateSearchSetpoint() {
-    if (turretSubsystem.getHitLeftLimitSwitch()) { setpoint = Math.abs(setpoint); }
-    else if (turretSubsystem.getHitRightLimitSwitch()) { setpoint = -1 * Math.abs(setpoint); }
+    if (turretSubsystem.getHitLeftLimitSwitch()) {
+      turretSpeed = Math.abs(turretSpeed);
+    } else if (turretSubsystem.getHitRightLimitSwitch()) {
+      turretSpeed = -Math.abs(turretSpeed);
+    }
   }
 
   private void updateTrackSetpoint() {
-    setpoint = limelight.getXError()*TurretConstants.turretKP; 
+    turretSpeed = limelight.getXError()*TurretConstants.turretKP; 
   }
 
   private TurretState determineTurretState(){

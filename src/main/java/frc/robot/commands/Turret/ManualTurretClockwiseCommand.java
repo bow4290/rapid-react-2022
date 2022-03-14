@@ -18,12 +18,12 @@ public class ManualTurretClockwiseCommand extends CommandBase {
 
   @Override
   public void execute() {
-    turretSubsystem.turnManual(TurretConstants.manualTurnSpeed);
+    turretSubsystem.turnTurret(TurretConstants.manualTurnSpeed);
   }
 
   @Override
   public void end(boolean interrupted) {
-    turretSubsystem.turnManual(0);
+    turretSubsystem.turnTurret(0);
   }
 
   // Returns true when the command should end.

@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
@@ -46,7 +47,7 @@ public class TurretSubsystem extends SubsystemBase {
     encoder.setPosition(0);
   }
 
-  public void turnManual(double speed){
+  public void turnTurret(double speed){
     motor.set(speed);
   }
   public void stopTurret(){
@@ -71,5 +72,6 @@ public class TurretSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("LimeLight Distance", limelight.getDistance());
   }
 }
