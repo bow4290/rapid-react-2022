@@ -1,5 +1,4 @@
 /*
-    Color thresholds should be in the range [0-255]
     Proximity thresholds should be in the range [0-2047]
 */
 
@@ -7,7 +6,6 @@ package frc.robot.sensors;
 
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.util.Color;
-
 import com.revrobotics.ColorSensorV3;
 
 public class RevColorSensor{
@@ -22,9 +20,8 @@ public class RevColorSensor{
   private int proxLowThresh;
   private int proxHighThresh;
 
-  public RevColorSensor(double redLowThresh, double redHighThresh, double greenLowThresh,
-                        double greenHighThresh, double blueLowThresh, double blueHighThresh,
-                        int proxLowThresh, int proxHighThresh, Boolean onboard) {
+  public RevColorSensor(double redLowThresh, double redHighThresh, double greenLowThresh, double greenHighThresh,
+                        double blueLowThresh, double blueHighThresh, int proxLowThresh, int proxHighThresh, Boolean i2c) {
     this.redLowThresh    = redLowThresh;
     this.redHighThresh   = redHighThresh;
     this.greenLowThresh  = greenLowThresh;
@@ -34,7 +31,7 @@ public class RevColorSensor{
     this.proxLowThresh   = proxLowThresh;
     this.proxHighThresh  = proxHighThresh;
 
-    colorSensor = new ColorSensorV3(onboard ? I2C.Port.kOnboard : I2C.Port.kMXP);
+    colorSensor = new ColorSensorV3(i2c ? I2C.Port.kOnboard : I2C.Port.kMXP);
   }
 
   public boolean isTarget() {

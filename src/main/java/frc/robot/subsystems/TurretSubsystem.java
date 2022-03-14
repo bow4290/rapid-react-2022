@@ -7,16 +7,13 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.FaultID;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import frc.robot.Constants.Flags;
 import frc.robot.Constants.TurretConstants;
 import frc.robot.sensors.Limelight;
 
 public class TurretSubsystem extends SubsystemBase {
-
   private CANSparkMax motor;
   public RelativeEncoder encoder;
-
   private Limelight limelight;
   public boolean isTurretStopped = false;
   // private SparkMaxPIDController pid;
@@ -72,6 +69,6 @@ public class TurretSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("LimeLight Distance", limelight.getDistance());
+    SmartDashboard.putBoolean("Is Turret Ready?", isTurretReady());
   }
 }

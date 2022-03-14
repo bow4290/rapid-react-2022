@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 public class BallIdentification implements Sendable {
   private RevColorSensor redBallColorSensor;
   private RevColorSensor blueBallColorSensor;
+  
   private Color ballColor = getAllianceColor();
 
   public static enum Color { RED, BLUE, NEITHER }
@@ -16,7 +17,9 @@ public class BallIdentification implements Sendable {
     this.blueBallColorSensor = blueBallColorSensor;
   }
 
-  public boolean isBallTeamColor() { return (getAllianceColor() == getBallColor()); }
+  public boolean isBallTeamColor() {
+    return (getAllianceColor() == getBallColor());
+  }
 
   public boolean isBallPresent() {
     return (redBallColorSensor.isTarget() || blueBallColorSensor.isTarget());
@@ -46,7 +49,6 @@ public class BallIdentification implements Sendable {
 
   @Override
   public void initSendable(SendableBuilder builder) {
-    // TODO Auto-generated method stub
     builder.addBooleanProperty("Is there a ball?", this :: isBallPresent, null);
     builder.addBooleanProperty("Is the ball the correct color?", this :: isBallTeamColor, null);
   }

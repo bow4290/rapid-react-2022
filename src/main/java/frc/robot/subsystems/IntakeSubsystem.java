@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -18,6 +17,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public IntakeSubsystem() {
     if (!Flags.intake) throw new Error("Intake flag must be set to create an IntakeSubsystem!");
+    
     intakeMotor = new CANSparkMax(IntakeConstants.intakeMotorChannel, MotorType.kBrushless);
     intakeMotor.restoreFactoryDefaults();
     intakeMotor.setInverted(false);
@@ -46,11 +46,11 @@ public class IntakeSubsystem extends SubsystemBase {
     return Math.abs(intakeMotor.get()) > 0 ? true : false;
   }
 
-  public static IntakeStatus getIntakePosition() { return intakeStatus; }
+  public static IntakeStatus getIntakePosition() {
+    return intakeStatus;
+  }
 
   @Override
   public void periodic() {
-    // TODO: Should we also display the current intake speed? (maybe in intakeSpin)
-    // SmartDashboard.putString("Intake Status", intakeStatus == IntakeStatus.UP ? "Up" : "Down");
   }
 }

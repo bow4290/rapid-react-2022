@@ -8,7 +8,6 @@ import frc.robot.sensors.Limelight;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
 
-
 public class ShootHigh extends CommandBase {
   private BallIdentification ball;
   private Limelight limelight;
@@ -25,7 +24,8 @@ public class ShootHigh extends CommandBase {
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   @Override
   public void execute() {
@@ -51,12 +51,10 @@ public class ShootHigh extends CommandBase {
   }
 
   private double calculateShooterSpeedRPM(double distance) {
-    if(distance < HoodConstants.hoodExtendDistance){
-      // Hood Retracted Equation
-      return (3538*(Math.pow(1.002, distance))-175);
-    } else{
-      // Hood Extended Equation
-      return ((5.06*distance)+5030.4);
+    if (distance < HoodConstants.hoodExtendDistance) {
+      return (3538*(Math.pow(1.002, distance))-175);    // Hood Retracted Equation
+    } else {
+      return ((5.06*distance)+5030.4);                  // Hood Extended Equation
     }
   }
 }

@@ -26,7 +26,6 @@ public class ManualTurretClockwiseCommand extends CommandBase {
     turretSubsystem.turnTurret(0);
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

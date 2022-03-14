@@ -1,6 +1,5 @@
 package frc.robot;
 
-
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.cscore.VideoMode.PixelFormat;
@@ -9,12 +8,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Robot extends TimedRobot {
-  private Command m_autonomousCommand;
-  private RobotContainer m_robotContainer;
+  private Command autonomousCommand;
+  private RobotContainer robotContainer;
 
   @Override
   public void robotInit() {
-    m_robotContainer = new RobotContainer();
+    robotContainer = new RobotContainer();
 
     UsbCamera camera = CameraServer.startAutomaticCapture();
     camera.setVideoMode(PixelFormat.kMJPEG, 480, 240, 30);
@@ -26,29 +25,35 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+  }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+  }
 
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    autonomousCommand = robotContainer.getAutonomousCommand();
     
-    if (m_autonomousCommand != null) {
-      m_robotContainer.turretSubsystem.isTurretStopped = false;
-      m_autonomousCommand.schedule();
+    if (autonomousCommand != null) {
+      robotContainer.turretSubsystem.isTurretStopped = false;   // Enable the turret during autonomous
+      autonomousCommand.schedule();
     }
   }
 
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+  }
 
   @Override
   public void teleopInit() {
-    if (m_autonomousCommand != null) m_autonomousCommand.cancel();
-    m_robotContainer.turretSubsystem.isTurretStopped = true;
-    m_robotContainer.teleopInitCommands().schedule();
+    if (autonomousCommand != null) {
+      autonomousCommand.cancel();
+    }
+
+    robotContainer.turretSubsystem.isTurretStopped = true;      // Disable the turret when teleop begins
+    robotContainer.teleopInitCommands().schedule();
   }
 
   @Override
@@ -61,5 +66,6 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+  }
 }

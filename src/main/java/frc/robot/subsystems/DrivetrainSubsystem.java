@@ -1,17 +1,14 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
-
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.Flags;
 
@@ -79,7 +76,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
     rightMotor1.setSelectedSensorPosition(0);
   }
 
-  public GearShiftPosition getGearShiftPosition() { return gearShiftPosition; }
+  public GearShiftPosition getGearShiftPosition() {
+    return gearShiftPosition;
+  }
 
   public void shiftDown() {
     gearShiftSolenoid.set(DoubleSolenoid.Value.kForward);  // kForward is DOWN
@@ -123,8 +122,13 @@ public class DrivetrainSubsystem extends SubsystemBase {
     }
   }
 
-  private double getLeftRawEncoderPosition() { return leftMotor1.getSelectedSensorPosition(); }
-  private double getRightRawEncoderPosition() { return rightMotor1.getSelectedSensorPosition(); }
+  private double getLeftRawEncoderPosition() {
+    return leftMotor1.getSelectedSensorPosition();
+  }
+
+  private double getRightRawEncoderPosition() {
+    return rightMotor1.getSelectedSensorPosition();
+  }
 
   @Override
   public void periodic() {

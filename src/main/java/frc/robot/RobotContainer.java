@@ -71,6 +71,7 @@ public class RobotContainer {
     }
 
     if (Flags.indexer) {
+      // Color values are from 0.00 - 1.00 (0% to 100% of the measured color).
       redBallColorSensorI2C  = new RevColorSensor(0.45, 1.00, 0.00, 1.00, 0.00, 0.15, 0, 2047, true);
       blueBallColorSensorI2C = new RevColorSensor(0.00, 0.26, 0.00, 1.00, 0.275, 1.00, 0, 2047, true);
       redBallColorSensorMXP  = new RevColorSensor(0.45, 1.00, 0.00, 1.00, 0.00, 0.15, 0, 2047, false);
@@ -83,7 +84,7 @@ public class RobotContainer {
 
     if (Flags.hood){
       hoodSubsystem = new HoodSubsystem();
-      hoodSubsystem.setDefaultCommand(new DefaultHoodCommand(limelight, hoodSubsystem));
+      hoodSubsystem.setDefaultCommand(new DefaultHoodCommand(limelight, hoodSubsystem, turretSubsystem));
     }
 
     if (Flags.turret) {
@@ -143,19 +144,6 @@ public class RobotContainer {
 
     setJoystickButtonWhenHeld(xboxController, 10, new ShootManual(shooterSubsystem));
     setJoystickButtonWhenHeld(xboxController, 6, new ShootHigh(ballUpper, limelight, shooterSubsystem, turretSubsystem));
-  }
-
-
-  public Command getAutonomousCommand() {
-    return chooser.getSelected();
-  }
-
-  public Command teleopInitCommands(){
-    return new ParallelCommandGroup(
-            new IntakeUp(intakeSubsystem),
-            new ShiftGearDown(drivetrainSubsystem),
-            new HoodRetractCommand(hoodSubsystem)
-          );
   }
 
   private void setJoystickButtonWhenPressed(Joystick joystick, int button, CommandBase command) {
@@ -223,5 +211,17 @@ public class RobotContainer {
       );
     
     AutoNothing = null;
+  }
+
+  public Command getAutonomousCommand() {
+    return chooser.getSelected();
+  }
+
+  public Command teleopInitCommands(){
+    return new ParallelCommandGroup(
+            new IntakeUp(intakeSubsystem),
+            new ShiftGearDown(drivetrainSubsystem),
+            new HoodRetractCommand(hoodSubsystem)
+           );
   }
 }

@@ -2,15 +2,11 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
-
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.Flags;
 import frc.robot.Constants.IndexerConstants;
 
 public class IndexerSubsystem extends SubsystemBase {
-  public static ShuffleboardTab tab = null;
-
   private WPI_VictorSPX upperIndexMotor;
   private WPI_VictorSPX lowerIndexMotor;
 

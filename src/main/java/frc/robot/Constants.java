@@ -2,8 +2,8 @@ package frc.robot;
 
 public final class Constants {
   public static final class JoystickConstants {
-    public static final int LEFT_JOYSTICK = 0;
-    public static final int RIGHT_JOYSTICK = 1;
+    public static final int LEFT_JOYSTICK   = 0;
+    public static final int RIGHT_JOYSTICK  = 1;
     public static final int XBOX_CONTROLLER = 2;
   }
 
@@ -11,63 +11,62 @@ public final class Constants {
     // Drive Motor Channels
     public static final int rightMotor1Channel = 5;
     public static final int rightMotor2Channel = 6;
-    public static final int leftMotor1Channel = 7;
-    public static final int leftMotor2Channel = 8;
+    public static final int leftMotor1Channel  = 7;
+    public static final int leftMotor2Channel  = 8;
  
     // Drive Pneumatic Channels
-    public static final int gearShiftUpChannel = 4;
+    public static final int gearShiftUpChannel   = 4;
     public static final int gearShiftDownChannel = 5;
 
     // Drive Gear Ratio Values
-    private static final double stage1Ratio = 60/12;
-    private static final double stage2Ratio = 28/28;
-    private static final double lowSpreadRatio = 44/22;
+    private static final double stage1Ratio     = 60/12;
+    private static final double stage2Ratio     = 28/28;
+    private static final double lowSpreadRatio  = 44/22;
     private static final double highSpreadRatio = 34/32;
 
     // Drive Calculations
-    private static final double wheelDiameter = 3.75;
-    private static final double wheelCircum = wheelDiameter*Math.PI;
-    private static final double driveWidth = 25.5;
-    private static final double driveCircum = driveWidth *Math.PI;    // Only for "zero-point" turns
+    private static final double wheelDiam   = 3.75;                 // inches
+    private static final double wheelCircum = wheelDiam*Math.PI;    // inches
+    private static final double driveWidth  = 25.5;                 // inches
+    private static final double driveCircum = driveWidth *Math.PI;  // Only for "zero-point" turns
 
     // Drive Distance Calculations
     private static final int encoderCPR = 2048;
-    private static final double lowCountsPerWheelRev = stage1Ratio * stage2Ratio * lowSpreadRatio * encoderCPR;
+    private static final double lowCountsPerWheelRev  = stage1Ratio * stage2Ratio * lowSpreadRatio * encoderCPR;
     private static final double highCountsPerWheelRev = stage1Ratio * stage2Ratio * highSpreadRatio * encoderCPR;
-    public static final double encoderLowDistanceConversion = wheelCircum/lowCountsPerWheelRev;     // inches per 1 encoder count (low gear)
+    public static final double encoderLowDistanceConversion  = wheelCircum/lowCountsPerWheelRev;    // inches per 1 encoder count (low gear)
     public static final double encoderHighDistanceConversion = wheelCircum/highCountsPerWheelRev;   // inches per 1 encoder count (high gear)
     
-    // To turn x degrees, run turn command until encoderCounts >= (driveLowCountsPerDeg*x).
-    public static final double driveLowCountsPerDeg = driveCircum/encoderLowDistanceConversion/360;    // counts per 1 degrees (low gear)
-    public static final double driveHighCountsPerDeg = driveCircum/encoderHighDistanceConversion/360;    // counts per 1 degrees (high gear)
+    // To turn x degrees, run turn command until encoderCounts >= (driveCountsPerDeg*x).
+    public static final double driveLowCountsPerDeg  = driveCircum/encoderLowDistanceConversion/360;    // counts per 1 degrees (low gear)
+    public static final double driveHighCountsPerDeg = driveCircum/encoderHighDistanceConversion/360;   // counts per 1 degrees (high gear)
 
     // Auto Drive Speeds
     public static final double autonomousDriveSpeed = 0.5;
-    public static final double autonomousTurnSpeed = 0.5;
+    public static final double autonomousTurnSpeed  = 0.5;
   }
 
   public static final class ElevatorConstants {
     public static int elevatorClimbMotorChannel = 10;
 
-    public static double forwardSoftLimit = 175000;     // Revolutions the motor can rotate CW (should be up)
-    public static double reverseSoftLimit = 5000;       // Revolutions the motor can rotate CCW (should be down)
-    // public static int elevatorLockChannel = 4;
-    // public static int elevatorUnlockChannel = 5; 
+    public static double forwardSoftLimit = 175000;     // Revolutions the motor can rotate CW
+    public static double reverseSoftLimit = 5000;       // Revolutions the motor can rotate CCW
 
     public static double elevatorSpeed = 0.75;          // -1 to 1 (Percent Output)
   }
 
   public static final class HoodConstants {
-    public static int hoodSolenoidExtendChannel = 3;
+    public static int hoodSolenoidExtendChannel  = 3;
     public static int hoodSolenoidRetractChannel = 2;
-    public static double hoodExtendDistance = 165;      // Distance in inches
+
+    public static double hoodExtendDistance = 165;      // Distance from target in inches where hood will extend
   }
 
   public static final class IndexerConstants {
     public static int upperIndexMotorChannel = 0;
     public static int lowerIndexMotorChannel = 1;
     
-    public static double bothShootingIndexSpeed = 1;
+    public static double bothShootingIndexSpeed  = 1.0;
     public static double upperIntakingIndexSpeed = 0.225;
     public static double lowerIntakingIndexSpeed = 0.275;
   }
@@ -95,18 +94,19 @@ public final class Constants {
   public static final class TurretConstants {
     public static int deviceID = 11;
 
-    public static int forwardRotations = 110;
-    public static int reverseRotations = -110;
+    public static int forwardRotations = 110;         // Soft limit to prevent turret from turning too far
+    public static int reverseRotations = -110;        // Soft limit to prevent turret from turning too far
 
-    public static double manualTurnSpeed = 0.3;
-    public static double defaultTrackSpeed = 0.3;
+    public static double manualTurnSpeed    = 0.3;
+    public static double defaultTrackSpeed  = 0.3;
     public static double defaultSearchSpeed = 0.6;
+
     public static double turretKP = 0.1;
   }
 
   public static final class LimelightConstants {
     /* To calculate the limelight mount angle (a1):
-     * 1) Place te robot at a known distance
+     * 1) Place the robot at a known distance
      * 2) Measure limelight lense height (h1) and target height (h2)
      * 3) Calculate: a1 = atan((h2-h1)/d)-yError
     */
