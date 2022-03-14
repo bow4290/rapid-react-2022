@@ -9,20 +9,22 @@ public class ShootDiscard extends CommandBase {
 
   public ShootDiscard(ShooterSubsystem shooterSubsystem) {
     this.shooterSubsystem = shooterSubsystem;
+    
     addRequirements(shooterSubsystem);
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   @Override
   public void execute() {
-    //shooterSubsystem.shoot(ShooterConstants.discardSpeedRPM);
+    shooterSubsystem.shoot(ShooterConstants.discardSpeedRPM);
   }
 
   @Override
   public void end(boolean interrupted) {
-    //shooterSubsystem.shoot(0);
+    shooterSubsystem.shoot(0);
   }
 
   @Override
