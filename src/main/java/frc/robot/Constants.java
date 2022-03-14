@@ -105,10 +105,11 @@ public final class Constants {
   }
 
   public static final class LimelightConstants {
-    // To calculate the limelight mount angle (a1):
-    // 1) Place te robot at a known distance
-    // 2) Measure limelight lense height (h1) and target height (h2)
-    // 3) Calculate: a1 = atan((h2-h1)/d)-yError
+    /* To calculate the limelight mount angle (a1):
+     * 1) Place te robot at a known distance
+     * 2) Measure limelight lense height (h1) and target height (h2)
+     * 3) Calculate: a1 = atan((h2-h1)/d)-yError
+    */
     public static final double h1 = 29.75;            // Distance from ground to limelight lense
     public static final double h2 = 104;              // Distance from ground to target (8'8")
     public static final double a1 = 35.3;             // Limelight mount angle (0 = facing forward, 90 = facing the ceiling)

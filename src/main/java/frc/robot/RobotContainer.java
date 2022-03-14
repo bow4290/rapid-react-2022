@@ -7,7 +7,6 @@ import frc.robot.Constants.Flags;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.commands.Shooter.ShootHigh;
 import frc.robot.commands.Shooter.ShootManual;
-import frc.robot.commands.Shooter.ShootStop;
 import frc.robot.commands.Indexer.*;
 import frc.robot.commands.Intake.*;
 import frc.robot.commands.Auto.AutoDriveForDistanceCommand;
@@ -69,7 +68,6 @@ public class RobotContainer {
 
     if (Flags.intake) {
       intakeSubsystem = new IntakeSubsystem();
-      //intakeSubsystem.setDefaultCommand(new IntakeStop(intakeSubsystem).perpetually());
     }
 
     if (Flags.indexer) {
@@ -87,8 +85,6 @@ public class RobotContainer {
       hoodSubsystem = new HoodSubsystem();
       hoodSubsystem.setDefaultCommand(new DefaultHoodCommand(limelight, hoodSubsystem));
     }
-
-    //shooterSubsystem.setDefaultCommand(new ShootStop(shooterSubsystem));
 
     if (Flags.turret) {
       turretSubsystem = new TurretSubsystem(limelight);
@@ -108,21 +104,20 @@ public class RobotContainer {
   }
 
 
-  /* Xbox Controller Button Binding:
-    Buttons:
+  /* Xbox Controller Button Bindings:
+     Buttons:
       1 - A           6 - RightBump
       2 - B           7 - Back
       3 - X           8 - Start
       4 - Y           9 - LeftStickIn
       5 - LeftBump   10 - RightStickIn
 
-    Axes:
+     Axes:
       0 - LeftX       3 - RightTrig
       1 - LeftY       4 - RightX
       2 - LeftTrig    5 - RightY
   */
   private void configureButtonBindings() {
-    // setJoystickButtonWhileHeld(xboxController, 6, new ShootHigh(ball, limelight, shooterSubsystem));
     // setJoystickButtonWhenHeld(xboxController, 5, new ManualTurretClockwiseCommand(turretSubsystem));
     // setJoystickButtonWhenHeld(xboxController, 6, new ManualTurretCounterClockwiseCommand(turretSubsystem));
 
@@ -167,26 +162,21 @@ public class RobotContainer {
     new JoystickButton(joystick, button).whenPressed(command);
   }
 
-  /**
-   * WhileHeld constantly starts the command and repeatedly schedules while the
-   * button is held. Cancels when button is released.
+  /*
+   * WhileHeld starts the command. If the command ends whilst the button is still pressed,
+   * the command is rescheduled. The command is cancelled when button is released.
    */
   // private void setJoystickButtonWhileHeld(Joystick joystick, int button, CommandBase command) {
   //   new JoystickButton(joystick, button).whileHeld(command);
   // }
 
   /**
-   * WhenHeld starts the command once when the button is first pressed. Command
-   * runs until button is released or command interrupted.
+   * WhenHeld starts the command. If the command ends whilst the button is still pressed,
+   * the command is not rescheduled. The command is cancelled when button is released.
    */
   private void setJoystickButtonWhenHeld(Joystick joystick, int button, CommandBase command) {
     new JoystickButton(joystick, button).whenHeld(command);
   }
-
-
-  // private void setJoystickButtonToggleWhenPressed(Joystick joystick, int button, CommandBase command) {
-  //   new JoystickButton(joystick, button).toggleWhenPressed(command);
-  // }
 
   private void autoCommands(){
     AutoDriveCollectAndShoot = 
