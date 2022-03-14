@@ -1,6 +1,7 @@
 package frc.robot.commands.Indexer;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.IndexerConstants;
 import frc.robot.subsystems.IndexerSubsystem;
 
 public class ReverseIndexerCommand extends CommandBase {
@@ -17,7 +18,7 @@ public class ReverseIndexerCommand extends CommandBase {
 
   @Override
   public void execute() {
-    indexerSubsystem.turnBothIndexMotors(-0.5, -0.5);
+    indexerSubsystem.turnBothIndexMotors(-IndexerConstants.reverseIndexSpeed, -IndexerConstants.reverseIndexSpeed);
   }
 
   @Override

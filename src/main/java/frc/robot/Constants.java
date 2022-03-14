@@ -43,7 +43,7 @@ public final class Constants {
 
     // Auto Drive Speeds
     public static final double autonomousDriveSpeed = 0.5;
-    public static final double autonomousTurnSpeed  = 0.5;
+    public static final double autonomousTurnSpeed  = 0.25;
   }
 
   public static final class ElevatorConstants {
@@ -59,16 +59,18 @@ public final class Constants {
     public static int hoodSolenoidExtendChannel  = 3;
     public static int hoodSolenoidRetractChannel = 2;
 
-    public static double hoodExtendDistance = 165;      // Distance from target in inches where hood will extend
+    public static double hoodExtendDistance = 160;      // Distance from target in inches where hood will extend
   }
 
   public static final class IndexerConstants {
     public static int upperIndexMotorChannel = 0;
     public static int lowerIndexMotorChannel = 1;
     
-    public static double bothShootingIndexSpeed  = 1.0;
+    public static double upperShootingIndexSpeed = 0.5;
+    public static double lowerShootingIndexSpeed = 0.275;
     public static double upperIntakingIndexSpeed = 0.225;
     public static double lowerIntakingIndexSpeed = 0.275;
+    public static double reverseIndexSpeed = 0.25;
   }
 
   public static final class IntakeConstants {

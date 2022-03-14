@@ -52,6 +52,7 @@ public class RobotContainer {
   public BallIdentification ballUpper;
   public BallIdentification ballLower;
 
+  private Command AutoDriveCollectAndShoot2;
   private Command AutoDriveCollectAndShoot;
   private Command AutoDriveAndShoot;
   private Command AutoDriveAndCollect;
@@ -82,14 +83,14 @@ public class RobotContainer {
       indexerSubsystem.setDefaultCommand(new DefaultIndexerCommand(indexerSubsystem, shooterSubsystem, intakeSubsystem, ballUpper, ballLower));
     }
 
-    if (Flags.hood){
-      hoodSubsystem = new HoodSubsystem();
-      hoodSubsystem.setDefaultCommand(new DefaultHoodCommand(limelight, hoodSubsystem, turretSubsystem));
-    }
-
     if (Flags.turret) {
       turretSubsystem = new TurretSubsystem(limelight);
       turretSubsystem.setDefaultCommand(new TurretCommand(limelight, turretSubsystem));
+    }
+
+    if (Flags.hood){
+      hoodSubsystem = new HoodSubsystem();
+      hoodSubsystem.setDefaultCommand(new DefaultHoodCommand(limelight, hoodSubsystem, turretSubsystem));
     }
 
     autoCommands();
@@ -134,7 +135,7 @@ public class RobotContainer {
 
     if (Flags.indexer) {
       setJoystickButtonWhenHeld(xboxController, 9, new ManualIndexerCommand(indexerSubsystem));
-      setJoystickButtonWhenHeld(xboxController, 7, new ReverseIndexerCommand(indexerSubsystem));
+      setJoystickButtonWhenHeld(xboxController, 10, new ReverseIndexerCommand(indexerSubsystem));
     }
 
     setJoystickButtonWhenHeld(xboxController, 3, new ToggleTurretCommand(turretSubsystem));
@@ -142,7 +143,7 @@ public class RobotContainer {
     setJoystickButtonWhenHeld(xboxController, 4, new ElevatorUpCommand(elevatorSubsystem));
     setJoystickButtonWhenHeld(xboxController, 1, new ElevatorDownCommand(elevatorSubsystem));
 
-    setJoystickButtonWhenHeld(xboxController, 10, new ShootManual(shooterSubsystem));
+    setJoystickButtonWhenHeld(xboxController, 8, new ShootManual(shooterSubsystem));
     setJoystickButtonWhenHeld(xboxController, 6, new ShootHigh(ballUpper, limelight, shooterSubsystem, turretSubsystem));
   }
 
@@ -167,6 +168,22 @@ public class RobotContainer {
   }
 
   private void autoCommands(){
+    AutoDriveCollectAndShoot2 = 
+      new SequentialCommandGroup(
+        new ShiftGearDown(drivetrainSubsystem),
+        new IntakeDown(intakeSubsystem),
+        new ParallelRaceGroup(
+          new AutoDriveForDistanceCommand(drivetrainSubsystem, 60),
+          new IntakeIn(intakeSubsystem)
+        ),
+        new WaitCommand(0.20),
+        new AutoTurnLeftAngleCommand(drivetrainSubsystem, 180),
+        new ParallelRaceGroup(
+          new ShootHigh(ballUpper, limelight, shooterSubsystem, turretSubsystem),
+          new WaitCommand(5)
+        )
+      );
+    
     AutoDriveCollectAndShoot = 
       new SequentialCommandGroup(
         new ShiftGearDown(drivetrainSubsystem),

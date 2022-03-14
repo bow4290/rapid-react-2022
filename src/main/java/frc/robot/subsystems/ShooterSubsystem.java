@@ -85,8 +85,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Shooter Commanded Speed", targetSpeed);
-    SmartDashboard.putNumber("Shooter Actual Speed", getShooterRPM());
+    //SmartDashboard.putNumber("Shooter Commanded Speed", targetSpeed);
+    //SmartDashboard.putNumber("Shooter Actual Speed", getShooterRPM());
     SmartDashboard.putBoolean("Is Shooter Ready?", isShooterReady());
   }
 }
