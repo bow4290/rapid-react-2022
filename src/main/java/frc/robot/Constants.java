@@ -42,8 +42,8 @@ public final class Constants {
     public static final double driveHighCountsPerDeg = driveCircum/encoderHighDistanceConversion/360;   // counts per 1 degrees (high gear)
 
     // Auto Drive Speeds
-    public static final double autonomousDriveSpeed = 0.5;
-    public static final double autonomousTurnSpeed  = 0.25;
+    public static final double autonomousDriveSpeed = 0.6;
+    public static final double autonomousTurnSpeed  = 0.4;
   }
 
   public static final class ElevatorConstants {
@@ -84,7 +84,7 @@ public final class Constants {
     public static int shooterMotorChannel = 2;
     public static int shooterMotorVoltage = 11;
 
-    public static double manualShooterSpeedRPM = 5000;
+    public static double manualShooterSpeedRPM = 1500;
     public static double discardSpeedRPM = 1500.0;
 
     public static double kF = 1023.0/20330.0;
@@ -101,7 +101,7 @@ public final class Constants {
 
     public static double manualTurnSpeed    = 0.3;
     public static double defaultTrackSpeed  = 0.3;
-    public static double defaultSearchSpeed = 0.6;
+    public static double defaultSearchSpeed = 0.65;
 
     public static double turretKP = 0.1;
   }

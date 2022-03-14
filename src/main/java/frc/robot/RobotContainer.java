@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.Flags;
 import frc.robot.Constants.JoystickConstants;
+import frc.robot.commands.Shooter.ShootDiscard;
 import frc.robot.commands.Shooter.ShootHigh;
 import frc.robot.commands.Shooter.ShootManual;
 import frc.robot.commands.Indexer.*;
@@ -59,6 +60,7 @@ public class RobotContainer {
   private Command AutoDriveAndCollect;
   private Command AutoDriveOnly;
   private Command AutoNothing;
+  private Command AutoPlop;
 
   SendableChooser<Command> chooser = new SendableChooser<>();
 
@@ -96,9 +98,10 @@ public class RobotContainer {
 
     autoCommands();
 
-    chooser.setDefaultOption("FULL AUTO", AutoDriveCollectAndShoot);
-    chooser.addOption("FULLER AUTO", AutoDriveCollectAndShoot2);
-    chooser.addOption("Drive and Shoot", AutoDriveAndShoot);
+    chooser.setDefaultOption("3-Ball High Auto", AutoDriveCollectAndShoot2);
+    chooser.addOption("2-Ball High Auto", AutoDriveCollectAndShoot);
+    chooser.addOption("1-Ball High Auto", AutoDriveAndShoot);
+    chooser.addOption("1-Ball Low Auto", AutoPlop);
     chooser.addOption("Drive and Collect", AutoDriveAndCollect);
     chooser.addOption("Drive Only", AutoDriveOnly);
     chooser.addOption("Do Nothing", AutoNothing);
@@ -170,6 +173,15 @@ public class RobotContainer {
   }
 
   private void autoCommands(){
+    AutoPlop = 
+    new SequentialCommandGroup(
+      new ToggleTurretCommand(turretSubsystem),
+      new ParallelRaceGroup(
+          new ShootDiscard(shooterSubsystem),
+          new WaitCommand(5)
+        )
+    );
+
     AutoDriveCollectAndShoot2 = 
       new SequentialCommandGroup(
         new ShiftGearDown(drivetrainSubsystem),
@@ -179,10 +191,14 @@ public class RobotContainer {
           new IntakeIn(intakeSubsystem)
         ),
         new WaitCommand(0.20),
-        new AutoTurnRightAngleCommand(drivetrainSubsystem, 90.0 + 32.25 + 15.0),
+        new ParallelRaceGroup(
+          new AutoTurnRightAngleCommand(drivetrainSubsystem, (90.0 + 22.5 + 15.0)),     
+          new IntakeIn(intakeSubsystem)
+        ),
+        new WaitCommand(0.20),
         new ParallelRaceGroup(
           new ShootHigh(ballUpper, limelight, shooterSubsystem, turretSubsystem),
-          new WaitCommand(2.5)
+          new WaitCommand(3)
         ),
         new AutoTurnLeftAngleCommand(drivetrainSubsystem, 15.0),
         new ParallelRaceGroup(
@@ -190,7 +206,7 @@ public class RobotContainer {
           new IntakeIn(intakeSubsystem)
         ),
         new WaitCommand(0.20),
-        new AutoTurnRightAngleCommand(drivetrainSubsystem, 180.0 - (90.0 + 32.25)),
+        new AutoTurnRightAngleCommand(drivetrainSubsystem, 210.0 - (90.0 + 22.5)),
         new ParallelRaceGroup(
           new ShootHigh(ballUpper, limelight, shooterSubsystem, turretSubsystem),
           new WaitCommand(5)
