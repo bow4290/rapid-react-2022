@@ -13,7 +13,8 @@ import frc.robot.Constants.ShooterConstants;
 public class ShooterSubsystem extends SubsystemBase {
   public static WPI_TalonFX shooterMotor = new WPI_TalonFX(ShooterConstants.shooterMotorChannel);
 
-  double targetSpeed = 0;
+  private double targetSpeed = 0;
+  private double manualRPM = ShooterConstants.manualShooterSpeedRPM;
 
   public ShooterSubsystem() {
     shooterMotor.configFactoryDefault();
@@ -28,6 +29,8 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterMotor.config_kP(0, ShooterConstants.kP);
     shooterMotor.config_kI(0, ShooterConstants.kI);
     shooterMotor.config_kD(0, ShooterConstants.kD);
+
+    SmartDashboard.putNumber("Manual Shooter Speed", manualRPM);
   }
 
   /* SparkMAX motor controllers require a weird velocity unit.
@@ -50,7 +53,10 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void manualShoot() {
-    targetSpeed = ShooterConstants.manualShooterSpeedRPM*2048/600;
+    // Obtain the manual shooter speed from the dashboard. If it can't, default to the ShooterConstants value.
+    manualRPM = SmartDashboard.getNumber("Manual Shooter Speed", ShooterConstants.manualShooterSpeedRPM);
+
+    targetSpeed = (manualRPM*2048)/600;
     shooterMotor.set(ControlMode.Velocity, targetSpeed);
   }
 
