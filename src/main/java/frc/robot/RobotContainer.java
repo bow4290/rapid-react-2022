@@ -11,6 +11,7 @@ import frc.robot.commands.Indexer.*;
 import frc.robot.commands.Intake.*;
 import frc.robot.commands.Auto.AutoDriveForDistanceCommand;
 import frc.robot.commands.Auto.AutoTurnLeftAngleCommand;
+import frc.robot.commands.Auto.AutoTurnRightAngleCommand;
 import frc.robot.commands.Drivetrain.*;
 import frc.robot.commands.Elevator.*;
 import frc.robot.sensors.BallIdentification;
@@ -96,6 +97,7 @@ public class RobotContainer {
     autoCommands();
 
     chooser.setDefaultOption("FULL AUTO", AutoDriveCollectAndShoot);
+    chooser.addOption("FULLER AUTO", AutoDriveCollectAndShoot2);
     chooser.addOption("Drive and Shoot", AutoDriveAndShoot);
     chooser.addOption("Drive and Collect", AutoDriveAndCollect);
     chooser.addOption("Drive Only", AutoDriveOnly);
@@ -173,11 +175,22 @@ public class RobotContainer {
         new ShiftGearDown(drivetrainSubsystem),
         new IntakeDown(intakeSubsystem),
         new ParallelRaceGroup(
-          new AutoDriveForDistanceCommand(drivetrainSubsystem, 60),
+          new AutoDriveForDistanceCommand(drivetrainSubsystem, 40),
           new IntakeIn(intakeSubsystem)
         ),
         new WaitCommand(0.20),
-        new AutoTurnLeftAngleCommand(drivetrainSubsystem, 180),
+        new AutoTurnRightAngleCommand(drivetrainSubsystem, 90.0 + 32.25 + 15.0),
+        new ParallelRaceGroup(
+          new ShootHigh(ballUpper, limelight, shooterSubsystem, turretSubsystem),
+          new WaitCommand(2.5)
+        ),
+        new AutoTurnLeftAngleCommand(drivetrainSubsystem, 15.0),
+        new ParallelRaceGroup(
+          new AutoDriveForDistanceCommand(drivetrainSubsystem, 117),
+          new IntakeIn(intakeSubsystem)
+        ),
+        new WaitCommand(0.20),
+        new AutoTurnRightAngleCommand(drivetrainSubsystem, 180.0 - (90.0 + 32.25)),
         new ParallelRaceGroup(
           new ShootHigh(ballUpper, limelight, shooterSubsystem, turretSubsystem),
           new WaitCommand(5)
