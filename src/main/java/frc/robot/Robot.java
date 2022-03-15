@@ -16,7 +16,7 @@ public class Robot extends TimedRobot {
     robotContainer = new RobotContainer();
 
     UsbCamera camera0 = CameraServer.startAutomaticCapture();
-    camera0.setVideoMode(PixelFormat.kMJPEG, 480, 240, 30);
+    camera0.setVideoMode(PixelFormat.kMJPEG, 360, 180, 30);
   }
 
   @Override

@@ -30,7 +30,7 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterMotor.config_kI(0, ShooterConstants.kI);
     shooterMotor.config_kD(0, ShooterConstants.kD);
 
-    SmartDashboard.putNumber("Manual Shooter Speed", manualRPM);
+    SmartDashboard.putNumber("Manual Shooter Speed ", manualRPM);
   }
 
   /* SparkMAX motor controllers require a weird velocity unit.
@@ -54,7 +54,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public void manualShoot() {
     // Obtain the manual shooter speed from the dashboard. If it can't, default to the ShooterConstants value.
-    manualRPM = SmartDashboard.getNumber("Manual Shooter Speed", ShooterConstants.manualShooterSpeedRPM);
+    manualRPM = SmartDashboard.getNumber("Manual Shooter Speed ", ShooterConstants.manualShooterSpeedRPM);
 
     targetSpeed = (manualRPM*2048)/600;
     shooterMotor.set(ControlMode.Velocity, targetSpeed);
@@ -87,6 +87,6 @@ public class ShooterSubsystem extends SubsystemBase {
   public void periodic() {
     //SmartDashboard.putNumber("Shooter Commanded Speed", targetSpeed);
     //SmartDashboard.putNumber("Shooter Actual Speed", getShooterRPM());
-    SmartDashboard.putBoolean("Is Shooter Ready?", isShooterReady());
+    SmartDashboard.putBoolean("Is Shooter Ready? ", isShooterReady());
   }
 }

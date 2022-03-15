@@ -69,6 +69,10 @@ public class TurretSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putBoolean("Is Turret Ready?", isTurretReady());
+    SmartDashboard.putBoolean("Is Turret Ready? ", isTurretReady());
+    SmartDashboard.putBoolean("Has a target? ", limelight.isTarget());
+    SmartDashboard.putNumber("X Error ", limelight.getXError());
+    SmartDashboard.putNumber("Y Error ", limelight.getXError());
+    SmartDashboard.putNumber("Distance ", limelight.getDistance());
   }
 }

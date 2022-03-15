@@ -134,9 +134,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     if (gearShiftPosition == GearShiftPosition.DOWN){
-      SmartDashboard.putString("Drive GEAR", "LOW");
+      SmartDashboard.putString("Drive GEAR ", "LOW");
     } else {
-      SmartDashboard.putString("Drive GEAR", "HIGH");
+      SmartDashboard.putString("Drive GEAR ", "HIGH");
     }
   }
 }
