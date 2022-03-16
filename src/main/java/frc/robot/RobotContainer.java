@@ -76,10 +76,10 @@ public class RobotContainer {
 
     if (Flags.indexer) {
       // Color values are from 0.00 - 1.00 (0% to 100% of the measured color).
-      redBallColorSensorI2C  = new RevColorSensor(0.40, 1.00, 0.00, 1.00, 0.00, 0.18, 2, 2047, true);
-      blueBallColorSensorI2C = new RevColorSensor(0.00, 0.28, 0.00, 1.00, 0.26, 1.00, 2, 2047, true);
-      redBallColorSensorMXP  = new RevColorSensor(0.40, 1.00, 0.00, 1.00, 0.00, 0.18, 2, 2047, false);
-      blueBallColorSensorMXP = new RevColorSensor(0.00, 0.28, 0.00, 1.00, 0.26, 1.00, 2, 2047, false);
+      redBallColorSensorI2C  = new RevColorSensor(0.40, 1.00, 0.00, 1.00, 0.00, 0.18, 0, 2047, true);
+      blueBallColorSensorI2C = new RevColorSensor(0.00, 0.30, 0.00, 1.00, 0.26, 1.00, 0, 2047, true);
+      redBallColorSensorMXP  = new RevColorSensor(0.40, 1.00, 0.00, 1.00, 0.00, 0.18, 0, 2047, false);
+      blueBallColorSensorMXP = new RevColorSensor(0.00, 0.30, 0.00, 1.00, 0.20, 1.00, 0, 2047, false);
       ballUpper = new BallIdentification(redBallColorSensorMXP, blueBallColorSensorMXP);
       ballLower = new BallIdentification(redBallColorSensorI2C, blueBallColorSensorI2C);
       indexerSubsystem = new IndexerSubsystem();
@@ -192,7 +192,7 @@ public class RobotContainer {
         ),
         new WaitCommand(0.20),
         new ParallelRaceGroup(
-          new AutoTurnRightAngleCommand(drivetrainSubsystem, (90.0 + 22.5 + 15.0)),     
+          new AutoTurnRightAngleCommand(drivetrainSubsystem, (90.0 + 27.5 + 15.0)),     
           new IntakeIn(intakeSubsystem)
         ),
         new WaitCommand(0.20),
