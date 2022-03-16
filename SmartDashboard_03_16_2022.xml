@@ -1,0 +1,136 @@
+<xml version="1.0">
+<dashboard>
+	<widget field="Has a target? " type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
+		<location x="654" y="0"/>
+		<width>165</width>
+		<height>111</height>
+	</widget>
+	<widget field="Is Turret Ready? " type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
+		<location x="457" y="0"/>
+		<width>192</width>
+		<height>112</height>
+	</widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
+		<location x="974" y="143"/>
+		<width>549</width>
+		<height>411</height>
+		<property name="Camera Choice" value="limelight"/>
+	</static-widget>
+	<widget field="Drive GEAR " type="String" class="edu.wpi.first.smartdashboard.gui.elements.FormattedField">
+		<location x="858" y="5"/>
+		<width>263</width>
+		<height>110</height>
+		<property name="Font Size" value="76"/>
+	</widget>
+	<widget field="Is Shooter Ready? " type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.BooleanBox">
+		<location x="252" y="0"/>
+		<width>192</width>
+		<height>112</height>
+	</widget>
+	<widget field="SendableChooser[0]" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+		<location x="40" y="205"/>
+	</widget>
+	<widget field="limelight_Stream" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="2" y="44"/>
+	</widget>
+	<widget field="Distance " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="19" y="140"/>
+	</widget>
+	<widget field="X Error " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="25" y="96"/>
+		<height>19</height>
+	</widget>
+	<widget field="Y Error " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="26" y="118"/>
+		<height>19</height>
+	</widget>
+	<widget field="limelight_Interface" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="2" y="23"/>
+	</widget>
+	<widget field="limelight_PipelineName" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="3" y="2"/>
+	</widget>
+	<widget field="Manual Shooter Speed " type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="243" y="114"/>
+	</widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.CameraServerViewer">
+		<location x="242" y="142"/>
+		<width>571</width>
+		<height>416</height>
+		<property name="Camera Choice" value="USB Camera 0"/>
+	</static-widget>
+</dashboard>
+<live-window>
+	<widget field="HoodSubsystem" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<location x="0" y="352"/>
+	</widget>
+	<widget field="ElevatorSubsystem" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<location x="0" y="330"/>
+	</widget>
+	<widget field="IntakeSubsystem" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<location x="0" y="266"/>
+	</widget>
+	<widget field="ShooterSubsystem" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<location x="0" y="224"/>
+	</widget>
+	<widget field="DrivetrainSubsystem" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<location x="0" y="202"/>
+	</widget>
+	<widget field="TurretSubsystem" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<location x="0" y="67"/>
+	</widget>
+	<widget field="IndexerSubsystem" type="Subsystem" class="edu.wpi.first.smartdashboard.gui.elements.Subsystem">
+		<location x="0" y="22"/>
+	</widget>
+	<widget field="Ungrouped" type="LW Subsystem" class="edu.wpi.first.smartdashboard.livewindow.elements.LWSubsystem">
+		<widget field="Victor SPX [0]" type="Motor Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="15"/>
+			<height>45</height>
+			<width>295</width>
+		</widget>
+		<widget field="Talon FX [2]" type="Motor Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="60"/>
+			<height>45</height>
+			<width>295</width>
+		</widget>
+		<widget field="Talon FX [8]" type="Motor Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="105"/>
+			<height>45</height>
+			<width>295</width>
+		</widget>
+		<widget field="Talon FX [10]" type="Motor Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="150"/>
+			<height>45</height>
+			<width>295</width>
+		</widget>
+		<widget field="DoubleSolenoid[0,0]" type="Double Solenoid" class="edu.wpi.first.smartdashboard.livewindow.elements.RelayController">
+			<location x="6" y="195"/>
+			<height>19</height>
+			<width>295</width>
+		</widget>
+		<widget field="Talon FX [6]" type="Motor Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="214"/>
+			<height>45</height>
+			<width>295</width>
+		</widget>
+		<widget field="DoubleSolenoid[0,4]" type="Double Solenoid" class="edu.wpi.first.smartdashboard.livewindow.elements.RelayController">
+			<location x="6" y="259"/>
+			<height>19</height>
+			<width>295</width>
+		</widget>
+		<widget field="Victor SPX [1]" type="Motor Controller" class="edu.wpi.first.smartdashboard.livewindow.elements.SpeedController">
+			<location x="6" y="278"/>
+			<height>45</height>
+			<width>295</width>
+		</widget>
+		<widget field="DoubleSolenoid[0,3]" type="Double Solenoid" class="edu.wpi.first.smartdashboard.livewindow.elements.RelayController">
+			<location x="6" y="323"/>
+			<height>19</height>
+			<width>295</width>
+		</widget>
+		<location x="0" y="0"/>
+		<width>307</width>
+		<height>348</height>
+	</widget>
+</live-window>
+</xml>
