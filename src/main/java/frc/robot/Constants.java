@@ -96,8 +96,8 @@ public final class Constants {
   public static final class TurretConstants {
     public static int deviceID = 11;
 
-    public static int forwardRotations = 110;         // Soft limit to prevent turret from turning too far
-    public static int reverseRotations = -110;        // Soft limit to prevent turret from turning too far
+    public static int forwardRotations = 90;         // Soft limit to prevent turret from turning too far
+    public static int reverseRotations = -90;        // Soft limit to prevent turret from turning too far
 
     public static double manualTurnSpeed    = 0.3;
     public static double defaultTrackSpeed  = 0.3;

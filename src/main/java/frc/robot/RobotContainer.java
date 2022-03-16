@@ -76,10 +76,10 @@ public class RobotContainer {
 
     if (Flags.indexer) {
       // Color values are from 0.00 - 1.00 (0% to 100% of the measured color).
-      redBallColorSensorI2C  = new RevColorSensor(0.45, 1.00, 0.00, 1.00, 0.00, 0.15, 0, 2047, true);
-      blueBallColorSensorI2C = new RevColorSensor(0.00, 0.26, 0.00, 1.00, 0.275, 1.00, 0, 2047, true);
-      redBallColorSensorMXP  = new RevColorSensor(0.45, 1.00, 0.00, 1.00, 0.00, 0.15, 0, 2047, false);
-      blueBallColorSensorMXP = new RevColorSensor(0.00, 0.26, 0.00, 1.00, 0.275, 1.00, 0, 2047, false);
+      redBallColorSensorI2C  = new RevColorSensor(0.40, 1.00, 0.00, 1.00, 0.00, 0.18, 2, 2047, true);
+      blueBallColorSensorI2C = new RevColorSensor(0.00, 0.28, 0.00, 1.00, 0.26, 1.00, 2, 2047, true);
+      redBallColorSensorMXP  = new RevColorSensor(0.40, 1.00, 0.00, 1.00, 0.00, 0.18, 2, 2047, false);
+      blueBallColorSensorMXP = new RevColorSensor(0.00, 0.28, 0.00, 1.00, 0.26, 1.00, 2, 2047, false);
       ballUpper = new BallIdentification(redBallColorSensorMXP, blueBallColorSensorMXP);
       ballLower = new BallIdentification(redBallColorSensorI2C, blueBallColorSensorI2C);
       indexerSubsystem = new IndexerSubsystem();
@@ -218,7 +218,7 @@ public class RobotContainer {
         new ShiftGearDown(drivetrainSubsystem),
         new IntakeDown(intakeSubsystem),
         new ParallelRaceGroup(
-          new AutoDriveForDistanceCommand(drivetrainSubsystem, 60),
+          new AutoDriveForDistanceCommand(drivetrainSubsystem, 40),
           new IntakeIn(intakeSubsystem)
         ),
         new WaitCommand(0.20),
@@ -232,7 +232,7 @@ public class RobotContainer {
     AutoDriveAndShoot =
       new SequentialCommandGroup(
         new ShiftGearDown(drivetrainSubsystem),
-        new AutoDriveForDistanceCommand(drivetrainSubsystem, 60),
+        new AutoDriveForDistanceCommand(drivetrainSubsystem, 40),
         new AutoTurnLeftAngleCommand(drivetrainSubsystem, 180),
         new ParallelRaceGroup(
           new ShootHigh(ballUpper, limelight, shooterSubsystem, turretSubsystem),
@@ -245,7 +245,7 @@ public class RobotContainer {
         new ShiftGearDown(drivetrainSubsystem),
         new IntakeDown(intakeSubsystem),
         new ParallelRaceGroup(
-          new AutoDriveForDistanceCommand(drivetrainSubsystem, 60),
+          new AutoDriveForDistanceCommand(drivetrainSubsystem, 40),
           new IntakeIn(intakeSubsystem)
         )
       );
@@ -253,7 +253,7 @@ public class RobotContainer {
     AutoDriveOnly =
       new SequentialCommandGroup(
         new ShiftGearDown(drivetrainSubsystem),
-        new AutoDriveForDistanceCommand(drivetrainSubsystem, 60)
+        new AutoDriveForDistanceCommand(drivetrainSubsystem, 40)
       );
     
     AutoNothing = null;

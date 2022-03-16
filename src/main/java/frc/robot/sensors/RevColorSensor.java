@@ -53,7 +53,8 @@ public class RevColorSensor{
   }
 
   public boolean isProximityMet() {
-    return (getProximity() > proxLowThresh && getProximity() < proxHighThresh);
+    final int proximity = getProximity();
+    return (proximity > proxLowThresh && proximity < proxHighThresh);
   }
 
   public double getRed() { return colorSensor.getColor().red; }
