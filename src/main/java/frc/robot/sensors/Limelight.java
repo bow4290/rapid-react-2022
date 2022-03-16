@@ -2,14 +2,10 @@ package frc.robot.sensors;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.LimelightConstants;
 
 public class Limelight {
   private static NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-  // public static ShuffleboardTab tab = Shuffleboard.getTab("Limelight");
   private static double avgYError = 0.0;
 
   public static enum LedMode { ledPipeline, ledOff, ledBlink, ledOn }
@@ -17,11 +13,6 @@ public class Limelight {
   public static enum CamMode { vision, driving }
 
   public Limelight() {
-    // SmartDashboard.putData("hi", () -> true);
-    // tab.addBoolean("Has a target?", this :: isTarget);
-    // tab.addNumber("X Error", this :: getXError);
-    // tab.addNumber("Y Error", this :: getYError);
-    // tab.addNumber("Distance", this :: getDistance);
   }
 
   /** Set the state of the LED */
