@@ -192,7 +192,7 @@ public class RobotContainer {
         ),
         new WaitCommand(0.20),
         new ParallelRaceGroup(
-          new AutoTurnRightAngleCommand(drivetrainSubsystem, (90.0 + 27.5 + 15.0)),     
+          new AutoTurnRightAngleCommand(drivetrainSubsystem, (90.0 + 30 + 25.0)),     
           new IntakeIn(intakeSubsystem)
         ),
         new WaitCommand(0.20),
@@ -200,9 +200,9 @@ public class RobotContainer {
           new ShootHigh(ballUpper, limelight, shooterSubsystem, turretSubsystem),
           new WaitCommand(2.75)
         ),
-        new AutoTurnLeftAngleCommand(drivetrainSubsystem, 15.0),
+        new AutoTurnLeftAngleCommand(drivetrainSubsystem, 25.0),
         new ParallelRaceGroup(
-          new AutoDriveForDistanceCommand(drivetrainSubsystem, 117),
+          new AutoDriveForDistanceCommand(drivetrainSubsystem, (117+6)),
           new IntakeIn(intakeSubsystem)
         ),
         new WaitCommand(0.20),
@@ -265,7 +265,7 @@ public class RobotContainer {
 
   public Command teleopInitCommands(){
     return new ParallelCommandGroup(
-            // new IntakeUp(intakeSubsystem),
+            new IntakeUp(intakeSubsystem),
             new ShiftGearDown(drivetrainSubsystem),
             new HoodRetractCommand(hoodSubsystem)
            );

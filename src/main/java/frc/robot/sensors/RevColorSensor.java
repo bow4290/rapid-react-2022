@@ -36,9 +36,9 @@ public class RevColorSensor{
 
   public boolean isTarget() {
     final Color color = colorSensor.getColor();
-    return (isRedThresholdMet(color) && isGreenThresholdMet(color) && isBlueThresholdMet(color) &&
-            isProximityMet());
+    return (isRedThresholdMet(color) && isBlueThresholdMet(color));
   }
+  //checking for green threshold and proximity were removed
 
   public boolean isRedThresholdMet(Color color) {
     return (color.red > redLowThresh && color.red < redHighThresh);

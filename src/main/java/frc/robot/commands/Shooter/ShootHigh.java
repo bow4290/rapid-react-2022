@@ -29,12 +29,12 @@ public class ShootHigh extends CommandBase {
 
   @Override
   public void execute() {
-    if(turretSubsystem.isTurretReady() && ball.isBallTeamColor()) {
+    if(turretSubsystem.isTurretReady()) {
       double distance = limelight.getDistance();
       double calculatedRPM = calculateShooterSpeedRPM(distance);
       shooterSubsystem.shoot(calculatedRPM);
-    } else if(!ball.isBallTeamColor()) {
-      shooterSubsystem.shoot(ShooterConstants.discardSpeedRPM);
+    // } else if(!ball.isBallTeamColor()) {
+    //   shooterSubsystem.shoot(ShooterConstants.discardSpeedRPM);
     } else {
       shooterSubsystem.shoot(0);
     }
