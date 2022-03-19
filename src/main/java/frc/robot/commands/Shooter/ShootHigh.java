@@ -52,9 +52,9 @@ public class ShootHigh extends CommandBase {
 
   private double calculateShooterSpeedRPM(double distance) {
     if (distance < HoodConstants.hoodExtendDistance) {
-      return (16.62*distance+2392);    // Hood Retracted Equation
+      return (16.62*distance+(2392+ShooterConstants.adjustNearRPM));    // Hood Retracted Equation
     } else {
-      return (40.32*distance-2201.6);                  // Hood Extended Equation
+      return (40.32*distance-(2201.6+ShooterConstants.adjustFarRPM));                  // Hood Extended Equation
     }
   }
 }

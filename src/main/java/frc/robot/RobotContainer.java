@@ -265,7 +265,7 @@ public class RobotContainer {
 
   public Command teleopInitCommands(){
     return new ParallelCommandGroup(
-            new IntakeUp(intakeSubsystem),
+            // new IntakeUp(intakeSubsystem),
             new ShiftGearDown(drivetrainSubsystem),
             new HoodRetractCommand(hoodSubsystem)
            );
