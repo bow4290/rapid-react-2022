@@ -43,7 +43,7 @@ public final class Constants {
 
     // Auto Drive Speeds
     public static final double autonomousDriveSpeed = 0.6;
-    public static final double autonomousTurnSpeed  = 0.4;
+    public static final double autonomousTurnSpeed  = 0.5;
   }
 
   public static final class ElevatorConstants {
@@ -86,6 +86,9 @@ public final class Constants {
 
     public static double manualShooterSpeedRPM = 1500;
     public static double discardSpeedRPM = 1500.0;
+    public static double adjustNearRPM = 0; //added to retracted hood equation
+    public static double adjustFarRPM = 0; //added to extended hood equation
+
 
     public static double kF = 1023.0/20330.0;
     public static double kP = 0.1;

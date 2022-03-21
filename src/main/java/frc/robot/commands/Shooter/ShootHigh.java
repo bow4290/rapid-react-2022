@@ -29,12 +29,12 @@ public class ShootHigh extends CommandBase {
 
   @Override
   public void execute() {
-    if(turretSubsystem.isTurretReady() && ball.isBallTeamColor()) {
+    if(turretSubsystem.isTurretReady()) {
       double distance = limelight.getDistance();
       double calculatedRPM = calculateShooterSpeedRPM(distance);
       shooterSubsystem.shoot(calculatedRPM);
-    } else if(!ball.isBallTeamColor()) {
-      shooterSubsystem.shoot(ShooterConstants.discardSpeedRPM);
+    // } else if(!ball.isBallTeamColor()) {
+    //   shooterSubsystem.shoot(ShooterConstants.discardSpeedRPM);
     } else {
       shooterSubsystem.shoot(0);
     }
@@ -52,9 +52,9 @@ public class ShootHigh extends CommandBase {
 
   private double calculateShooterSpeedRPM(double distance) {
     if (distance < HoodConstants.hoodExtendDistance) {
-      return (16.62*distance+2392);    // Hood Retracted Equation
+      return (16.62*distance+(2392+ShooterConstants.adjustNearRPM));    // Hood Retracted Equation
     } else {
-      return (40.32*distance-2201.6);                  // Hood Extended Equation
+      return (40.32*distance-(2201.6+ShooterConstants.adjustFarRPM));                  // Hood Extended Equation
     }
   }
 }
