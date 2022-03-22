@@ -13,19 +13,19 @@ public class ShootStop extends CommandBase {
 
   @Override
   public void initialize() {
-    //shooterSubsystem.shoot(0.0);
+    shooterSubsystem.shoot(0);
   }
 
   @Override
   public void execute() {
-    shooterSubsystem.shoot(0);
   }
   
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

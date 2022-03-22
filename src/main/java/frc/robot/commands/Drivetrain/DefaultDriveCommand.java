@@ -13,18 +13,25 @@ public class DefaultDriveCommand extends CommandBase {
     this.leftSpeed = leftSpeed;
     this.rightSpeed = rightSpeed;
     this.drivetrainSubsystem = drivetrainSubsystem;
+
     addRequirements(drivetrainSubsystem);
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   @Override
-  public void execute() { drivetrainSubsystem.drive(leftSpeed.getAsDouble(), rightSpeed.getAsDouble()); }
+  public void execute() {
+    drivetrainSubsystem.drive(leftSpeed.getAsDouble(), rightSpeed.getAsDouble());
+  }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   @Override
-  public boolean isFinished() { return false; }
+  public boolean isFinished() {
+    return false;
+  }
 }

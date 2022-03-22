@@ -11,6 +11,7 @@ public class AutoTurnRightAngleCommand extends CommandBase {
   public AutoTurnRightAngleCommand(DrivetrainSubsystem drivetrainSubsystem, double degrees) {
     this.drivetrainSubsystem = drivetrainSubsystem;
     this.degrees = degrees;
+    
     addRequirements(drivetrainSubsystem);
   }
 

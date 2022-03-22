@@ -12,11 +12,11 @@ public class ShootHigh extends CommandBase {
   private ShooterSubsystem shooterSubsystem;
   private TurretSubsystem turretSubsystem;
 
-  public ShootHigh(Limelight limelight, 
-  ShooterSubsystem shooterSubsystem, TurretSubsystem turretSubsystem) {
+  public ShootHigh(Limelight limelight, ShooterSubsystem shooterSubsystem, TurretSubsystem turretSubsystem) {
     this.limelight = limelight;
     this.shooterSubsystem = shooterSubsystem;
     this.turretSubsystem = turretSubsystem;
+    
     addRequirements(shooterSubsystem);
   }
 
