@@ -18,6 +18,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
+    robotContainer.periodic();
     CommandScheduler.getInstance().run();
   }
 
