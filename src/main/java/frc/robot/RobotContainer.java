@@ -149,7 +149,7 @@ public class RobotContainer {
     setJoystickButtonWhenHeld(xboxController, 1, new ElevatorDownCommand(elevatorSubsystem));
 
     setJoystickButtonWhenHeld(xboxController, 8, new ShootManual(shooterSubsystem));
-    setJoystickButtonWhenHeld(xboxController, 6, new ShootHigh(ballUpper, limelight, shooterSubsystem, turretSubsystem));
+    setJoystickButtonWhenHeld(xboxController, 6, new ShootHigh(limelight, shooterSubsystem, turretSubsystem));
   }
 
   private void setJoystickButtonWhenPressed(Joystick joystick, int button, CommandBase command) {
@@ -197,7 +197,7 @@ public class RobotContainer {
         ),
         new WaitCommand(0.20),
         new ParallelRaceGroup(
-          new ShootHigh(ballUpper, limelight, shooterSubsystem, turretSubsystem),
+          new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
           new WaitCommand(2.75)
         ),
         new AutoTurnLeftAngleCommand(drivetrainSubsystem, 25.0),
@@ -208,7 +208,7 @@ public class RobotContainer {
         new WaitCommand(0.20),
         new AutoTurnRightAngleCommand(drivetrainSubsystem, 210.0 - (90.0 + 22.5)),
         new ParallelRaceGroup(
-          new ShootHigh(ballUpper, limelight, shooterSubsystem, turretSubsystem),
+          new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
           new WaitCommand(5)
         )
       );
@@ -224,7 +224,7 @@ public class RobotContainer {
         new WaitCommand(0.20),
         new AutoTurnLeftAngleCommand(drivetrainSubsystem, 180),
         new ParallelRaceGroup(
-          new ShootHigh(ballUpper, limelight, shooterSubsystem, turretSubsystem),
+          new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
           new WaitCommand(5)
         )
       );
@@ -235,7 +235,7 @@ public class RobotContainer {
         new AutoDriveForDistanceCommand(drivetrainSubsystem, 40),
         new AutoTurnLeftAngleCommand(drivetrainSubsystem, 180),
         new ParallelRaceGroup(
-          new ShootHigh(ballUpper, limelight, shooterSubsystem, turretSubsystem),
+          new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
           new WaitCommand(5)
         )
       );

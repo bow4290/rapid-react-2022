@@ -72,7 +72,7 @@ public class TurretCommand extends CommandBase {
   }
 
   private void updateTrackSetpoint() {
-    turretSpeed = limelight.getXError()*TurretConstants.turretKP; 
+    turretSpeed = limelight.getXErrorWithOffset(TurretConstants.aimOffsetDistance)*TurretConstants.turretKP; 
   }
 
   private TurretState determineTurretState(){

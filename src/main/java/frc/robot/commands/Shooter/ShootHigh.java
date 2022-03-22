@@ -3,20 +3,17 @@ package frc.robot.commands.Shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.HoodConstants;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.sensors.BallIdentification;
 import frc.robot.sensors.Limelight;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
 
 public class ShootHigh extends CommandBase {
-  private BallIdentification ball;
   private Limelight limelight;
   private ShooterSubsystem shooterSubsystem;
   private TurretSubsystem turretSubsystem;
 
-  public ShootHigh(BallIdentification ball, Limelight limelight, 
+  public ShootHigh(Limelight limelight, 
   ShooterSubsystem shooterSubsystem, TurretSubsystem turretSubsystem) {
-    this.ball = ball;
     this.limelight = limelight;
     this.shooterSubsystem = shooterSubsystem;
     this.turretSubsystem = turretSubsystem;
@@ -50,9 +47,9 @@ public class ShootHigh extends CommandBase {
 
   private double calculateShooterSpeedRPM(double distance) {
     if (distance < HoodConstants.hoodExtendDistance) {
-      return (16.62*distance+(2392+ShooterConstants.adjustNearRPM));    // Hood Retracted Equation
+      return (16.62*distance+2392+ShooterConstants.adjustNearRPM);        // Hood Retracted Equation
     } else {
-      return (40.32*distance-(2201.6+ShooterConstants.adjustFarRPM));                  // Hood Extended Equation
+      return (40.32*distance-2201.6+ShooterConstants.adjustFarRPM);       // Hood Extended Equation
     }
   }
 }
