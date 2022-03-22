@@ -14,8 +14,8 @@ public class ShootHigh extends CommandBase {
   private ShooterSubsystem shooterSubsystem;
   private TurretSubsystem turretSubsystem;
 
-  public ShootHigh(BallIdentification ball, Limelight limelight, ShooterSubsystem shooterSubsystem, TurretSubsystem turretSubsystem
-  ) {
+  public ShootHigh(BallIdentification ball, Limelight limelight, 
+  ShooterSubsystem shooterSubsystem, TurretSubsystem turretSubsystem) {
     this.ball = ball;
     this.limelight = limelight;
     this.shooterSubsystem = shooterSubsystem;
@@ -33,8 +33,6 @@ public class ShootHigh extends CommandBase {
       double distance = limelight.getDistance();
       double calculatedRPM = calculateShooterSpeedRPM(distance);
       shooterSubsystem.shoot(calculatedRPM);
-    // } else if(!ball.isBallTeamColor()) {
-    //   shooterSubsystem.shoot(ShooterConstants.discardSpeedRPM);
     } else {
       shooterSubsystem.shoot(0);
     }

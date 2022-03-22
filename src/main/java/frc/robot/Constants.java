@@ -52,7 +52,7 @@ public final class Constants {
     public static double forwardSoftLimit = 175000;     // Revolutions the motor can rotate CW
     public static double reverseSoftLimit = 5000;       // Revolutions the motor can rotate CCW
 
-    public static double elevatorSpeed = 0.75;          // -1 to 1 (Percent Output)
+    public static double elevatorSpeed = 0.90;          // -1 to 1 (Percent Output)
   }
 
   public static final class HoodConstants {
@@ -105,6 +105,8 @@ public final class Constants {
     public static double manualTurnSpeed    = 0.3;
     public static double defaultTrackSpeed  = 0.3;
     public static double defaultSearchSpeed = -0.55;
+
+    // public static double aimOffsetDeg = 2.0;
 
     public static double turretKP = 0.1;
   }

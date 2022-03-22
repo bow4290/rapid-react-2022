@@ -17,10 +17,6 @@ public class BallIdentification implements Sendable {
     this.blueBallColorSensor = blueBallColorSensor;
   }
 
-  public boolean isBallTeamColor() {
-    return (getAllianceColor() == getBallColor());
-  }
-
   public boolean isBallPresent() {
     return (redBallColorSensor.isTarget() || blueBallColorSensor.isTarget());
   }
@@ -50,6 +46,5 @@ public class BallIdentification implements Sendable {
   @Override
   public void initSendable(SendableBuilder builder) {
     builder.addBooleanProperty("Is there a ball?", this :: isBallPresent, null);
-    builder.addBooleanProperty("Is the ball the correct color?", this :: isBallTeamColor, null);
   }
 }
