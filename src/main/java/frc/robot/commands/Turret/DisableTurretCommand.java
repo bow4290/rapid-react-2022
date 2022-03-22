@@ -21,6 +21,7 @@ public class DisableTurretCommand extends CommandBase {
 
   @Override
   public void execute() {
+    //TODO: this should snap to position 0
     turretSubsystem.isTurretStopped = true;
   }
 
