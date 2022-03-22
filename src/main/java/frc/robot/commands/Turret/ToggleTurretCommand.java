@@ -13,15 +13,17 @@ public class ToggleTurretCommand extends CommandBase {
   }
 
   @Override
-  public void initialize() {}
-
-  @Override
-  public void execute() {
+  public void initialize() {
     turretSubsystem.isTurretStopped = !turretSubsystem.isTurretStopped;
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void execute() {
+  }
+
+  @Override
+  public void end(boolean interrupted) {
+  }
 
   @Override
   public boolean isFinished() {

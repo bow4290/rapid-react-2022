@@ -17,6 +17,7 @@ public class BallIdentification implements Sendable {
     this.blueBallColorSensor = blueBallColorSensor;
   }
 
+  // If the sensor senses a red ball or a blue ball, then a ball is present.
   public boolean isBallPresent() {
     return (redBallColorSensor.isTarget() || blueBallColorSensor.isTarget());
   }
