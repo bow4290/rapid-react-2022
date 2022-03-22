@@ -4,11 +4,13 @@ import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorConstants;
+import frc.robot.Constants.Flags;
 
 public class ElevatorSubsystem extends SubsystemBase {
   private WPI_TalonFX elevatorClimbMotor = new WPI_TalonFX(ElevatorConstants.elevatorClimbMotorChannel);
 
   public ElevatorSubsystem() {
+    if (!Flags.elevator) throw new Error("Elevator flag must be set to create an ElevatorSubsystem!");
     elevatorClimbMotor.setNeutralMode(NeutralMode.Brake);
     elevatorClimbMotor.setInverted(TalonFXInvertType.CounterClockwise);
 

@@ -42,7 +42,7 @@ public class RobotContainer {
   public TurretSubsystem turretSubsystem;
   private IntakeSubsystem intakeSubsystem;
   private ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-  private ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
+  private ElevatorSubsystem elevatorSubsystem;
 
   public Limelight limelight = new Limelight();
 
@@ -90,10 +90,12 @@ public class RobotContainer {
       turretSubsystem.setDefaultCommand(new TurretCommand(limelight, turretSubsystem));
     }
 
-    if (Flags.hood){
+    if (Flags.hood) {
       hoodSubsystem = new HoodSubsystem();
       hoodSubsystem.setDefaultCommand(new DefaultHoodCommand(limelight, hoodSubsystem, turretSubsystem));
     }
+
+    if (Flags.elevator) elevatorSubsystem = new ElevatorSubsystem();
 
     autoCommands();
 
@@ -108,7 +110,6 @@ public class RobotContainer {
 
     configureButtonBindings();
   }
-
 
   /* Xbox Controller Button Bindings:
      Buttons:

@@ -129,5 +129,6 @@ public final class Constants {
     public static final boolean indexer = true;
     public static final boolean turret = true;
     public static final boolean hood = true;
+    public static final boolean elevator = false;
   }
 }
