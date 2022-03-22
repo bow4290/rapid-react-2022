@@ -135,7 +135,7 @@ public class RobotContainer {
 
     if (Flags.intake) {
       setJoystickButtonWhenHeld(xboxController, 5, new IntakeIn(intakeSubsystem));
-      setJoystickButtonWhenHeld(xboxController, 2, new IntakeToggle(intakeSubsystem));
+      // setJoystickButtonWhenHeld(xboxController, 2, new IntakeToggle(intakeSubsystem));
     }
 
     if (Flags.indexer) {
@@ -147,6 +147,7 @@ public class RobotContainer {
 
     setJoystickButtonWhenHeld(xboxController, 4, new ElevatorUpCommand(elevatorSubsystem));
     setJoystickButtonWhenHeld(xboxController, 1, new ElevatorDownCommand(elevatorSubsystem));
+    setJoystickButtonWhenHeld(xboxController, 2, new ArmToggle(elevatorSubsystem));
 
     setJoystickButtonWhenHeld(xboxController, 8, new ShootManual(shooterSubsystem));
     setJoystickButtonWhenHeld(xboxController, 6, new ShootHigh(limelight, shooterSubsystem, turretSubsystem));

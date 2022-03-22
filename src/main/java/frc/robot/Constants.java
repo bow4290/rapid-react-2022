@@ -53,6 +53,9 @@ public final class Constants {
     public static double reverseSoftLimit = 5000;       // Revolutions the motor can rotate CCW
 
     public static double elevatorSpeed = 0.90;          // -1 to 1 (Percent Output)
+
+    public static int armUpChannel = 6;
+    public static int armDownChannel = 7;
   }
 
   public static final class HoodConstants {
@@ -125,9 +128,9 @@ public final class Constants {
 
   public static final class Flags {
     public static final boolean drivetrain = true;
-    public static final boolean intake = true;
-    public static final boolean indexer = true;
-    public static final boolean turret = true;
-    public static final boolean hood = true;
+    public static final boolean intake = false;
+    public static final boolean indexer = false;
+    public static final boolean turret = false;
+    public static final boolean hood = false;
   }
 }
