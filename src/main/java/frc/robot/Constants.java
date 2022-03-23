@@ -105,9 +105,9 @@ public final class Constants {
     public static double manualTurnSpeed    = 0.3;
     public static double defaultTrackSpeed  = 0.3;
     public static double defaultSearchSpeed = -0.55;
-    public static double turretHomingSpeed  = 0.3;
+    public static double turretHomingSpeed  = 0.6;
 
-    public static double aimOffsetDistance = 12.0;
+    public static double aimOffsetDistance = 6.0;
 
     public static double turretKP = 0.1;
   }
@@ -129,6 +129,6 @@ public final class Constants {
     public static final boolean indexer = true;
     public static final boolean turret = true;
     public static final boolean hood = true;
-    public static final boolean elevator = false;
+    public static final boolean elevator = true;
   }
 }
