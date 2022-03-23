@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorConstants;
+import frc.robot.Constants.Flags;
 
 public class ElevatorSubsystem extends SubsystemBase {
   private WPI_TalonFX elevatorClimbMotor = new WPI_TalonFX(ElevatorConstants.elevatorClimbMotorChannel);
@@ -15,6 +16,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   public enum TravArmStatus { UP, DOWN }
   public static TravArmStatus travArmStatus;
   public ElevatorSubsystem() {
+    if (!Flags.elevator) throw new Error("Elevator flag must be set to create an ElevatorSubsystem!");
     elevatorClimbMotor.setNeutralMode(NeutralMode.Brake);
     elevatorClimbMotor.setInverted(TalonFXInvertType.CounterClockwise);
 

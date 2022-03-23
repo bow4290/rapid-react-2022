@@ -1,31 +1,61 @@
 package frc.robot.sensors;
 
+import com.revrobotics.ColorSensorV3;
+
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.Timer;
 
 public class BallIdentification implements Sendable {
-  private RevColorSensor redBallColorSensor;
-  private RevColorSensor blueBallColorSensor;
-  
+  private final ColorSensorV3 sensor;
+
   private Color ballColor = getAllianceColor();
 
   public static enum Color { RED, BLUE, NEITHER }
 
-  public BallIdentification(RevColorSensor redBallColorSensor, RevColorSensor blueBallColorSensor) {
-    this.redBallColorSensor = redBallColorSensor;
-    this.blueBallColorSensor = blueBallColorSensor;
+  // TODO: why does this need to be a static class
+  public static class Threshold {
+    public final double redLow, redHigh, blueLow, blueHigh;
+
+    public Threshold(double redLow, double redHigh,  double blueLow, double blueHigh) {
+      this.redLow = redLow;
+      this.redHigh = redHigh;
+      this.blueLow = blueLow;
+      this.blueHigh = blueHigh;
+    }
+
+    public Boolean check(edu.wpi.first.wpilibj.util.Color color) {
+      return (color.red > redLow && color.red < redHigh) && (color.blue > blueLow && color.blue < blueHigh);
+    }
+  }
+
+  private final Threshold redThresh, blueThresh;
+
+  public BallIdentification(Threshold red, Threshold blue, Boolean i2c) {
+    sensor = new ColorSensorV3(i2c ? I2C.Port.kOnboard : I2C.Port.kMXP);
+    redThresh = red;
+    blueThresh = blue;
+  }
+
+  private edu.wpi.first.wpilibj.util.Color cachedColor;
+  public void update() {
+    double start = Timer.getFPGATimestamp();
+    cachedColor = sensor.getColor();
+    double end = Timer.getFPGATimestamp();
+    System.out.println("Call took: " + (double)((int)((end - start) * 1000000.0)) / 1000.0 + "ms");
   }
 
   // If the sensor senses a red ball or a blue ball, then a ball is present.
   public boolean isBallPresent() {
-    return (redBallColorSensor.isTarget() || blueBallColorSensor.isTarget());
+    return (redThresh.check(cachedColor) || blueThresh.check(cachedColor));
   }
 
   public Color getBallColor() {
-    if (redBallColorSensor.isTarget() && !blueBallColorSensor.isTarget()) {
+    if (redThresh.check(cachedColor) && !blueThresh.check(cachedColor)) {
       ballColor = Color.RED;
-    } else if (blueBallColorSensor.isTarget() && !redBallColorSensor.isTarget()) {
+    } else if (blueThresh.check(cachedColor) && !redThresh.check(cachedColor)) {
       ballColor = Color.BLUE;
     }
     return ballColor;

@@ -42,7 +42,7 @@ public class RobotContainer {
   public TurretSubsystem turretSubsystem;
   private IntakeSubsystem intakeSubsystem;
   private ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-  private ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
+  private ElevatorSubsystem elevatorSubsystem;
 
   public Limelight limelight = new Limelight();
 
@@ -76,12 +76,11 @@ public class RobotContainer {
 
     if (Flags.indexer) {
       // Color values are from 0.00 - 1.00 (0% to 100% of the measured color).
-      redBallColorSensorI2C  = new RevColorSensor(0.40, 1.00, 0.00, 1.00, 0.00, 0.18, 0, 2047, true);
-      blueBallColorSensorI2C = new RevColorSensor(0.00, 0.30, 0.00, 1.00, 0.26, 1.00, 0, 2047, true);
-      redBallColorSensorMXP  = new RevColorSensor(0.40, 1.00, 0.00, 1.00, 0.00, 0.18, 0, 2047, false);
-      blueBallColorSensorMXP = new RevColorSensor(0.00, 0.30, 0.00, 1.00, 0.20, 1.00, 0, 2047, false);
-      ballUpper = new BallIdentification(redBallColorSensorMXP, blueBallColorSensorMXP);
-      ballLower = new BallIdentification(redBallColorSensorI2C, blueBallColorSensorI2C);
+      BallIdentification.Threshold red = new BallIdentification.Threshold(0.4, 1.0, 0.0, 0.18);
+      BallIdentification.Threshold blueHigh = new BallIdentification.Threshold(0.0, 0.3, 0.2, 1.0);
+      BallIdentification.Threshold blueLow = new BallIdentification.Threshold(0.0, 0.3, 0.26, 1.0);
+      ballUpper = new BallIdentification(red, blueHigh, false);
+      ballLower = new BallIdentification(red, blueLow, true);
       indexerSubsystem = new IndexerSubsystem();
       indexerSubsystem.setDefaultCommand(new DefaultIndexerCommand(indexerSubsystem, shooterSubsystem, intakeSubsystem, ballUpper, ballLower));
     }
@@ -91,10 +90,12 @@ public class RobotContainer {
       turretSubsystem.setDefaultCommand(new TurretCommand(limelight, turretSubsystem));
     }
 
-    if (Flags.hood){
+    if (Flags.hood) {
       hoodSubsystem = new HoodSubsystem();
       hoodSubsystem.setDefaultCommand(new DefaultHoodCommand(limelight, hoodSubsystem, turretSubsystem));
     }
+
+    if (Flags.elevator) elevatorSubsystem = new ElevatorSubsystem();
 
     autoCommands();
 
@@ -109,7 +110,6 @@ public class RobotContainer {
 
     configureButtonBindings();
   }
-
 
   /* Xbox Controller Button Bindings:
      Buttons:
@@ -270,5 +270,10 @@ public class RobotContainer {
             new ShiftGearDown(drivetrainSubsystem),
             new HoodRetractCommand(hoodSubsystem)
            );
+  }
+
+  public void periodic() {
+    ballLower.update();
+    ballUpper.update();
   }
 }

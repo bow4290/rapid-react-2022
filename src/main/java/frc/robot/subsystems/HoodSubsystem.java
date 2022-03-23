@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.Flags;
 import frc.robot.Constants.HoodConstants;
 
 public class HoodSubsystem extends SubsystemBase {
@@ -11,6 +12,7 @@ public class HoodSubsystem extends SubsystemBase {
   private static HoodStatus hoodStatus;
 
   public HoodSubsystem() {
+    if (!Flags.hood) throw new Error("Hood flag must be set to create a HoodSubsystem!");
     hoodSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, HoodConstants.hoodSolenoidExtendChannel, HoodConstants.hoodSolenoidRetractChannel);
     hoodStatus = null;
   }
