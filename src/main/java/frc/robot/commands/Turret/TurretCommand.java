@@ -30,6 +30,7 @@ public class TurretCommand extends CommandBase {
 
   @Override
   public void execute() {
+    System.out.println("fbrlkjgbaekrjgbeaklrjgn: " + turretSubsystem.isTurretStopped);
     if (turretSubsystem.isTurretStopped == true){
       if (turretSubsystem.encoder.getPosition() > 4) {
         turretSubsystem.turnTurret(-TurretConstants.turretHomingSpeed);      // We may need to swap signs here, will need to test.

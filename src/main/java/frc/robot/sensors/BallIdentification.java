@@ -44,7 +44,7 @@ public class BallIdentification implements Sendable {
     double start = Timer.getFPGATimestamp();
     cachedColor = sensor.getColor();
     double end = Timer.getFPGATimestamp();
-    System.out.println("Call took: " + (double)((int)((end - start) * 1000000.0)) / 1000.0 + "ms");
+    //System.out.println("Call took: " + (double)((int)((end - start) * 1000000.0)) / 1000.0 + "ms");
   }
 
   // If the sensor senses a red ball or a blue ball, then a ball is present.

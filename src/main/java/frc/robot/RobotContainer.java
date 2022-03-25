@@ -8,6 +8,7 @@ import frc.robot.Constants.JoystickConstants;
 import frc.robot.commands.Shooter.ShootDiscard;
 import frc.robot.commands.Shooter.ShootHigh;
 import frc.robot.commands.Shooter.ShootManual;
+import frc.robot.commands.Shooter.ShootStop;
 import frc.robot.commands.Indexer.*;
 import frc.robot.commands.Intake.*;
 import frc.robot.commands.Auto.AutoDriveForDistanceCommand;
@@ -28,6 +29,8 @@ import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.Turret.DisableTurretCommand;
+import frc.robot.commands.Turret.EnableTurretCommand;
 import frc.robot.commands.Turret.ToggleTurretCommand;
 import frc.robot.commands.Turret.TurretCommand;
 
@@ -61,6 +64,7 @@ public class RobotContainer {
   private Command AutoDriveOnly;
   private Command AutoNothing;
   private Command AutoPlop;
+  private Command AutoTestingOnly;
 
   SendableChooser<Command> chooser = new SendableChooser<>();
 
@@ -106,6 +110,7 @@ public class RobotContainer {
     chooser.addOption("Drive and Collect", AutoDriveAndCollect);
     chooser.addOption("Drive Only", AutoDriveOnly);
     chooser.addOption("Do Nothing", AutoNothing);
+    chooser.addOption("TESTING ONLY", AutoTestingOnly);
     SmartDashboard.putData(chooser);
 
     configureButtonBindings();
@@ -256,7 +261,31 @@ public class RobotContainer {
         new AutoDriveForDistanceCommand(drivetrainSubsystem, 40)
       );
     
-    AutoNothing = null;
+    AutoNothing = 
+      null;
+
+    AutoTestingOnly = 
+      new SequentialCommandGroup(
+        new ParallelCommandGroup(
+        new EnableTurretCommand(turretSubsystem),
+        new WaitCommand(1)
+        ),
+        new ParallelRaceGroup(
+          new ShootManual(shooterSubsystem),
+          new WaitCommand(3)
+        ), 
+        new ParallelRaceGroup(
+        new ShootStop(shooterSubsystem),
+        new WaitCommand(3)
+        ),
+        new ParallelCommandGroup(
+          new ShootManual(shooterSubsystem),
+          new WaitCommand(1),
+          new DisableTurretCommand(turretSubsystem)
+        )
+        // new WaitCommand(5),
+        // new DisableTurretCommand(turretSubsystem)
+      );
   }
 
   public Command getAutonomousCommand() {

@@ -9,12 +9,13 @@ public class DisableTurretCommand extends CommandBase {
   public DisableTurretCommand(TurretSubsystem turretSubsystem) {
     this.turretSubsystem = turretSubsystem;
 
-    addRequirements(turretSubsystem);  
+    // addRequirements(turretSubsystem);  
   }
 
   @Override
   public void initialize() {
     turretSubsystem.isTurretStopped = true;
+    System.out.println("Turret Disabled!");
   }
 
   @Override

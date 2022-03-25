@@ -9,12 +9,13 @@ public class EnableTurretCommand extends CommandBase {
   public EnableTurretCommand(TurretSubsystem turretSubsystem) {
     this.turretSubsystem = turretSubsystem;
 
-    addRequirements(turretSubsystem);
+    // addRequirements(turretSubsystem);
   }
 
   @Override
   public void initialize() {
     turretSubsystem.isTurretStopped = false;
+    System.out.println("Turret Enabled!");
   }
 
   @Override

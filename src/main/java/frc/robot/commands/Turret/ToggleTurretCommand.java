@@ -9,7 +9,7 @@ public class ToggleTurretCommand extends CommandBase {
   public ToggleTurretCommand(TurretSubsystem turretSubsystem) {
     this.turretSubsystem = turretSubsystem;
 
-    addRequirements(turretSubsystem);
+    // addRequirements(turretSubsystem);
   }
 
   @Override
