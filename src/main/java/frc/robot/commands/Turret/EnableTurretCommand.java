@@ -15,7 +15,6 @@ public class EnableTurretCommand extends CommandBase {
   @Override
   public void initialize() {
     turretSubsystem.isTurretStopped = false;
-    System.out.println("Turret Enabled!");
   }
 
   @Override

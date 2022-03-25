@@ -110,7 +110,7 @@ public class RobotContainer {
     chooser.addOption("Drive and Collect", AutoDriveAndCollect);
     chooser.addOption("Drive Only", AutoDriveOnly);
     chooser.addOption("Do Nothing", AutoNothing);
-    chooser.addOption("TESTING ONLY", AutoTestingOnly);
+    // chooser.addOption("TESTING ONLY", AutoTestingOnly);
     SmartDashboard.putData(chooser);
 
     configureButtonBindings();
@@ -197,7 +197,7 @@ public class RobotContainer {
         ),
         new WaitCommand(0.20),
         new ParallelRaceGroup(
-          new AutoTurnRightAngleCommand(drivetrainSubsystem, (90.0 + 30 + 25.0)),     
+          new AutoTurnRightAngleCommand(drivetrainSubsystem, (90.0 + 35 + 25.0)),     
           new IntakeIn(intakeSubsystem)
         ),
         new WaitCommand(0.20),
@@ -219,20 +219,24 @@ public class RobotContainer {
       );
     
     AutoDriveCollectAndShoot = 
-      new SequentialCommandGroup(
-        new ShiftGearDown(drivetrainSubsystem),
-        new IntakeDown(intakeSubsystem),
-        new ParallelRaceGroup(
-          new AutoDriveForDistanceCommand(drivetrainSubsystem, 40),
-          new IntakeIn(intakeSubsystem)
-        ),
-        new WaitCommand(0.20),
-        new AutoTurnLeftAngleCommand(drivetrainSubsystem, 180),
-        new ParallelRaceGroup(
-          new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
-          new WaitCommand(5)
-        )
-      );
+    new SequentialCommandGroup(
+      new ShiftGearDown(drivetrainSubsystem),
+      new IntakeDown(intakeSubsystem),
+      new ParallelRaceGroup(
+        new AutoDriveForDistanceCommand(drivetrainSubsystem, 40),
+        new IntakeIn(intakeSubsystem)
+      ),
+      new WaitCommand(0.20),
+      new ParallelRaceGroup(
+        new AutoTurnRightAngleCommand(drivetrainSubsystem, (150)),     
+        new IntakeIn(intakeSubsystem)
+      ),
+      new WaitCommand(0.20),
+      new ParallelRaceGroup(
+        new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
+        new WaitCommand(5)
+      )
+    );
 
     AutoDriveAndShoot =
       new SequentialCommandGroup(
@@ -265,27 +269,7 @@ public class RobotContainer {
       null;
 
     AutoTestingOnly = 
-      new SequentialCommandGroup(
-        new ParallelCommandGroup(
-        new EnableTurretCommand(turretSubsystem),
-        new WaitCommand(1)
-        ),
-        new ParallelRaceGroup(
-          new ShootManual(shooterSubsystem),
-          new WaitCommand(3)
-        ), 
-        new ParallelRaceGroup(
-        new ShootStop(shooterSubsystem),
-        new WaitCommand(3)
-        ),
-        new ParallelCommandGroup(
-          new ShootManual(shooterSubsystem),
-          new WaitCommand(1),
-          new DisableTurretCommand(turretSubsystem)
-        )
-        // new WaitCommand(5),
-        // new DisableTurretCommand(turretSubsystem)
-      );
+    null;
   }
 
   public Command getAutonomousCommand() {
