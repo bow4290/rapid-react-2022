@@ -42,7 +42,7 @@ public final class Constants {
     public static final double driveHighCountsPerDeg = driveCircum/encoderHighDistanceConversion/360;   // counts per 1 degrees (high gear)
 
     // Auto Drive Speeds
-    public static final double autonomousDriveSpeed = 0.6;
+    public static final double autonomousDriveSpeed = 0.7;
     public static final double autonomousTurnSpeed  = 0.5;
   }
 
