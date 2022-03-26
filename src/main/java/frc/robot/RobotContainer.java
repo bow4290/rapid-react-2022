@@ -27,6 +27,7 @@ import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -66,6 +67,7 @@ public class RobotContainer {
   private Command AutoNothing;
   private Command AutoPlop;
   private Command AutoTestingOnly;
+  private Command AutoCrossCountry;
 
   SendableChooser<Command> chooser = new SendableChooser<>();
 
@@ -111,6 +113,7 @@ public class RobotContainer {
     chooser.addOption("Drive and Collect", AutoDriveAndCollect);
     chooser.addOption("Drive Only", AutoDriveOnly);
     chooser.addOption("Do Nothing", AutoNothing);
+    chooser.addOption("Cross Country", AutoCrossCountry);
     // chooser.addOption("TESTING ONLY", AutoTestingOnly);
     SmartDashboard.putData(chooser);
 
@@ -273,6 +276,19 @@ public class RobotContainer {
       new SequentialCommandGroup(
         new ShiftGearDown(drivetrainSubsystem),
         new AutoDriveForDistanceCommand(drivetrainSubsystem, 40)
+      );
+
+      AutoCrossCountry = new SequentialCommandGroup(
+        new ShiftGearDown(drivetrainSubsystem),
+        new IntakeDown(intakeSubsystem),
+        new ParallelRaceGroup(
+          new AutoDriveForDistanceCommand(drivetrainSubsystem, 30),
+          new IntakeIn(intakeSubsystem)
+        ),
+        // new WaitCommand(7),
+        // new RunCommand(() -> System.out.println("turning")),
+        new AutoTurnRightAngleCommand(drivetrainSubsystem, 180),
+        new AutoShootHigh(limelight, shooterSubsystem, turretSubsystem, ballUpper, ballLower)
       );
     
     AutoNothing = 
