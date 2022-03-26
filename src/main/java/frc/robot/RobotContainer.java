@@ -196,33 +196,39 @@ public class RobotContainer {
           new IntakeIn(intakeSubsystem)
         ),
         new WaitCommand(0.20),
+        new ShiftGearDown(drivetrainSubsystem),
         new ParallelRaceGroup(
-          new AutoTurnRightAngleCommand(drivetrainSubsystem, (90.0 + 35 + 25.0)),     
+          new AutoTurnRightAngleCommand(drivetrainSubsystem, (90.0+ 35.0 +25.0)),
           new IntakeIn(intakeSubsystem)
         ),
-        new WaitCommand(0.20),
         new ParallelRaceGroup(
           new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
           new WaitCommand(2.5)
         ),
         new AutoTurnLeftAngleCommand(drivetrainSubsystem, 25.0),
-        new ParallelRaceGroup(
+        new ShiftGearUp(drivetrainSubsystem),
+        new ParallelCommandGroup(
           new AutoDriveForDistanceCommand(drivetrainSubsystem, (117+6)),
-          new IntakeIn(intakeSubsystem)
+          new ParallelRaceGroup(
+            new IntakeIn(intakeSubsystem),
+            new WaitCommand(2)
+          )
         ),
         new WaitCommand(0.20),
+        new ShiftGearDown(drivetrainSubsystem),
         new AutoTurnRightAngleCommand(drivetrainSubsystem, 210.0 - (90.0 + 22.5)),
         new ParallelRaceGroup(
           new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
           new WaitCommand(1.5)
-        ),
-        new WaitCommand(0.20),
-        new AutoTurnLeftAngleCommand(drivetrainSubsystem, 139),
-        new ShiftGearUp(drivetrainSubsystem),
-        new ParallelRaceGroup(
-          new AutoDriveForDistanceCommand(drivetrainSubsystem, (130)),
-          new IntakeIn(intakeSubsystem)
         )
+        // new WaitCommand(0.20),
+        // new AutoTurnLeftAngleCommand(drivetrainSubsystem, 135),
+        // new WaitCommand(0.20),
+        // new ShiftGearUp(drivetrainSubsystem),
+        // new ParallelRaceGroup(
+        //   new AutoDriveForDistanceCommand(drivetrainSubsystem, (130)),
+        //   new IntakeIn(intakeSubsystem)
+        // )
         );
     
     AutoDriveCollectAndShoot = 
