@@ -203,7 +203,7 @@ public class RobotContainer {
         new WaitCommand(0.20),
         new ParallelRaceGroup(
           new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
-          new WaitCommand(2.75)
+          new WaitCommand(2.5)
         ),
         new AutoTurnLeftAngleCommand(drivetrainSubsystem, 25.0),
         new ParallelRaceGroup(
@@ -214,9 +214,16 @@ public class RobotContainer {
         new AutoTurnRightAngleCommand(drivetrainSubsystem, 210.0 - (90.0 + 22.5)),
         new ParallelRaceGroup(
           new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
-          new WaitCommand(5)
+          new WaitCommand(1.5)
+        ),
+        new WaitCommand(0.20),
+        new AutoTurnLeftAngleCommand(drivetrainSubsystem, 139),
+        new ShiftGearUp(drivetrainSubsystem),
+        new ParallelRaceGroup(
+          new AutoDriveForDistanceCommand(drivetrainSubsystem, (130)),
+          new IntakeIn(intakeSubsystem)
         )
-      );
+        );
     
     AutoDriveCollectAndShoot = 
     new SequentialCommandGroup(

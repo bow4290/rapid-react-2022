@@ -107,7 +107,7 @@ public final class Constants {
     public static double defaultSearchSpeed = -0.55;
     public static double turretHomingSpeed  = 0.6;
 
-    public static double aimOffsetDistance = 6.0;
+    public static double aimOffsetDistance = 5.5;
 
     public static double turretKP = 0.1;
   }
