@@ -78,6 +78,8 @@ public final class Constants {
 
     public static int intakeUpChannel = 0;
     public static int intakeDownChannel = 1;
+
+    public static double intakeTriggerbuffer = 0.05;
   }
 
   public static final class ShooterConstants {

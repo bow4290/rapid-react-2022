@@ -76,6 +76,7 @@ public class RobotContainer {
 
     if (Flags.intake) {
       intakeSubsystem = new IntakeSubsystem();
+      intakeSubsystem.setDefaultCommand(new DefaultIntakeInCommand(() -> xboxController.getThrottle(), intakeSubsystem));
     }
 
     if (Flags.indexer) {
