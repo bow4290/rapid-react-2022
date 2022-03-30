@@ -83,7 +83,6 @@ public class RobotContainer {
     }
 
       shooterSubsystem = new ShooterSubsystem();
-      shooterSubsystem.setDefaultCommand(new DefaultShootHighCommand(() -> xboxController.getRightTriggerAxis(), limelight, shooterSubsystem, turretSubsystem));
 
 
     if (Flags.indexer) {
@@ -110,6 +109,7 @@ public class RobotContainer {
     if (Flags.elevator) elevatorSubsystem = new ElevatorSubsystem();
 
     autoCommands();
+    shooterSubsystem.setDefaultCommand(new DefaultShootHighCommand(() -> xboxController.getRightTriggerAxis(), limelight, shooterSubsystem, turretSubsystem));
 
     chooser.setDefaultOption("3-Ball High Auto", AutoDriveCollectAndShoot2);
     chooser.addOption("2-Ball High Auto", AutoDriveCollectAndShoot);
