@@ -73,8 +73,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
   }
 
   public void resetDriveEncoders() {
-    leftMotor1.setSelectedSensorPosition(0);
-    rightMotor1.setSelectedSensorPosition(0);
+    { leftMotor1.setSelectedSensorPosition(0); } while (Math.abs(getLeftRawEncoderPosition()) > 0.05);
+    { rightMotor1.setSelectedSensorPosition(0); } while (Math.abs(getRightRawEncoderPosition()) > 0.05);
   }
 
   public GearShiftPosition getGearShiftPosition() {
