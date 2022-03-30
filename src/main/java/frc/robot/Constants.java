@@ -53,6 +53,9 @@ public final class Constants {
     public static double reverseSoftLimit = 5000;       // Revolutions the motor can rotate CCW
 
     public static double elevatorSpeed = 0.90;          // -1 to 1 (Percent Output)
+
+    public static int armUpChannel = 6;
+    public static int armDownChannel = 7;
   }
 
   public static final class HoodConstants {
