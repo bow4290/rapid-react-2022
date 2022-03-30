@@ -65,6 +65,7 @@ public class RobotContainer {
   private Command AutoDriveAndShoot;
   private Command AutoDriveAndCollect;
   private Command AutoDriveOnly;
+  private Command AutoCrossCountry;
   private Command AutoNothing;
   private Command AutoPlop;
   private Command AutoTestingOnly;
@@ -117,6 +118,7 @@ public class RobotContainer {
     chooser.addOption("1-Ball Low Auto", AutoPlop);
     chooser.addOption("Drive and Collect", AutoDriveAndCollect);
     chooser.addOption("Drive Only", AutoDriveOnly);
+    chooser.addOption("Cross Country", AutoCrossCountry);
     chooser.addOption("Do Nothing", AutoNothing);
     // chooser.addOption("TESTING ONLY", AutoTestingOnly);
     SmartDashboard.putData(chooser);
@@ -277,6 +279,25 @@ public class RobotContainer {
         new ShiftGearDown(drivetrainSubsystem),
         new AutoDriveForDistanceCommand(drivetrainSubsystem, 40)
       );
+
+    AutoCrossCountry =
+      new SequentialCommandGroup(new ShiftGearDown(drivetrainSubsystem),
+                                 new DisableTurretCommand(turretSubsystem),
+        new IntakeDown(intakeSubsystem),
+        new ParallelRaceGroup(
+          new AutoDriveForDistanceCommand(drivetrainSubsystem, 40),
+          new IntakeIn(intakeSubsystem)
+        ),
+                                 new AutoTurnLeftAngleCommand(drivetrainSubsystem, 180),
+                                 new EnableTurretCommand(turretSubsystem),
+                                 new ParallelRaceGroup(new ShootHigh(limelight, shooterSubsystem, turretSubsystem), new WaitCommand(5.0)),
+                                 new DisableTurretCommand(turretSubsystem),
+                                 new AutoTurnLeftAngleCommand(drivetrainSubsystem, 50),
+                                 new ParallelCommandGroup(new AutoDriveForDistanceCommand(drivetrainSubsystem, 40), new IntakeIn(intakeSubsystem)),
+                                 new AutoTurnRightAngleCommand(drivetrainSubsystem, 80),
+                                 new EnableTurretCommand(turretSubsystem),
+                                 new ParallelRaceGroup(new ShootHigh(limelight, shooterSubsystem, turretSubsystem), new WaitCommand(5.0))
+                                 );
     
     AutoNothing = 
       null;
