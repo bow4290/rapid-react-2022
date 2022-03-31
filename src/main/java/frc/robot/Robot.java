@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class Robot extends TimedRobot {
   private Command autonomousCommand;
@@ -36,6 +37,7 @@ public class Robot extends TimedRobot {
     
     // if (autonomousCommand != null) {
       robotContainer.turretSubsystem.isTurretStopped = false;   // Enable the turret during autonomous
+      DrivetrainSubsystem.forceCorrectEncoderResets = true;
       autonomousCommand.schedule();
     // }
   }
@@ -51,6 +53,7 @@ public class Robot extends TimedRobot {
     }
 
     robotContainer.turretSubsystem.isTurretStopped = true;      // Disable the turret when teleop begins
+    DrivetrainSubsystem.forceCorrectEncoderResets = false;
     robotContainer.teleopInitCommands().schedule();
   }
 
