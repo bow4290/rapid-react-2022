@@ -71,8 +71,8 @@ public final class Constants {
     
     public static double upperShootingIndexSpeed = 0.5;
     public static double lowerShootingIndexSpeed = 0.275;
-    public static double upperIntakingIndexSpeed = 0.225;
-    public static double lowerIntakingIndexSpeed = 0.275;
+    public static double upperIntakingIndexSpeed = 0.2;
+    public static double lowerIntakingIndexSpeed = 0.25;
     public static double reverseIndexSpeed = 0.25;
   }
 
@@ -91,8 +91,8 @@ public final class Constants {
 
     public static double manualShooterSpeedRPM = 1500;
     public static double discardSpeedRPM = 1500.0;
-    public static double adjustNearRPM = 0; //added to retracted hood equation
-    public static double adjustFarRPM = 0; //added to extended hood equation
+    public static double adjustNearRPM = -50; //added to retracted hood equation
+    public static double adjustFarRPM = 150; //added to extended hood equation
 
 
     public static double kF = 1023.0/20330.0;
@@ -114,7 +114,7 @@ public final class Constants {
     public static double defaultSearchSpeed = -0.55;
     public static double turretHomingSpeed  = 0.6;
 
-    public static double aimOffsetDistance = 6.0;
+    public static double aimOffsetDistance = 7.0;
 
     public static double turretKP = 0.1;
   }

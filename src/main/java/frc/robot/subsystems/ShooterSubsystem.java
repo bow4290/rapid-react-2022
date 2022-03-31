@@ -75,7 +75,7 @@ public class ShooterSubsystem extends SubsystemBase {
       return false;
     } else {
       double errorRatio = actualSpeed/targetSpeed;
-      if (errorRatio > 0.975 && errorRatio < 1.05) {
+      if (errorRatio > 0.98 && errorRatio < 1.03) {
         return true;
       } else {
         return false;
