@@ -41,9 +41,9 @@ public class BallIdentification implements Sendable {
 
   private edu.wpi.first.wpilibj.util.Color cachedColor;
   public void update() {
-    double start = Timer.getFPGATimestamp();
+    // double start = Timer.getFPGATimestamp();
     cachedColor = sensor.getColor();
-    double end = Timer.getFPGATimestamp();
+    // double end = Timer.getFPGATimestamp();
     //System.out.println("Call took: " + (double)((int)((end - start) * 1000000.0)) / 1000.0 + "ms");
   }
 
@@ -61,7 +61,7 @@ public class BallIdentification implements Sendable {
     return ballColor;
   }
 
-  private Color getAllianceColor() {
+  public static Color getAllianceColor() {
     switch (DriverStation.getAlliance()) {
       case Red:
         return Color.RED;
