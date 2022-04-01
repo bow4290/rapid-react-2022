@@ -69,10 +69,10 @@ public final class Constants {
     public static int upperIndexMotorChannel = 0;
     public static int lowerIndexMotorChannel = 1;
     
-    public static double upperShootingIndexSpeed = 0.5;
-    public static double lowerShootingIndexSpeed = 0.275;
+    public static double upperShootingIndexSpeed = 0.45; // was 0.5
+    public static double lowerShootingIndexSpeed = 0.25; // was 0.275
     public static double upperIntakingIndexSpeed = 0.2;
-    public static double lowerIntakingIndexSpeed = 0.25;
+    public static double lowerIntakingIndexSpeed = 0.275;
     public static double reverseIndexSpeed = 0.25;
   }
 
@@ -92,7 +92,7 @@ public final class Constants {
     public static double manualShooterSpeedRPM = 1500;
     public static double discardSpeedRPM = 1500.0;
     public static double adjustNearRPM = -50; //added to retracted hood equation
-    public static double adjustFarRPM = 150; //added to extended hood equation
+    public static double adjustFarRPM = 200; //added to extended hood equation
 
 
     public static double kF = 1023.0/20330.0;
@@ -110,12 +110,17 @@ public final class Constants {
     public static int reverseRotations = -95;        // Soft limit to prevent turret from turning too far
 
     public static double manualTurnSpeed    = 0.3;
+    // TODO: This variable is useless (see turretKP comment) (I hate java)
     public static double defaultTrackSpeed  = 0.3;
-    public static double defaultSearchSpeed = -0.55;
+    // This variable is actually less than the track speed (see above comment) (I hate java)
+    // used to be -0.55
+    public static double defaultSearchSpeed = -0.7;
+    // NOTE: This variable is not for homing, it's for going to 0 pos (I hate java)
     public static double turretHomingSpeed  = 0.6;
 
     public static double aimOffsetDistance = 7.0;
 
+    // This variable is bad (it's not actually pid, it's just kP and it overrides defaultTrackSpeed. it does make our turret go vroom though) (I hate java)
     public static double turretKP = 0.1;
   }
 

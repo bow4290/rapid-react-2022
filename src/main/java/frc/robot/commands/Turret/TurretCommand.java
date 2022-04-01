@@ -45,6 +45,7 @@ public class TurretCommand extends CommandBase {
         if (newTurretState == TurretState.SEARCH) {
           turretSpeed = localSearchSpeed;
         } else {
+          // NOTE: This assignment does not do anything as it is overriden in updateTrackSetpoint
           turretSpeed = localTrackSpeed;
         }
         turretState = newTurretState;
