@@ -77,8 +77,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
   public void resetDriveEncoders() {
     // Just in case this is what's causing the back-and-forth drivetrain, let's disable it during teleop.
     if (forceCorrectEncoderResets) {
-      { leftMotor1.setSelectedSensorPosition(0); } while (Math.abs(getLeftRawEncoderPosition()) < 0.05);
-      { rightMotor1.setSelectedSensorPosition(0); } while (Math.abs(getRightRawEncoderPosition()) < 0.05);
+      do { leftMotor1.setSelectedSensorPosition(0); } while (Math.abs(getLeftCalculatedPosition()) > 0.5);
+      do { rightMotor1.setSelectedSensorPosition(0); } while (Math.abs(getRightCalculatedPosition()) > 0.5);
     } else {
       leftMotor1.setSelectedSensorPosition(0);
       rightMotor1.setSelectedSensorPosition(0);
