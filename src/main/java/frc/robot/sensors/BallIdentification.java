@@ -6,7 +6,6 @@ import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.Timer;
 
 public class BallIdentification implements Sendable {
   private final ColorSensorV3 sensor;
@@ -41,10 +40,7 @@ public class BallIdentification implements Sendable {
 
   private edu.wpi.first.wpilibj.util.Color cachedColor;
   public void update() {
-    // double start = Timer.getFPGATimestamp();
     cachedColor = sensor.getColor();
-    // double end = Timer.getFPGATimestamp();
-    //System.out.println("Call took: " + (double)((int)((end - start) * 1000000.0)) / 1000.0 + "ms");
   }
 
   // If the sensor senses a red ball or a blue ball, then a ball is present.
