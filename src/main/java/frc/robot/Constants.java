@@ -101,6 +101,7 @@ public final class Constants {
     public static double kD = 0;
 
     public static double shooterTriggerbuffer = 0.05;
+    public static double timeOfGood = 0.05; // in seconds
   }
 
   public static final class TurretConstants {

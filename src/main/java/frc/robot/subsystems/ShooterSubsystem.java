@@ -15,6 +15,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   private double targetSpeed = 0;
   private double manualRPM = ShooterConstants.manualShooterSpeedRPM;
+  private int goodTimer = 0;
 
   public ShooterSubsystem() {
     shooterMotor.configFactoryDefault();
@@ -68,7 +69,7 @@ public class ShooterSubsystem extends SubsystemBase {
     return getShooterVelocityRaw()*600/2048;
   }
 
-  public boolean isShooterReady() { 
+  public boolean isShooterReadyRaw() {
     double actualSpeed = getShooterVelocityRaw();
 
     if (targetSpeed == 0){
@@ -83,8 +84,13 @@ public class ShooterSubsystem extends SubsystemBase {
     }
   }
 
+  public boolean isShooterReady() {
+    return (((double)goodTimer) * (1.0/50.0)) >= ShooterConstants.timeOfGood;
+  }
+
   @Override
   public void periodic() {
+    goodTimer = isShooterReadyRaw() ? goodTimer + 1 : 0;
     //SmartDashboard.putNumber("Shooter Commanded Speed", targetSpeed);
     //SmartDashboard.putNumber("Shooter Actual Speed", getShooterRPM());
     SmartDashboard.putBoolean("Is Shooter Ready? ", isShooterReady());
