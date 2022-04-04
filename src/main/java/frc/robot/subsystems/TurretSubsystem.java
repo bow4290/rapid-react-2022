@@ -60,15 +60,15 @@ public class TurretSubsystem extends SubsystemBase {
   }
 
   public boolean isTurretReady(){
-    return (limelight.isTarget() && (Math.abs(limelight.getXError()) < 4));
+    return (limelight.isTarget() && (Math.abs(limelight.getXErrorWithOffset(TurretConstants.aimOffsetDistance)) < 2.5));
   }
 
   @Override
   public void periodic() {
     SmartDashboard.putBoolean("Is Turret Ready? ", isTurretReady());
     SmartDashboard.putBoolean("Has a target? ", limelight.isTarget());
-    SmartDashboard.putNumber("X Error ", limelight.getXError());
-    SmartDashboard.putNumber("Y Error ", limelight.getXError());
+    SmartDashboard.putNumber("X Error ", limelight.getXErrorWithOffset(TurretConstants.aimOffsetDistance));
+    SmartDashboard.putNumber("Y Error ", limelight.getYError());
     SmartDashboard.putNumber("Distance ", limelight.getDistance());
   }
 }

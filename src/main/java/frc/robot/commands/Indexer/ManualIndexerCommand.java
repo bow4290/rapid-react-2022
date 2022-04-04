@@ -8,12 +8,13 @@ public class ManualIndexerCommand extends CommandBase {
 
   public ManualIndexerCommand(IndexerSubsystem indexerSubsystem) {
     this.indexerSubsystem = indexerSubsystem;
-    addRequirements(indexerSubsystem);
 
+    addRequirements(indexerSubsystem);
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   @Override
   public void execute() {

@@ -49,8 +49,18 @@ public class Limelight {
   /** Horizontal offset from limelight crosshair to target crosshair */
   public double getXError() { return table.getEntry("tx").getDouble(0.00); }
 
+  /** Horizontal offset from limelight crosshair to target crosshair with user-specified offset distance in inches */
+  public double getXErrorWithOffset(double targetOffsetDistance) {
+    return getXError() + Math.toDegrees(Math.atan2(targetOffsetDistance, getDistance()));
+  }
+
   /** Vertical offset from limelight crosshair to target crosshair */
   public double getYError() { return table.getEntry("ty").getDouble(0.00); }
+
+  /** Vertical offset from limelight crosshair to target crosshair with user-specified offset distance */
+  public double getYErrorWithOffset(double targetOffsetDistance) {
+    return getYError() + Math.toDegrees(Math.atan2(targetOffsetDistance, getDistance()));
+  }
 
   public double getAvgYError(double historic_weight) {
     avgYError = ((historic_weight * avgYError) + ((1.0 - historic_weight) * getYError())) / 2.0;

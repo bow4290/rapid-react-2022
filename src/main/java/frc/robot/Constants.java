@@ -52,7 +52,10 @@ public final class Constants {
     public static double forwardSoftLimit = 175000;     // Revolutions the motor can rotate CW
     public static double reverseSoftLimit = 5000;       // Revolutions the motor can rotate CCW
 
-    public static double elevatorSpeed = 0.75;          // -1 to 1 (Percent Output)
+    public static double elevatorSpeed = 0.90;          // -1 to 1 (Percent Output)
+
+    public static int armUpChannel = 6;
+    public static int armDownChannel = 7;
   }
 
   public static final class HoodConstants {
@@ -66,9 +69,9 @@ public final class Constants {
     public static int upperIndexMotorChannel = 0;
     public static int lowerIndexMotorChannel = 1;
     
-    public static double upperShootingIndexSpeed = 0.5;
-    public static double lowerShootingIndexSpeed = 0.275;
-    public static double upperIntakingIndexSpeed = 0.225;
+    public static double upperShootingIndexSpeed = 0.45; // was 0.5
+    public static double lowerShootingIndexSpeed = 0.25; // was 0.275
+    public static double upperIntakingIndexSpeed = 0.2;
     public static double lowerIntakingIndexSpeed = 0.275;
     public static double reverseIndexSpeed = 0.25;
   }
@@ -78,6 +81,8 @@ public final class Constants {
 
     public static int intakeUpChannel = 0;
     public static int intakeDownChannel = 1;
+
+    public static double intakeTriggerbuffer = 0.05;
   }
 
   public static final class ShooterConstants {
@@ -86,14 +91,16 @@ public final class Constants {
 
     public static double manualShooterSpeedRPM = 1500;
     public static double discardSpeedRPM = 1500.0;
-    public static double adjustNearRPM = 0; //added to retracted hood equation
-    public static double adjustFarRPM = 0; //added to extended hood equation
+    public static double adjustNearRPM = -50; //added to retracted hood equation
+    public static double adjustFarRPM = 200; //added to extended hood equation
 
 
     public static double kF = 1023.0/20330.0;
     public static double kP = 0.1;
     public static double kI = 0;
     public static double kD = 0;
+
+    public static double shooterTriggerbuffer = 0.05;
   }
 
   public static final class TurretConstants {
@@ -103,9 +110,17 @@ public final class Constants {
     public static int reverseRotations = -95;        // Soft limit to prevent turret from turning too far
 
     public static double manualTurnSpeed    = 0.3;
+    // TODO: This variable is useless (see turretKP comment) (I hate java)
     public static double defaultTrackSpeed  = 0.3;
-    public static double defaultSearchSpeed = -0.55;
+    // This variable is actually less than the track speed (see above comment) (I hate java)
+    // used to be -0.55
+    public static double defaultSearchSpeed = -0.7;
+    // NOTE: This variable is not for homing, it's for going to 0 pos (I hate java)
+    public static double turretHomingSpeed  = 0.6;
 
+    public static double aimOffsetDistance = 7.0;
+
+    // This variable is bad (it's not actually pid, it's just kP and it overrides defaultTrackSpeed. it does make our turret go vroom though) (I hate java)
     public static double turretKP = 0.1;
   }
 
@@ -126,5 +141,6 @@ public final class Constants {
     public static final boolean indexer = true;
     public static final boolean turret = true;
     public static final boolean hood = true;
+    public static final boolean elevator = true;
   }
 }

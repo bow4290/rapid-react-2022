@@ -21,7 +21,7 @@ public class ElevatorDownCommand extends CommandBase {
   public void execute() {
     elevatorSubsystem.getEncoderposition();
 
-    if(elevatorSubsystem.getEncoderposition() <= ElevatorConstants.reverseSoftLimit){
+    if (elevatorSubsystem.getEncoderposition() <= ElevatorConstants.reverseSoftLimit) {
       elevatorSubsystem.stopElevator();
     } else {    
       elevatorSubsystem.retractElevator(ElevatorConstants.elevatorSpeed);

@@ -1,11 +1,9 @@
 package frc.robot;
 
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cscore.UsbCamera;
-import edu.wpi.first.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class Robot extends TimedRobot {
   private Command autonomousCommand;
@@ -21,6 +19,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
+    robotContainer.periodic();
     CommandScheduler.getInstance().run();
   }
 
@@ -36,10 +35,11 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     autonomousCommand = robotContainer.getAutonomousCommand();
     
-    if (autonomousCommand != null) {
+    // if (autonomousCommand != null) {
       robotContainer.turretSubsystem.isTurretStopped = false;   // Enable the turret during autonomous
+      DrivetrainSubsystem.forceCorrectEncoderResets = true;
       autonomousCommand.schedule();
-    }
+    // }
   }
 
   @Override
@@ -53,6 +53,7 @@ public class Robot extends TimedRobot {
     }
 
     robotContainer.turretSubsystem.isTurretStopped = true;      // Disable the turret when teleop begins
+    DrivetrainSubsystem.forceCorrectEncoderResets = false;
     robotContainer.teleopInitCommands().schedule();
   }
 

@@ -13,16 +13,17 @@ public class AutoIntakeIn extends CommandBase {
     this.intakeSubsystem = intakeSubsystem;
     this.ballUpper = ballUpper;
     this.ballLower = ballLower;
+
     addRequirements(intakeSubsystem);
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   @Override
   public void execute() {
-    // Only spin motors when there aren't two balls.
-    if (!(ballLower.isBallPresent() && ballUpper.isBallPresent()))  intakeSubsystem.intakeSpin(1);
+    intakeSubsystem.intakeSpin(1);
   }
 
   @Override
@@ -31,5 +32,7 @@ public class AutoIntakeIn extends CommandBase {
   }
 
   @Override
-  public boolean isFinished() { return false; }
+  public boolean isFinished() {
+    return (ballLower.isBallPresent() && ballUpper.isBallPresent());
+  }
 }

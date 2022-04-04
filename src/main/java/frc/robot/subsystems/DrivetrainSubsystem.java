@@ -14,6 +14,8 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.Flags;
 
 public class DrivetrainSubsystem extends SubsystemBase {
+  public static Boolean forceCorrectEncoderResets = false;
+
   private WPI_TalonFX leftMotor1 = new WPI_TalonFX(DriveConstants.leftMotor1Channel);
   private WPI_TalonFX leftMotor2 = new WPI_TalonFX(DriveConstants.leftMotor2Channel);
   private WPI_TalonFX rightMotor1 = new WPI_TalonFX(DriveConstants.rightMotor1Channel);
@@ -73,8 +75,14 @@ public class DrivetrainSubsystem extends SubsystemBase {
   }
 
   public void resetDriveEncoders() {
-    leftMotor1.setSelectedSensorPosition(0);
-    rightMotor1.setSelectedSensorPosition(0);
+    // Just in case this is what's causing the back-and-forth drivetrain, let's disable it during teleop.
+    if (forceCorrectEncoderResets) {
+      do { leftMotor1.setSelectedSensorPosition(0); } while (Math.abs(getLeftCalculatedPosition()) > 0.5);
+      do { rightMotor1.setSelectedSensorPosition(0); } while (Math.abs(getRightCalculatedPosition()) > 0.5);
+    } else {
+      leftMotor1.setSelectedSensorPosition(0);
+      rightMotor1.setSelectedSensorPosition(0);
+    }
   }
 
   public GearShiftPosition getGearShiftPosition() {

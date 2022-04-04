@@ -8,18 +8,25 @@ public class ShiftGearDown extends CommandBase {
 
   public ShiftGearDown(DrivetrainSubsystem drivetrainSubsystem) {
     this.drivetrainSubsystem = drivetrainSubsystem;
+    
     addRequirements(drivetrainSubsystem);
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   @Override
-  public void execute() { drivetrainSubsystem.shiftDown(); }
+  public void execute() {
+    drivetrainSubsystem.shiftDown();
+  }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   @Override
-  public boolean isFinished() { return true; }
+  public boolean isFinished() {
+    return true;
+  }
 }

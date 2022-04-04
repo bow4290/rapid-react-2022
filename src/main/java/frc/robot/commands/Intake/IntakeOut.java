@@ -8,14 +8,18 @@ public class IntakeOut extends CommandBase {
 
   public IntakeOut(IntakeSubsystem intakeSubsystem) {
     this.intakeSubsystem = intakeSubsystem;
+
     addRequirements(intakeSubsystem);
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   @Override
-  public void execute() { intakeSubsystem.intakeSpin(-1); }
+  public void execute() {
+    intakeSubsystem.intakeSpin(-1);
+  }
 
   @Override
   public void end(boolean interrupted) {
@@ -23,5 +27,7 @@ public class IntakeOut extends CommandBase {
   }
 
   @Override
-  public boolean isFinished() { return false; }
+  public boolean isFinished() {
+    return false;
+  }
 }

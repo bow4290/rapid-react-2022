@@ -15,6 +15,7 @@ public class DefaultHoodCommand extends CommandBase {
     this.limelight = limelight;
     this.hoodSubsystem = hoodSubsystem;
     this.turretSubsystem = turretSubsystem;
+
     addRequirements(hoodSubsystem);
   }
 
@@ -24,10 +25,10 @@ public class DefaultHoodCommand extends CommandBase {
 
   @Override
   public void execute() {
-    if(turretSubsystem.isTurretReady()){
-      if((limelight.getDistance() > HoodConstants.hoodExtendDistance) && !hoodSubsystem.isHoodExtended()){
+    if (turretSubsystem.isTurretReady()) {
+      if ((limelight.getDistance() > HoodConstants.hoodExtendDistance) && !hoodSubsystem.isHoodExtended()) {
         hoodSubsystem.extendHoodSolenoid();
-      } else if ((limelight.getDistance() < HoodConstants.hoodExtendDistance) && hoodSubsystem.isHoodExtended()){
+      } else if ((limelight.getDistance() < HoodConstants.hoodExtendDistance) && hoodSubsystem.isHoodExtended()) {
         hoodSubsystem.retractHoodSolenoid();
       }
     }

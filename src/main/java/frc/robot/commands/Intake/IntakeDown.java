@@ -8,18 +8,25 @@ public class IntakeDown extends CommandBase {
 
   public IntakeDown(IntakeSubsystem intakeSubsystem) {
     this.intakeSubsystem = intakeSubsystem;
+    
     addRequirements(intakeSubsystem);
   }
 
   @Override
-  public void initialize() { intakeSubsystem.extendIntake(); }
+  public void initialize() {
+    intakeSubsystem.extendIntake();
+  }
 
   @Override
-  public void execute() {}
+  public void execute() {
+  }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   @Override
-  public boolean isFinished() { return true; }
+  public boolean isFinished() {
+    return true;
+  }
 }

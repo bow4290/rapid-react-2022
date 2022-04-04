@@ -9,6 +9,7 @@ public class ManualTurretCounterClockwiseCommand extends CommandBase {
 
   public ManualTurretCounterClockwiseCommand(TurretSubsystem turretSubsystem) {
     this.turretSubsystem = turretSubsystem;
+    
     addRequirements(turretSubsystem);
   }
 

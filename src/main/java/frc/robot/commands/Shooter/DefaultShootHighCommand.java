@@ -1,5 +1,7 @@
 package frc.robot.commands.Shooter;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.HoodConstants;
 import frc.robot.Constants.ShooterConstants;
@@ -7,12 +9,14 @@ import frc.robot.sensors.Limelight;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
 
-public class ShootHigh extends CommandBase {
+public class DefaultShootHighCommand extends CommandBase {
+  private DoubleSupplier shooterActiveDouble;
   private Limelight limelight;
   private ShooterSubsystem shooterSubsystem;
   private TurretSubsystem turretSubsystem;
 
-  public ShootHigh(Limelight limelight, ShooterSubsystem shooterSubsystem, TurretSubsystem turretSubsystem) {
+  public DefaultShootHighCommand(DoubleSupplier shooterActiveDouble, Limelight limelight, ShooterSubsystem shooterSubsystem, TurretSubsystem turretSubsystem) {
+    this.shooterActiveDouble = shooterActiveDouble;
     this.limelight = limelight;
     this.shooterSubsystem = shooterSubsystem;
     this.turretSubsystem = turretSubsystem;
@@ -26,7 +30,8 @@ public class ShootHigh extends CommandBase {
 
   @Override
   public void execute() {
-    if(turretSubsystem.isTurretReady()) {
+    if(shooterActiveDouble.getAsDouble() > ShooterConstants.shooterTriggerbuffer 
+        && turretSubsystem.isTurretReady()) {
       double distance = limelight.getDistance();
       double calculatedRPM = calculateShooterSpeedRPM(distance);
       shooterSubsystem.shoot(calculatedRPM);
@@ -37,7 +42,6 @@ public class ShootHigh extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    shooterSubsystem.shoot(0);
   }
 
   @Override

@@ -9,12 +9,13 @@ public class ReverseIndexerCommand extends CommandBase {
 
   public ReverseIndexerCommand(IndexerSubsystem indexerSubsystem) {
     this.indexerSubsystem = indexerSubsystem;
-    addRequirements(indexerSubsystem);
 
+    addRequirements(indexerSubsystem);
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   @Override
   public void execute() {
