@@ -87,7 +87,7 @@ public final class Constants {
 
   public static final class ShooterConstants {
     public static int shooterMotorChannel = 2;
-    public static int shooterMotorVoltage = 11;
+    public static double shooterMotorVoltage = 9.5;
 
     public static double manualShooterSpeedRPM = 1500;
     public static double discardSpeedRPM = 1500.0;
@@ -96,13 +96,11 @@ public final class Constants {
 
 
     public static double kF = 1023.0/20330.0;
-    public static double kP = 0.1;
-    public static double kI = 0;
+    public static double kP = 0.15;
+    public static double kI = 0.00005;
     public static double kD = 0;
 
-    public static double shooterTriggerbuffer = 0.05;
-    public static double timeOfGood = 0.05; // in seconds
-  }
+    public static double shooterTriggerbuffer = 0.05;  }
 
   public static final class TurretConstants {
     public static int deviceID = 11;

@@ -20,8 +20,6 @@ import frc.robot.commands.Elevator.*;
 import frc.robot.sensors.BallIdentification;
 import frc.robot.sensors.Limelight;
 import frc.robot.sensors.RevColorSensor;
-import frc.robot.commands.Hood.DefaultHoodCommand;
-import frc.robot.commands.Hood.HoodRetractCommand;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -41,7 +39,6 @@ public class RobotContainer {
   // public static Joystick xboxController = new Joystick(JoystickConstants.XBOX_CONTROLLER);
   public static XboxController xboxController = new XboxController(JoystickConstants.XBOX_CONTROLLER);
 
-  private HoodSubsystem hoodSubsystem;
   private IndexerSubsystem indexerSubsystem;
   public DrivetrainSubsystem drivetrainSubsystem;
   public TurretSubsystem turretSubsystem;
@@ -100,11 +97,6 @@ public class RobotContainer {
     if (Flags.turret) {
       turretSubsystem = new TurretSubsystem(limelight);
       turretSubsystem.setDefaultCommand(new TurretCommand(limelight, turretSubsystem));
-    }
-
-    if (Flags.hood) {
-      hoodSubsystem = new HoodSubsystem();
-      hoodSubsystem.setDefaultCommand(new DefaultHoodCommand(limelight, hoodSubsystem, turretSubsystem));
     }
 
     if (Flags.elevator) elevatorSubsystem = new ElevatorSubsystem();
@@ -363,8 +355,7 @@ public class RobotContainer {
   public Command teleopInitCommands(){
     return new ParallelCommandGroup(
             // new IntakeUp(inqtakeSubsystem),
-            new ShiftGearDown(drivetrainSubsystem),
-            new HoodRetractCommand(hoodSubsystem)
+            new ShiftGearDown(drivetrainSubsystem)
            );
   }
 
