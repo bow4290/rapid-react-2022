@@ -87,7 +87,7 @@ public final class Constants {
 
   public static final class ShooterConstants {
     public static int shooterMotorChannel = 2;
-    public static double shooterMotorVoltage = 9.5;
+    public static double shooterMotorVoltage = 11.0;
 
     public static double manualShooterSpeedRPM = 1500;
     public static double discardSpeedRPM = 1500.0;
@@ -95,10 +95,10 @@ public final class Constants {
     public static double adjustFarRPM = 200; //added to extended hood equation
 
 
-    public static double kF = 1023.0/20330.0;
-    public static double kP = 0.15;
-    public static double kI = 0.00005;
-    public static double kD = 0;
+    public static double kF = 1023.0/20320.0;   //1023.0/20330.0
+    public static double kP = 0.0;
+    public static double kI = 0.0;
+    public static double kD = 0.0;
 
     public static double shooterTriggerbuffer = 0.05;  }
 
@@ -117,7 +117,7 @@ public final class Constants {
     // NOTE: This variable is not for homing, it's for going to 0 pos (I hate java)
     public static double turretHomingSpeed  = 0.6;
 
-    public static double aimOffsetDistance = 7.0;
+    public static double aimOffsetDistance = 0;
 
     // This variable is bad (it's not actually pid, it's just kP and it overrides defaultTrackSpeed. it does make our turret go vroom though) (I hate java)
     public static double turretKP = 0.1;
