@@ -53,6 +53,7 @@ public class Robot extends TimedRobot {
     }
 
     robotContainer.turretSubsystem.isTurretStopped = true;      // Disable the turret when teleop begins
+    robotContainer.turretSubsystem.homingPosition = 0;
     DrivetrainSubsystem.forceCorrectEncoderResets = false;
     robotContainer.teleopInitCommands().schedule();
   }
