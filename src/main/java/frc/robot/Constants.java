@@ -69,8 +69,8 @@ public final class Constants {
     public static int upperIndexMotorChannel = 0;
     public static int lowerIndexMotorChannel = 1;
     
-    public static double upperShootingIndexSpeed = 0.45; // was 0.5
-    public static double lowerShootingIndexSpeed = 0.25; // was 0.275
+    public static double upperShootingIndexSpeed = 0.4; // was 0.5
+    public static double lowerShootingIndexSpeed = 0.225; // was 0.275
     public static double upperIntakingIndexSpeed = 0.2;
     public static double lowerIntakingIndexSpeed = 0.275;
     public static double reverseIndexSpeed = 0.25;
@@ -95,9 +95,9 @@ public final class Constants {
     public static double adjustFarRPM = 200; //added to extended hood equation
 
 
-    public static double kF = 1023.0/20320.0;   //1023.0/20330.0
+    public static double kF = 1023.0/19900.0;   //1023.0/20330.0
     public static double kP = 0.0;
-    public static double kI = 0.0;
+    public static double kI = 0.0; //0.0001;
     public static double kD = 0.0;
 
     public static double shooterTriggerbuffer = 0.05;  }
