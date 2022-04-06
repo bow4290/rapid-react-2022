@@ -16,6 +16,7 @@ public class TurretSubsystem extends SubsystemBase {
   public RelativeEncoder encoder;
   private Limelight limelight;
   public boolean isTurretStopped = false;
+  public double homingPosition = 0;
   // private SparkMaxPIDController pid;
 
   // private double kP, kI, kD, kF, kMaxOutput, kMinOutput, setpoint;
