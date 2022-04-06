@@ -49,6 +49,6 @@ public class DefaultShootHighCommand extends CommandBase {
   }
 
   private double calculateShooterSpeedRPM(double distance) {
-    return (16.62*distance+2392+ShooterConstants.adjustNearRPM);
+    return (0.00003293*Math.pow(distance,3.669)+3269);
   }
 }
