@@ -48,14 +48,20 @@ public final class Constants {
 
   public static final class ElevatorConstants {
     public static int elevatorClimbMotorChannel = 10;
+    public static int traverseClimbMotorChannel = 100; //FIXME: this isnt correct. use phoenix tuner
 
-    public static double forwardSoftLimit = 175000;     // Revolutions the motor can rotate CW
-    public static double reverseSoftLimit = 5000;       // Revolutions the motor can rotate CCW
+    public static double elevatorForwardSoftLimit = 175000;     // Revolutions the motor can rotate CW
+    public static double elevatorReverseSoftLimit = 5000;       // Revolutions the motor can rotate CCW
+
+    public static int armForwardSoftLimit = 10; //FIXME: this isnt correct. trial and error time
+    public static int armReverseSoftLimit = 0;  //FIXME: this isnt correct. trial and error time
 
     public static double elevatorSpeed = 0.90;          // -1 to 1 (Percent Output)
 
-    public static int armUpChannel = 6;
-    public static int armDownChannel = 7;
+    public static double travArmSpeed = 0.5; //FIXME: this isnt correct. trial and error time
+
+    // public static int armUpChannel = 6;
+    // public static int armDownChannel = 7;
   }
 
   public static final class HoodConstants {

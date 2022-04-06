@@ -19,9 +19,9 @@ public class ElevatorUpCommand extends CommandBase {
 
   @Override
   public void execute() {
-    elevatorSubsystem.getEncoderposition();
+    elevatorSubsystem.getElevatorEncoderposition();
     
-    if (elevatorSubsystem.getEncoderposition() >= ElevatorConstants.forwardSoftLimit) {
+    if (elevatorSubsystem.getElevatorEncoderposition() >= ElevatorConstants.elevatorForwardSoftLimit) {
       elevatorSubsystem.stopElevator();
     } else {    
       elevatorSubsystem.extendElevator(ElevatorConstants.elevatorSpeed);

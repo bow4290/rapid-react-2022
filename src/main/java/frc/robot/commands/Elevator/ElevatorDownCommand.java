@@ -19,9 +19,9 @@ public class ElevatorDownCommand extends CommandBase {
 
   @Override
   public void execute() {
-    elevatorSubsystem.getEncoderposition();
+    elevatorSubsystem.getElevatorEncoderposition();
 
-    if (elevatorSubsystem.getEncoderposition() <= ElevatorConstants.reverseSoftLimit) {
+    if (elevatorSubsystem.getElevatorEncoderposition() <= ElevatorConstants.elevatorReverseSoftLimit) {
       elevatorSubsystem.stopElevator();
     } else {    
       elevatorSubsystem.retractElevator(ElevatorConstants.elevatorSpeed);
