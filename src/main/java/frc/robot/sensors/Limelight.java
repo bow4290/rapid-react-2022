@@ -13,6 +13,7 @@ public class Limelight {
   public static enum CamMode { vision, driving }
 
   public Limelight() {
+    table.getEntry("crop").setDoubleArray(new double[]{-1.0, 1.0, -0.75, 1.0});
   }
 
   /** Set the state of the LED */
