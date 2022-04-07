@@ -15,10 +15,10 @@ import frc.robot.Constants.Flags;
 public class ElevatorSubsystem extends SubsystemBase {
   private WPI_TalonFX elevatorClimbMotor = new WPI_TalonFX(ElevatorConstants.elevatorClimbMotorChannel);
   private CANSparkMax traverseClimbMotor;
-  // private final DoubleSolenoid climberSolenoid;
+  private final DoubleSolenoid climberSolenoid;
 
-  // public enum TravArmStatus { UP, DOWN }
-  // public static TravArmStatus travArmStatus;
+  public enum PistonStatus { UP, DOWN }
+  public static PistonStatus pistonStatus;
   public ElevatorSubsystem() {
     if (!Flags.elevator) throw new Error("Elevator flag must be set to create an ElevatorSubsystem!");
     elevatorClimbMotor.setNeutralMode(NeutralMode.Brake);
@@ -43,7 +43,8 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     traverseClimbMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, ElevatorConstants.armForwardSoftLimit);
     traverseClimbMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, ElevatorConstants.armReverseSoftLimit);
-    // climberSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, ElevatorConstants.armUpChannel, ElevatorConstants.armDownChannel);
+    
+    climberSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, ElevatorConstants.armUpChannel, ElevatorConstants.armDownChannel);
   }
 
   public void extendElevator(double climbSpeed){
@@ -60,23 +61,29 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   public void retractArm() {
     traverseClimbMotor.set(-ElevatorConstants.travArmSpeed);
-    // climberSolenoid.set(DoubleSolenoid.Value.kReverse);
-    // travArmStatus = TravArmStatus.UP;
   }
 
   public void extendArm() {
     traverseClimbMotor.set(ElevatorConstants.travArmSpeed);
-    // climberSolenoid.set(DoubleSolenoid.Value.kForward);
-    // travArmStatus = TravArmStatus.DOWN;
+  }
+
+  public void extendPiston() {
+    climberSolenoid.set(DoubleSolenoid.Value.kForward);
+    pistonStatus = PistonStatus.UP;
+  }
+
+  public void retractPiston() {
+    climberSolenoid.set(DoubleSolenoid.Value.kReverse);
+    pistonStatus = PistonStatus.DOWN;  
   }
 
   public double getElevatorEncoderposition(){
     return elevatorClimbMotor.getSelectedSensorPosition();
   }
 
-  // public static TravArmStatus getTravArmStatus(){
-  //   return travArmStatus;
-  // }
+  public static PistonStatus getPistonStatus(){
+    return pistonStatus;
+  }
 
   @Override
   public void periodic() {

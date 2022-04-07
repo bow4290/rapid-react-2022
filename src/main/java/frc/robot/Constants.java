@@ -60,8 +60,8 @@ public final class Constants {
 
     public static double travArmSpeed = 0.5; //FIXME: this isnt correct. trial and error time
 
-    // public static int armUpChannel = 6;
-    // public static int armDownChannel = 7;
+    public static int armUpChannel = 6;
+    public static int armDownChannel = 7;
   }
 
   public static final class HoodConstants {
