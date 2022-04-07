@@ -91,9 +91,8 @@ public final class Constants {
 
     public static double manualShooterSpeedRPM = 1500;
     public static double discardSpeedRPM = 1500.0;
-    public static double adjustNearRPM = -50; //added to retracted hood equation
-    public static double adjustFarRPM = 200; //added to extended hood equation
-
+    public static double EquationAdjustA = 0; // a(x) + b
+    public static double EquationAdjustB = 0; // a(x) + b
 
     public static double kF = 1023.0/19900.0;   //1023.0/20330.0
     public static double kP = 0.0;

@@ -33,6 +33,7 @@ public class DefaultShootHighCommand extends CommandBase {
         && turretSubsystem.isTurretReady()) {
       double distance = limelight.getDistance();
       double calculatedRPM = calculateShooterSpeedRPM(distance);
+      if (calculatedRPM > 5250) calculatedRPM = 5250;
       shooterSubsystem.shoot(calculatedRPM);
     } else {
       shooterSubsystem.shoot(0);
@@ -49,6 +50,6 @@ public class DefaultShootHighCommand extends CommandBase {
   }
 
   private double calculateShooterSpeedRPM(double distance) {
-    return (0.00003293*Math.pow(distance,3.669)+3269);
+    return ((19.6274+ShooterConstants.EquationAdjustA)*distance + (2133.25+ShooterConstants.EquationAdjustB));
   }
 }
