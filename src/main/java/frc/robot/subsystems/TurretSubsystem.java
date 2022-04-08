@@ -16,6 +16,7 @@ public class TurretSubsystem extends SubsystemBase {
   public RelativeEncoder encoder;
   private Limelight limelight;
   public boolean isTurretStopped = false;
+  public double homingPosition = 0;
   // private SparkMaxPIDController pid;
 
   // private double kP, kI, kD, kF, kMaxOutput, kMinOutput, setpoint;
@@ -60,7 +61,7 @@ public class TurretSubsystem extends SubsystemBase {
   }
 
   public boolean isTurretReady(){
-    return (limelight.isTarget() && (Math.abs(limelight.getXErrorWithOffset(TurretConstants.aimOffsetDistance)) < 2.5));
+    return (limelight.isTarget() && (Math.abs(limelight.getXErrorWithOffset(TurretConstants.aimOffsetDistance)) < 3)); // was 2.5
   }
 
   @Override

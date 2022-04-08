@@ -69,8 +69,8 @@ public final class Constants {
     public static int upperIndexMotorChannel = 0;
     public static int lowerIndexMotorChannel = 1;
     
-    public static double upperShootingIndexSpeed = 0.45; // was 0.5
-    public static double lowerShootingIndexSpeed = 0.25; // was 0.275
+    public static double upperShootingIndexSpeed = 0.4; // was 0.5
+    public static double lowerShootingIndexSpeed = 0.225; // was 0.275
     public static double upperIntakingIndexSpeed = 0.2;
     public static double lowerIntakingIndexSpeed = 0.275;
     public static double reverseIndexSpeed = 0.25;
@@ -87,21 +87,19 @@ public final class Constants {
 
   public static final class ShooterConstants {
     public static int shooterMotorChannel = 2;
-    public static int shooterMotorVoltage = 11;
+    public static double shooterMotorVoltage = 11.0;
 
     public static double manualShooterSpeedRPM = 1500;
     public static double discardSpeedRPM = 1500.0;
-    public static double adjustNearRPM = -50; //added to retracted hood equation
-    public static double adjustFarRPM = 200; //added to extended hood equation
+    public static double EquationAdjustA = 0; // a(x) + b
+    public static double EquationAdjustB = 0; // a(x) + b
 
+    public static double kF = 1023.0/19900.0;   //1023.0/20330.0
+    public static double kP = 0.0;
+    public static double kI = 0.0; //0.0001;
+    public static double kD = 0.0;
 
-    public static double kF = 1023.0/20330.0;
-    public static double kP = 0.1;
-    public static double kI = 0;
-    public static double kD = 0;
-
-    public static double shooterTriggerbuffer = 0.05;
-  }
+    public static double shooterTriggerbuffer = 0.05;  }
 
   public static final class TurretConstants {
     public static int deviceID = 11;
@@ -118,7 +116,7 @@ public final class Constants {
     // NOTE: This variable is not for homing, it's for going to 0 pos (I hate java)
     public static double turretHomingSpeed  = 0.6;
 
-    public static double aimOffsetDistance = 7.0;
+    public static double aimOffsetDistance = 2;
 
     // This variable is bad (it's not actually pid, it's just kP and it overrides defaultTrackSpeed. it does make our turret go vroom though) (I hate java)
     public static double turretKP = 0.1;

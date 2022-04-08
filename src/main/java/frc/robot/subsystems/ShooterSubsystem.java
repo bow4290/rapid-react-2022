@@ -15,6 +15,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
   private double targetSpeed = 0;
   private double manualRPM = ShooterConstants.manualShooterSpeedRPM;
+  private double actualSpeed = 0;
+  private double errorRatio = 0;
+  private int thresholdLoops = 0;
+  private int goodThresholdLoopCount = 10;
 
   public ShooterSubsystem() {
     shooterMotor.configFactoryDefault();
@@ -30,7 +34,10 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterMotor.config_kI(0, ShooterConstants.kI);
     shooterMotor.config_kD(0, ShooterConstants.kD);
 
-    SmartDashboard.putNumber("Manual Shooter Speed ", manualRPM);
+    // SmartDashboard.putNumber("Manual Shooter Speed ", manualRPM);
+    // SmartDashboard.putNumber("kP", 0.0);
+    // SmartDashboard.putNumber("kI", ShooterConstants.kI);
+    // SmartDashboard.putNumber("kD", 0.0);
   }
 
   /* SparkMAX motor controllers require a weird velocity unit.
@@ -68,25 +75,27 @@ public class ShooterSubsystem extends SubsystemBase {
     return getShooterVelocityRaw()*600/2048;
   }
 
-  public boolean isShooterReady() { 
-    double actualSpeed = getShooterVelocityRaw();
-
-    if (targetSpeed == 0){
-      return false;
-    } else {
-      double errorRatio = actualSpeed/targetSpeed;
-      if (errorRatio > 0.98 && errorRatio < 1.03) {
-        return true;
-      } else {
-        return false;
-      }
-    }
+  public boolean isShooterReady() {
+    return thresholdLoops > goodThresholdLoopCount;
   }
 
   @Override
   public void periodic() {
+    actualSpeed = getShooterVelocityRaw();
+    errorRatio = actualSpeed/targetSpeed;
+
+    if (errorRatio > 0.98 && errorRatio < 1.02) { // was 1.03
+      ++thresholdLoops;
+    } else {
+      thresholdLoops = 0;
+    }
+
     //SmartDashboard.putNumber("Shooter Commanded Speed", targetSpeed);
-    //SmartDashboard.putNumber("Shooter Actual Speed", getShooterRPM());
-    SmartDashboard.putBoolean("Is Shooter Ready? ", isShooterReady());
+    // SmartDashboard.putNumber("Shooter Actual Speed", getShooterRPM());
+    // SmartDashboard.putBoolean("Is Shooter Ready? ", isShooterReady());
+    
+    // shooterMotor.config_kP(0, SmartDashboard.getNumber("kP", 0.0));
+    // shooterMotor.config_kI(0, SmartDashboard.getNumber("kI", 0.0001));
+    // shooterMotor.config_kD(0, SmartDashboard.getNumber("kD", 0.0));
   }
 }

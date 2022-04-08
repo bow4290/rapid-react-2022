@@ -3,7 +3,6 @@ package frc.robot.commands.Shooter;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.HoodConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.sensors.Limelight;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -34,6 +33,7 @@ public class DefaultShootHighCommand extends CommandBase {
         && turretSubsystem.isTurretReady()) {
       double distance = limelight.getDistance();
       double calculatedRPM = calculateShooterSpeedRPM(distance);
+      if (calculatedRPM > 5250) calculatedRPM = 5250;
       shooterSubsystem.shoot(calculatedRPM);
     } else {
       shooterSubsystem.shoot(0);
@@ -50,10 +50,6 @@ public class DefaultShootHighCommand extends CommandBase {
   }
 
   private double calculateShooterSpeedRPM(double distance) {
-    if (distance < HoodConstants.hoodExtendDistance) {
-      return (16.62*distance+2392+ShooterConstants.adjustNearRPM);        // Hood Retracted Equation
-    } else {
-      return (40.32*distance-2201.6+ShooterConstants.adjustFarRPM);       // Hood Extended Equation
-    }
+    return ((19.6274+ShooterConstants.EquationAdjustA)*distance + (2133.25+ShooterConstants.EquationAdjustB));
   }
 }
