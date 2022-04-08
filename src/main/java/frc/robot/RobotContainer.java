@@ -193,6 +193,8 @@ public class RobotContainer {
           new ShootDiscard(shooterSubsystem),
           new WaitCommand(5)
         )
+      // new AutoDriveForDistanceCommand(drivetrainSubsystem, -60)
+      // it doesnt work like that :(
     );
 
     AutoDriveCollectAndShoot2 = 
@@ -206,11 +208,11 @@ public class RobotContainer {
           new IntakeIn(intakeSubsystem)
         ),
         new WaitCommand(0.20),
-        new EnableTurretCommand(turretSubsystem),
         new ParallelRaceGroup(
           new AutoTurnRightAngleCommand(drivetrainSubsystem, (90.0 + 35 + 30.0)),
           new IntakeIn(intakeSubsystem)
         ),
+        new EnableTurretCommand(turretSubsystem),
         new WaitCommand(0.20),
         new ParallelRaceGroup(
           new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
@@ -237,10 +239,11 @@ public class RobotContainer {
     AutoDriveCollectAndShoot = 
     new SequentialCommandGroup(
       new ShiftGearDown(drivetrainSubsystem),
+      new DisableTurretCommand(turretSubsystem),
       new IntakeDown(intakeSubsystem),    
       new ShiftGearDown(drivetrainSubsystem),
       new ParallelRaceGroup(
-        new AutoDriveForDistanceCommand(drivetrainSubsystem, 50), // used to be 40, did not go quite far enough
+        new AutoDriveForDistanceCommand(drivetrainSubsystem, 40), // used to be 40, did not go quite far enough
         new IntakeIn(intakeSubsystem)
       ),
       new WaitCommand(0.20),
@@ -248,6 +251,7 @@ public class RobotContainer {
         new AutoTurnRightAngleCommand(drivetrainSubsystem, (150)),     
         new IntakeIn(intakeSubsystem)
       ),
+      new EnableTurretCommand(turretSubsystem),
       new WaitCommand(0.20),
       new ParallelRaceGroup(
         new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
@@ -258,8 +262,10 @@ public class RobotContainer {
     AutoDriveAndShoot =
       new SequentialCommandGroup(
         new ShiftGearDown(drivetrainSubsystem),
+        new DisableTurretCommand(turretSubsystem),
         new AutoDriveForDistanceCommand(drivetrainSubsystem, 40),
         new AutoTurnLeftAngleCommand(drivetrainSubsystem, 180),
+        new EnableTurretCommand(turretSubsystem),
         new ParallelRaceGroup(
           new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
           new WaitCommand(5)
@@ -269,6 +275,7 @@ public class RobotContainer {
     AutoDriveAndCollect =
       new SequentialCommandGroup(
         new ShiftGearDown(drivetrainSubsystem),
+        new DisableTurretCommand(turretSubsystem),
         new IntakeDown(intakeSubsystem),
         new ParallelRaceGroup(
           new AutoDriveForDistanceCommand(drivetrainSubsystem, 40),
@@ -279,6 +286,7 @@ public class RobotContainer {
     AutoDriveOnly =
       new SequentialCommandGroup(
         new ShiftGearDown(drivetrainSubsystem),
+        new DisableTurretCommand(turretSubsystem),
         new AutoDriveForDistanceCommand(drivetrainSubsystem, 40)
       );
 

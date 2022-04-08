@@ -116,7 +116,7 @@ public final class Constants {
     // NOTE: This variable is not for homing, it's for going to 0 pos (I hate java)
     public static double turretHomingSpeed  = 0.6;
 
-    public static double aimOffsetDistance = 0;
+    public static double aimOffsetDistance = 2;
 
     // This variable is bad (it's not actually pid, it's just kP and it overrides defaultTrackSpeed. it does make our turret go vroom though) (I hate java)
     public static double turretKP = 0.1;
