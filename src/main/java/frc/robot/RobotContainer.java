@@ -200,12 +200,11 @@ public class RobotContainer {
   private void autoCommands(){
     AutoPlop = 
     new SequentialCommandGroup(
-      new ToggleTurretCommand(turretSubsystem),
       new ParallelRaceGroup(
           new ShootDiscard(shooterSubsystem),
-          new WaitCommand(4)
+          new WaitCommand(5)
       ),
-      new AutoReverseDriveForDistanceCommand(drivetrainSubsystem, 150)
+      new AutoReverseDriveForDistanceCommand(drivetrainSubsystem, 200)
     );
 
     AutoDriveCollectAndShoot2 = 
@@ -383,12 +382,12 @@ public class RobotContainer {
            );
   }
 
-  public Command autonomousInitCommands(){
-    return new ParallelCommandGroup( 
-      new ShiftGearDown(drivetrainSubsystem),
-      new SetPipeline(limelight, 0)
-    );
-  }
+  // public Command autonomousInitCommands(){
+  //   return new ParallelCommandGroup( 
+  //     new ShiftGearDown(drivetrainSubsystem),
+  //     new SetPipeline(limelight, 0)
+  //   );
+  // }
 
   public void periodic() {
     ballLower.update();

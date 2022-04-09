@@ -35,13 +35,13 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     autonomousCommand = robotContainer.getAutonomousCommand();
     
-    // if (autonomousCommand != null) {
+    if (autonomousCommand != null) {
       robotContainer.turretSubsystem.isTurretStopped = false;   // Enable the turret during autonomous
       DrivetrainSubsystem.forceCorrectEncoderResets = true;
       // robotContainer.autonomousInitCommands().schedule();
 
       autonomousCommand.schedule();
-    // }
+    }
   }
 
   @Override
@@ -54,8 +54,9 @@ public class Robot extends TimedRobot {
       autonomousCommand.cancel();
     }
 
-    robotContainer.turretSubsystem.isTurretStopped = true;      // Disable the turret when teleop begins
-    robotContainer.turretSubsystem.homingPosition = 0;
+    // robotContainer.turretSubsystem.isTurretStopped = true;      // Disable the turret when teleop begins
+    // robotContainer.turretSubsystem.homingPosition = 0;
+    //FIXME: another instance of neutered turret code
     DrivetrainSubsystem.forceCorrectEncoderResets = false;
     robotContainer.teleopInitCommands().schedule();
   }
