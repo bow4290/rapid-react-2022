@@ -1,7 +1,6 @@
 package frc.robot.commands.Shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.HoodConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.sensors.Limelight;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -12,10 +11,12 @@ public class ShootHigh extends CommandBase {
   private ShooterSubsystem shooterSubsystem;
   private TurretSubsystem turretSubsystem;
 
-  public ShootHigh(Limelight limelight, ShooterSubsystem shooterSubsystem, TurretSubsystem turretSubsystem) {
-    this.limelight = limelight;
+  public ShootHigh(Limelight limelight, ShooterSubsystem shooterSubsystem, TurretSubsystem turret) {
+    //FIXME: neutered the limelight and turret. add these back sometime
+
+    // this.limelight = limelight;
     this.shooterSubsystem = shooterSubsystem;
-    this.turretSubsystem = turretSubsystem;
+    // this.turretSubsystem = turretSubsystem;
     
     addRequirements(shooterSubsystem);
   }
@@ -29,6 +30,7 @@ public class ShootHigh extends CommandBase {
     if(turretSubsystem.isTurretReady()) {
       double distance = limelight.getDistance();
       double calculatedRPM = calculateShooterSpeedRPM(distance);
+      if (calculatedRPM > 5250) calculatedRPM = 5250;
       shooterSubsystem.shoot(calculatedRPM);
     } else {
       shooterSubsystem.shoot(0);
@@ -46,10 +48,6 @@ public class ShootHigh extends CommandBase {
   }
 
   private double calculateShooterSpeedRPM(double distance) {
-    if (distance < HoodConstants.hoodExtendDistance) {
-      return (16.62*distance+2392+ShooterConstants.adjustNearRPM);        // Hood Retracted Equation
-    } else {
-      return (40.32*distance-2201.6+ShooterConstants.adjustFarRPM);       // Hood Extended Equation
-    }
+    return ((19.6274+ShooterConstants.EquationAdjustA)*distance + (2133.25+ShooterConstants.EquationAdjustB));
   }
 }

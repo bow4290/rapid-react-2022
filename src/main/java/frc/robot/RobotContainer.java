@@ -13,6 +13,7 @@ import frc.robot.commands.Shooter.ShootManual;
 import frc.robot.commands.Indexer.*;
 import frc.robot.commands.Intake.*;
 import frc.robot.commands.Auto.AutoDriveForDistanceCommand;
+import frc.robot.commands.Auto.AutoReverseDriveForDistanceCommand;
 import frc.robot.commands.Auto.AutoTurnLeftAngleCommand;
 import frc.robot.commands.Auto.AutoTurnRightAngleCommand;
 import frc.robot.commands.Drivetrain.*;
@@ -20,8 +21,6 @@ import frc.robot.commands.Elevator.*;
 import frc.robot.sensors.BallIdentification;
 import frc.robot.sensors.Limelight;
 import frc.robot.sensors.RevColorSensor;
-import frc.robot.commands.Hood.DefaultHoodCommand;
-import frc.robot.commands.Hood.HoodRetractCommand;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -41,7 +40,6 @@ public class RobotContainer {
   // public static Joystick xboxController = new Joystick(JoystickConstants.XBOX_CONTROLLER);
   public static XboxController xboxController = new XboxController(JoystickConstants.XBOX_CONTROLLER);
 
-  private HoodSubsystem hoodSubsystem;
   private IndexerSubsystem indexerSubsystem;
   public DrivetrainSubsystem drivetrainSubsystem;
   public TurretSubsystem turretSubsystem;
@@ -102,11 +100,6 @@ public class RobotContainer {
       turretSubsystem.setDefaultCommand(new TurretCommand(limelight, turretSubsystem));
     }
 
-    if (Flags.hood) {
-      hoodSubsystem = new HoodSubsystem();
-      hoodSubsystem.setDefaultCommand(new DefaultHoodCommand(limelight, hoodSubsystem, turretSubsystem));
-    }
-
     if (Flags.elevator) elevatorSubsystem = new ElevatorSubsystem();
 
     autoCommands();
@@ -163,7 +156,7 @@ public class RobotContainer {
 
     setXboxControllerButtonWhenHeld(xboxController, 4, new ElevatorUpCommand(elevatorSubsystem));
     setXboxControllerButtonWhenHeld(xboxController, 1, new ElevatorDownCommand(elevatorSubsystem));
-    setXboxControllerButtonWhenHeld(xboxController, 3, new ArmToggle(elevatorSubsystem));
+    //setXboxControllerButtonWhenHeld(xboxController, 3, new ArmToggle(elevatorSubsystem));
 
     setXboxControllerButtonWhenHeld(xboxController, 2, new ShootManual(shooterSubsystem));
     // setXboxControllerButtonWhenHeld(xboxController, 6, new ShootHigh(limelight, shooterSubsystem, turretSubsystem));
@@ -193,14 +186,19 @@ public class RobotContainer {
     new JoystickButton(xboxController, button).whenHeld(command);
   }
 
+  private void setXboxControllerButtonWhenPressed (XboxController xboxController, int button, CommandBase command) {
+    new JoystickButton(xboxController, button).whenPressed(command);
+  }
+
   private void autoCommands(){
     AutoPlop = 
     new SequentialCommandGroup(
       new ToggleTurretCommand(turretSubsystem),
       new ParallelRaceGroup(
           new ShootDiscard(shooterSubsystem),
-          new WaitCommand(5)
-        )
+          new WaitCommand(4)
+      ),
+      new AutoReverseDriveForDistanceCommand(drivetrainSubsystem, 150)
     );
 
     AutoDriveCollectAndShoot2 = 
@@ -214,11 +212,11 @@ public class RobotContainer {
           new IntakeIn(intakeSubsystem)
         ),
         new WaitCommand(0.20),
-        new EnableTurretCommand(turretSubsystem),
         new ParallelRaceGroup(
           new AutoTurnRightAngleCommand(drivetrainSubsystem, (90.0 + 35 + 30.0)),
           new IntakeIn(intakeSubsystem)
         ),
+        new EnableTurretCommand(turretSubsystem),
         new WaitCommand(0.20),
         new ParallelRaceGroup(
           new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
@@ -245,10 +243,11 @@ public class RobotContainer {
     AutoDriveCollectAndShoot = 
     new SequentialCommandGroup(
       new ShiftGearDown(drivetrainSubsystem),
+      new DisableTurretCommand(turretSubsystem),
       new IntakeDown(intakeSubsystem),    
       new ShiftGearDown(drivetrainSubsystem),
       new ParallelRaceGroup(
-        new AutoDriveForDistanceCommand(drivetrainSubsystem, 50), // used to be 40, did not go quite far enough
+        new AutoDriveForDistanceCommand(drivetrainSubsystem, 40), // used to be 40, did not go quite far enough
         new IntakeIn(intakeSubsystem)
       ),
       new WaitCommand(0.20),
@@ -256,6 +255,7 @@ public class RobotContainer {
         new AutoTurnRightAngleCommand(drivetrainSubsystem, (150)),     
         new IntakeIn(intakeSubsystem)
       ),
+      new EnableTurretCommand(turretSubsystem),
       new WaitCommand(0.20),
       new ParallelRaceGroup(
         new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
@@ -266,8 +266,10 @@ public class RobotContainer {
     AutoDriveAndShoot =
       new SequentialCommandGroup(
         new ShiftGearDown(drivetrainSubsystem),
+        new DisableTurretCommand(turretSubsystem),
         new AutoDriveForDistanceCommand(drivetrainSubsystem, 40),
         new AutoTurnLeftAngleCommand(drivetrainSubsystem, 180),
+        new EnableTurretCommand(turretSubsystem),
         new ParallelRaceGroup(
           new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
           new WaitCommand(5)
@@ -277,6 +279,7 @@ public class RobotContainer {
     AutoDriveAndCollect =
       new SequentialCommandGroup(
         new ShiftGearDown(drivetrainSubsystem),
+        new DisableTurretCommand(turretSubsystem),
         new IntakeDown(intakeSubsystem),
         new ParallelRaceGroup(
           new AutoDriveForDistanceCommand(drivetrainSubsystem, 40),
@@ -287,6 +290,7 @@ public class RobotContainer {
     AutoDriveOnly =
       new SequentialCommandGroup(
         new ShiftGearDown(drivetrainSubsystem),
+        new DisableTurretCommand(turretSubsystem),
         new AutoDriveForDistanceCommand(drivetrainSubsystem, 40)
       );
 
@@ -363,8 +367,7 @@ public class RobotContainer {
   public Command teleopInitCommands(){
     return new ParallelCommandGroup(
             // new IntakeUp(inqtakeSubsystem),
-            new ShiftGearDown(drivetrainSubsystem),
-            new HoodRetractCommand(hoodSubsystem)
+            new ShiftGearDown(drivetrainSubsystem)
            );
   }
 
