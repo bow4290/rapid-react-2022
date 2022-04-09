@@ -12,7 +12,10 @@ import frc.robot.commands.Shooter.ShootHigh;
 import frc.robot.commands.Shooter.ShootManual;
 import frc.robot.commands.Indexer.*;
 import frc.robot.commands.Intake.*;
+import frc.robot.commands.LimelightCycle;
+import frc.robot.commands.SetPipeline;
 import frc.robot.commands.Auto.AutoDriveForDistanceCommand;
+import frc.robot.commands.Auto.AutoReverseDriveForDistanceCommand;
 import frc.robot.commands.Auto.AutoTurnLeftAngleCommand;
 import frc.robot.commands.Auto.AutoTurnRightAngleCommand;
 import frc.robot.commands.Drivetrain.*;
@@ -25,6 +28,7 @@ import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -47,6 +51,8 @@ public class RobotContainer {
   private ElevatorSubsystem elevatorSubsystem;
 
   public Limelight limelight = new Limelight();
+
+  public static int wantedPipeline;
 
   public RevColorSensor redBallColorSensorI2C;
   public RevColorSensor blueBallColorSensorI2C;
@@ -96,7 +102,7 @@ public class RobotContainer {
 
     if (Flags.turret) {
       turretSubsystem = new TurretSubsystem(limelight);
-      turretSubsystem.setDefaultCommand(new TurretCommand(limelight, turretSubsystem));
+      // turretSubsystem.setDefaultCommand(new TurretCommand(limelight, turretSubsystem));
     }
 
     if (Flags.elevator) elevatorSubsystem = new ElevatorSubsystem();
@@ -152,13 +158,15 @@ public class RobotContainer {
     }
 
     setXboxControllerButtonWhenHeld(xboxController, 6, new ToggleTurretCommand(turretSubsystem));
+    // setXboxControllerButtonWhenHeld(xboxController, 3, new LimelightCycle(limelight));
 
     setXboxControllerButtonWhenHeld(xboxController, 4, new ElevatorUpCommand(elevatorSubsystem));
     setXboxControllerButtonWhenHeld(xboxController, 1, new ElevatorDownCommand(elevatorSubsystem));
-    setXboxControllerButtonWhenHeld(xboxController, 3, new ArmToggle(elevatorSubsystem));
+    // setXboxControllerButtonWhenHeld(xboxController, 3, new ArmToggle(elevatorSubsystem));
 
     setXboxControllerButtonWhenHeld(xboxController, 2, new ShootManual(shooterSubsystem));
-    // setXboxControllerButtonWhenHeld(xboxController, 6, new ShootHigh(limelight, shooterSubsystem, turretSubsystem));
+    setXboxControllerButtonWhenHeld(xboxController, 6, new ShootHigh(shooterSubsystem));
+    //FIXME: neutered the limelight and turret. add these back sometime
   }
 
   private void setJoystickButtonWhenPressed(Joystick joystick, int button, CommandBase command) {
@@ -185,20 +193,24 @@ public class RobotContainer {
     new JoystickButton(xboxController, button).whenHeld(command);
   }
 
+  private void setXboxControllerButtonWhenPressed (XboxController xboxController, int button, CommandBase command) {
+    new JoystickButton(xboxController, button).whenPressed(command);
+  }
+
   private void autoCommands(){
     AutoPlop = 
     new SequentialCommandGroup(
       new ToggleTurretCommand(turretSubsystem),
       new ParallelRaceGroup(
           new ShootDiscard(shooterSubsystem),
-          new WaitCommand(5)
-        )
-      // new AutoDriveForDistanceCommand(drivetrainSubsystem, -60)
-      // it doesnt work like that :(
+          new WaitCommand(4)
+      ),
+      new AutoReverseDriveForDistanceCommand(drivetrainSubsystem, 150)
     );
 
     AutoDriveCollectAndShoot2 = 
       new SequentialCommandGroup(
+        // new SetPipeline(limelight, 1),
         new ShiftGearDown(drivetrainSubsystem),
         new DisableTurretCommand(turretSubsystem),
         new IntakeDown(intakeSubsystem),
@@ -215,10 +227,11 @@ public class RobotContainer {
         new EnableTurretCommand(turretSubsystem),
         new WaitCommand(0.20),
         new ParallelRaceGroup(
-          new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
+          // new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
           new WaitCommand(3.25)
         ),
         new DisableTurretCommand(turretSubsystem),
+        // new SetPipeline(limelight, 0),
         new AutoTurnLeftAngleCommand(drivetrainSubsystem, 30.0),
             new ParallelRaceGroup(
                 new SequentialCommandGroup(
@@ -230,7 +243,7 @@ public class RobotContainer {
                     ),
                 new IntakeIn(intakeSubsystem)),
         new ParallelRaceGroup(
-                        new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
+                        // new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
                         new WaitCommand(4)),
         new AutoTurnLeftAngleCommand(drivetrainSubsystem, 120),
         new AutoDriveForDistanceCommand(drivetrainSubsystem, 13 * 12)
@@ -254,7 +267,7 @@ public class RobotContainer {
       new EnableTurretCommand(turretSubsystem),
       new WaitCommand(0.20),
       new ParallelRaceGroup(
-        new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
+        // new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
         new WaitCommand(5)
       )
     );
@@ -267,7 +280,7 @@ public class RobotContainer {
         new AutoTurnLeftAngleCommand(drivetrainSubsystem, 180),
         new EnableTurretCommand(turretSubsystem),
         new ParallelRaceGroup(
-          new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
+          // new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
           new WaitCommand(5)
         )
       );
@@ -298,7 +311,7 @@ public class RobotContainer {
             new IntakeIn(intakeSubsystem)),
         new AutoTurnLeftAngleCommand(drivetrainSubsystem, 180),
         new EnableTurretCommand(turretSubsystem),
-        new ParallelRaceGroup(new ShootHigh(limelight, shooterSubsystem, turretSubsystem), new WaitCommand(5.0)),
+        // new ParallelRaceGroup(new ShootHigh(limelight, shooterSubsystem, turretSubsystem), new WaitCommand(5.0)),
         new DisableTurretCommand(turretSubsystem),
         new AutoTurnLeftAngleCommand(drivetrainSubsystem, 50),
         new ParallelCommandGroup(new SequentialCommandGroup(
@@ -308,7 +321,7 @@ public class RobotContainer {
             new ShootDiscard(shooterSubsystem)
                 .until(() -> ballUpper.getBallColor() == BallIdentification.getAllianceColor())),
         new EnableTurretCommand(turretSubsystem),
-        new ParallelRaceGroup(new ShootHigh(limelight, shooterSubsystem, turretSubsystem), new WaitCommand(5.0)));
+        // new ParallelRaceGroup(new ShootHigh(limelight, shooterSubsystem, turretSubsystem), new WaitCommand(5.0)));
 
     AutoFunkyFourBallOnly =
       new SequentialCommandGroup(
@@ -327,7 +340,7 @@ public class RobotContainer {
         ),
         new WaitCommand(0.20),
         new ParallelRaceGroup(
-          new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
+          // new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
           new WaitCommand(2.75)
         ),
         new DisableTurretCommand(turretSubsystem),
@@ -341,7 +354,7 @@ public class RobotContainer {
         new ParallelRaceGroup(
           new AutoDriveForDistanceCommand(drivetrainSubsystem, 90),
           new IntakeIn(intakeSubsystem)
-        )
+        ))
         //new EnableTurretCommand(turretSubsystem),
         // new ParallelRaceGroup(
         //   new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
@@ -353,7 +366,9 @@ public class RobotContainer {
       null;
 
     AutoTestingOnly = 
-    null;
+    new SequentialCommandGroup(
+      new AutoReverseDriveForDistanceCommand(drivetrainSubsystem, 60)
+    );
   }
 
   public Command getAutonomousCommand() {
@@ -363,8 +378,16 @@ public class RobotContainer {
   public Command teleopInitCommands(){
     return new ParallelCommandGroup(
             // new IntakeUp(inqtakeSubsystem),
-            new ShiftGearDown(drivetrainSubsystem)
+            new ShiftGearDown(drivetrainSubsystem),
+            new SetPipeline(limelight, 0)
            );
+  }
+
+  public Command autonomousInitCommands(){
+    return new ParallelCommandGroup( 
+      new ShiftGearDown(drivetrainSubsystem),
+      new SetPipeline(limelight, 0)
+    );
   }
 
   public void periodic() {

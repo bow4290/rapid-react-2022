@@ -11,10 +11,12 @@ public class ShootHigh extends CommandBase {
   private ShooterSubsystem shooterSubsystem;
   private TurretSubsystem turretSubsystem;
 
-  public ShootHigh(Limelight limelight, ShooterSubsystem shooterSubsystem, TurretSubsystem turretSubsystem) {
-    this.limelight = limelight;
+  public ShootHigh(ShooterSubsystem shooterSubsystem) {
+    //FIXME: neutered the limelight and turret. add these back sometime
+
+    // this.limelight = limelight;
     this.shooterSubsystem = shooterSubsystem;
-    this.turretSubsystem = turretSubsystem;
+    // this.turretSubsystem = turretSubsystem;
     
     addRequirements(shooterSubsystem);
   }
@@ -25,14 +27,17 @@ public class ShootHigh extends CommandBase {
 
   @Override
   public void execute() {
-    if(turretSubsystem.isTurretReady()) {
-      double distance = limelight.getDistance();
-      double calculatedRPM = calculateShooterSpeedRPM(distance);
-      if (calculatedRPM > 5250) calculatedRPM = 5250;
-      shooterSubsystem.shoot(calculatedRPM);
-    } else {
-      shooterSubsystem.shoot(0);
-    }
+    // if(turretSubsystem.isTurretReady()) {
+      // double distance = limelight.getDistance();
+      // double calculatedRPM = calculateShooterSpeedRPM(distance);
+      // if (calculatedRPM > 5250) calculatedRPM = 5250;
+    //   shooterSubsystem.shoot(calculatedRPM);
+    // } else {
+    //   shooterSubsystem.shoot(0);
+    // }
+
+    shooterSubsystem.shoot(3500);
+
   }
 
   @Override

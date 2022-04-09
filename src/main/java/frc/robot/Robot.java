@@ -38,6 +38,8 @@ public class Robot extends TimedRobot {
     // if (autonomousCommand != null) {
       robotContainer.turretSubsystem.isTurretStopped = false;   // Enable the turret during autonomous
       DrivetrainSubsystem.forceCorrectEncoderResets = true;
+      // robotContainer.autonomousInitCommands().schedule();
+
       autonomousCommand.schedule();
     // }
   }
@@ -57,6 +59,7 @@ public class Robot extends TimedRobot {
     DrivetrainSubsystem.forceCorrectEncoderResets = false;
     robotContainer.teleopInitCommands().schedule();
   }
+  
 
   @Override
   public void teleopPeriodic() {
