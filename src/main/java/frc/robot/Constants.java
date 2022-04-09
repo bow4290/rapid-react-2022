@@ -89,10 +89,10 @@ public final class Constants {
     public static int shooterMotorChannel = 2;
     public static double shooterMotorVoltage = 11.0;
 
-    public static double manualShooterSpeedRPM = 1500;
+    public static double manualShooterSpeedRPM = 3500;
     public static double discardSpeedRPM = 1500.0;
     public static double EquationAdjustA = 0; // a(x) + b
-    public static double EquationAdjustB = 0; // a(x) + b
+    public static double EquationAdjustB = 75; // a(x) + b
 
     public static double kF = 1023.0/19900.0;   //1023.0/20330.0
     public static double kP = 0.0;
@@ -104,15 +104,16 @@ public final class Constants {
   public static final class TurretConstants {
     public static int deviceID = 11;
 
-    public static int forwardRotations = 95;         // Soft limit to prevent turret from turning too far
-    public static int reverseRotations = -95;        // Soft limit to prevent turret from turning too far
+    public static int forwardRotations = 80;         // Soft limit to prevent turret from turning too far
+    public static int reverseRotations = -80;        // Soft limit to prevent turret from turning too far
+    //these were at +- 95
 
     public static double manualTurnSpeed    = 0.3;
     // TODO: This variable is useless (see turretKP comment) (I hate java)
     public static double defaultTrackSpeed  = 0.3;
     // This variable is actually less than the track speed (see above comment) (I hate java)
     // used to be -0.55
-    public static double defaultSearchSpeed = -0.7;
+    public static double defaultSearchSpeed = -0.6;
     // NOTE: This variable is not for homing, it's for going to 0 pos (I hate java)
     public static double turretHomingSpeed  = 0.6;
 

@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMax.FaultID;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import frc.robot.Constants.Flags;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.TurretConstants;
 import frc.robot.sensors.Limelight;
 
@@ -52,11 +53,13 @@ public class TurretSubsystem extends SubsystemBase {
   }
 
   public boolean getHitLeftLimitSwitch() {
-    return motor.getFault(FaultID.kSoftLimitRev);
+    // return motor.getFault(FaultID.kSoftLimitRev);
+    return encoder.getPosition() < TurretConstants.reverseRotations;
   }
 
   public boolean getHitRightLimitSwitch() {
-    return motor.getFault(FaultID.kSoftLimitFwd);
+    // return motor.getFault(FaultID.kSoftLimitFwd);
+    return encoder.getPosition() > TurretConstants.forwardRotations;
   }
 
   public boolean isTurretReady(){

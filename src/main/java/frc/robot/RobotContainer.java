@@ -8,6 +8,7 @@ import frc.robot.Constants.Flags;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.commands.Shooter.DefaultShootHighCommand;
 import frc.robot.commands.Shooter.ShootDiscard;
+import frc.robot.commands.Shooter.ShootHardcodedDiscard;
 import frc.robot.commands.Shooter.ShootHigh;
 import frc.robot.commands.Shooter.ShootManual;
 import frc.robot.commands.Indexer.*;
@@ -157,8 +158,9 @@ public class RobotContainer {
     setXboxControllerButtonWhenHeld(xboxController, 4, new ElevatorUpCommand(elevatorSubsystem));
     setXboxControllerButtonWhenHeld(xboxController, 1, new ElevatorDownCommand(elevatorSubsystem));
     //setXboxControllerButtonWhenHeld(xboxController, 3, new ArmToggle(elevatorSubsystem));
+    setXboxControllerButtonWhenHeld(xboxController, 3, new ShootManual(shooterSubsystem));
 
-    setXboxControllerButtonWhenHeld(xboxController, 2, new ShootManual(shooterSubsystem));
+    setXboxControllerButtonWhenHeld(xboxController, 2, new ShootHardcodedDiscard(shooterSubsystem));
     // setXboxControllerButtonWhenHeld(xboxController, 6, new ShootHigh(limelight, shooterSubsystem, turretSubsystem));
   }
 
@@ -198,7 +200,7 @@ public class RobotContainer {
           new ShootDiscard(shooterSubsystem),
           new WaitCommand(4)
       ),
-      new AutoReverseDriveForDistanceCommand(drivetrainSubsystem, 150)
+      new AutoReverseDriveForDistanceCommand(drivetrainSubsystem, 200)
     );
 
     AutoDriveCollectAndShoot2 = 
