@@ -1,19 +1,20 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkMax.FaultID;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StickyFaults;
+import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import frc.robot.Constants.Flags;
 import frc.robot.Constants.TurretConstants;
 import frc.robot.sensors.Limelight;
 
 public class TurretSubsystem extends SubsystemBase {
-  private CANSparkMax motor;
-  public RelativeEncoder encoder;
+  // TODO: encasulate?
+  public WPI_TalonFX motor;
   private Limelight limelight;
   public boolean isTurretStopped = false;
   public double homingPosition = 0;
@@ -26,23 +27,29 @@ public class TurretSubsystem extends SubsystemBase {
 
     this.limelight = limelight;
 
-    motor = new CANSparkMax(TurretConstants.deviceID, MotorType.kBrushless);
-    motor.restoreFactoryDefaults();
+    motor = new WPI_TalonFX(TurretConstants.deviceID);
+    motor.configFactoryDefault();
 
     motor.setInverted(false);
-    motor.setIdleMode(IdleMode.kBrake);
-    motor.enableVoltageCompensation(11.0);
+    motor.setNeutralMode(NeutralMode.Brake);
+    motor.configVoltageCompSaturation(11);
+    motor.enableVoltageCompensation(true);
 
-    motor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
-    motor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
+    motor.configForwardSoftLimitEnable(true);
+    motor.configReverseSoftLimitEnable(true);
 
-    motor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, TurretConstants.forwardRotations);
-    motor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, TurretConstants.reverseRotations);
+    motor.configForwardSoftLimitThreshold(TurretConstants.forwardRotations);
+    motor.configReverseSoftLimitThreshold(TurretConstants.reverseRotations);
+    // motor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
+    // motor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
+
+    // motor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, TurretConstants.forwardRotations);
+    // motor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, TurretConstants.reverseRotations);
 
     // pid = motor.getPIDController();
 
-    encoder = motor.getEncoder();
-    encoder.setPosition(0);
+    motor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
+    motor.setSelectedSensorPosition(0);
   }
 
   public void turnTurret(double speed){
@@ -53,11 +60,23 @@ public class TurretSubsystem extends SubsystemBase {
   }
 
   public boolean getHitLeftLimitSwitch() {
-    return motor.getFault(FaultID.kSoftLimitRev);
+    StickyFaults faults = new StickyFaults();
+    motor.getStickyFaults(faults);
+    if (faults.ReverseLimitSwitch) {
+      motor.clearStickyFaults();
+      return true;
+    }
+    return false;
   }
 
   public boolean getHitRightLimitSwitch() {
-    return motor.getFault(FaultID.kSoftLimitFwd);
+    StickyFaults faults = new StickyFaults();
+    motor.getStickyFaults(faults);
+    if (faults.ForwardLimitSwitch) {
+      motor.clearStickyFaults();
+      return true;
+    }
+    return false;
   }
 
   public boolean isTurretReady(){

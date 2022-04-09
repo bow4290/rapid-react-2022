@@ -104,22 +104,22 @@ public final class Constants {
   public static final class TurretConstants {
     public static int deviceID = 11;
 
-    public static int forwardRotations = 95;         // Soft limit to prevent turret from turning too far
-    public static int reverseRotations = -95;        // Soft limit to prevent turret from turning too far
+    public static int forwardRotations = 10 * 2048;//95;         // Soft limit to prevent turret from turning too far
+    public static int reverseRotations = -10 * 2048;//-95;        // Soft limit to prevent turret from turning too far
 
-    public static double manualTurnSpeed    = 0.3;
+    public static double manualTurnSpeed    = 0.1;//0.3;
     // TODO: This variable is useless (see turretKP comment) (I hate java)
-    public static double defaultTrackSpeed  = 0.3;
+    public static double defaultTrackSpeed  = 0.1;//0.3;
     // This variable is actually less than the track speed (see above comment) (I hate java)
     // used to be -0.55
-    public static double defaultSearchSpeed = -0.7;
+    public static double defaultSearchSpeed = -0.1;//-0.7;
     // NOTE: This variable is not for homing, it's for going to 0 pos (I hate java)
-    public static double turretHomingSpeed  = 0.6;
+    public static double turretHomingSpeed  = 0.1;//0.6;
 
     public static double aimOffsetDistance = 2;
 
     // This variable is bad (it's not actually pid, it's just kP and it overrides defaultTrackSpeed. it does make our turret go vroom though) (I hate java)
-    public static double turretKP = 0.1;
+    public static double turretKP = 0.01;//0.1;
   }
 
   public static final class LimelightConstants {

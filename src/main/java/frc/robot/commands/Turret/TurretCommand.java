@@ -31,9 +31,9 @@ public class TurretCommand extends CommandBase {
   @Override
   public void execute() {
     if (turretSubsystem.isTurretStopped == true){
-      if (turretSubsystem.encoder.getPosition() > (turretSubsystem.homingPosition + 4)) {
+      if (turretSubsystem.motor.getSelectedSensorPosition() > (turretSubsystem.homingPosition + (1 * 2048))) {
         turretSubsystem.turnTurret(-TurretConstants.turretHomingSpeed);
-      } else if (turretSubsystem.encoder.getPosition() < (turretSubsystem.homingPosition - 4)) {
+      } else if (turretSubsystem.motor.getSelectedSensorPosition() < (turretSubsystem.homingPosition - (1 * 2048))) {
         turretSubsystem.turnTurret(TurretConstants.turretHomingSpeed);
       } else {
         turretSubsystem.stopTurret();
