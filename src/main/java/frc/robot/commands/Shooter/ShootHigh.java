@@ -2,21 +2,21 @@ package frc.robot.commands.Shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.sensors.Limelight;
+import frc.robot.sensors.TargetTracker;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
 
 public class ShootHigh extends CommandBase {
-  private Limelight limelight;
+  private TargetTracker targetTracker;
   private ShooterSubsystem shooterSubsystem;
   private TurretSubsystem turretSubsystem;
 
-  public ShootHigh(Limelight limelight, ShooterSubsystem shooterSubsystem, TurretSubsystem turret) {
+  public ShootHigh(TargetTracker targetTracker, ShooterSubsystem shooterSubsystem, TurretSubsystem turretSubsystem) {
     //FIXME: neutered the limelight and turret. add these back sometime
 
-    // this.limelight = limelight;
+    this.targetTracker = targetTracker;
     this.shooterSubsystem = shooterSubsystem;
-    // this.turretSubsystem = turretSubsystem;
+    this.turretSubsystem = turretSubsystem;
     
     addRequirements(shooterSubsystem);
   }
@@ -28,7 +28,7 @@ public class ShootHigh extends CommandBase {
   @Override
   public void execute() {
     if(turretSubsystem.isTurretReady()) {
-      double distance = limelight.getDistance();
+      double distance = targetTracker.getDistance();
       double calculatedRPM = calculateShooterSpeedRPM(distance);
       if (calculatedRPM > 5250) calculatedRPM = 5250;
       shooterSubsystem.shoot(calculatedRPM);

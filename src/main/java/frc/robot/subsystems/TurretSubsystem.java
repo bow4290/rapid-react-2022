@@ -9,21 +9,21 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import frc.robot.Constants.Flags;
 import frc.robot.Constants.TurretConstants;
-import frc.robot.sensors.Limelight;
+import frc.robot.sensors.TargetTracker;
 
 public class TurretSubsystem extends SubsystemBase {
   private CANSparkMax motor;
   public RelativeEncoder encoder;
-  private Limelight limelight;
+  private TargetTracker targetTracker;
   public boolean isTurretStopped = false;
   // private SparkMaxPIDController pid;
 
   // private double kP, kI, kD, kF, kMaxOutput, kMinOutput, setpoint;
 
-  public TurretSubsystem(Limelight limelight) {
+  public TurretSubsystem(TargetTracker targetTracker) {
     if (!Flags.turret) throw new Error("Turret flag must be set to create a TurretSubsystem!");
 
-    this.limelight = limelight;
+    this.targetTracker = targetTracker;
 
     motor = new CANSparkMax(TurretConstants.deviceID, MotorType.kBrushless);
     motor.restoreFactoryDefaults();
@@ -60,15 +60,15 @@ public class TurretSubsystem extends SubsystemBase {
   }
 
   public boolean isTurretReady(){
-    return (limelight.isTarget() && (Math.abs(limelight.getXErrorWithOffset(TurretConstants.aimOffsetDistance)) < 3)); // was 2.5
+    return (targetTracker.hasTarget() && (Math.abs(targetTracker.getXErrorWithOffset(TurretConstants.aimOffsetDistance)) < 3)); // was 2.5
   }
 
   @Override
   public void periodic() {
     SmartDashboard.putBoolean("Is Turret Ready? ", isTurretReady());
-    SmartDashboard.putBoolean("Has a target? ", limelight.isTarget());
-    SmartDashboard.putNumber("X Error ", limelight.getXErrorWithOffset(TurretConstants.aimOffsetDistance));
-    SmartDashboard.putNumber("Y Error ", limelight.getYError());
-    SmartDashboard.putNumber("Distance ", limelight.getDistance());
+    SmartDashboard.putBoolean("Has a target? ", targetTracker.hasTarget());
+    SmartDashboard.putNumber("X Error ", targetTracker.getXErrorWithOffset(TurretConstants.aimOffsetDistance));
+    // SmartDashboard.putNumber("Y Error ", targetTracker.getYError());
+    SmartDashboard.putNumber("Distance ", targetTracker.getDistance());
   }
 }

@@ -21,6 +21,7 @@ import frc.robot.commands.Elevator.*;
 import frc.robot.sensors.BallIdentification;
 import frc.robot.sensors.Limelight;
 import frc.robot.sensors.RevColorSensor;
+import frc.robot.sensors.TargetTracker;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -70,6 +71,8 @@ public class RobotContainer {
 
   SendableChooser<Command> chooser = new SendableChooser<>();
 
+  private TargetTracker targetTracker = new TargetTracker(5);
+
   public RobotContainer() {
     if (Flags.drivetrain) {
       drivetrainSubsystem = new DrivetrainSubsystem();
@@ -96,14 +99,14 @@ public class RobotContainer {
     }
 
     if (Flags.turret) {
-      turretSubsystem = new TurretSubsystem(limelight);
-      turretSubsystem.setDefaultCommand(new TurretCommand(limelight, turretSubsystem));
+      turretSubsystem = new TurretSubsystem(targetTracker);
+      turretSubsystem.setDefaultCommand(new TurretCommand(targetTracker, turretSubsystem));
     }
 
     if (Flags.elevator) elevatorSubsystem = new ElevatorSubsystem();
 
     autoCommands();
-    shooterSubsystem.setDefaultCommand(new DefaultShootHighCommand(() -> xboxController.getRightTriggerAxis(), limelight, shooterSubsystem, turretSubsystem));
+    shooterSubsystem.setDefaultCommand(new DefaultShootHighCommand(() -> xboxController.getRightTriggerAxis(), targetTracker, shooterSubsystem, turretSubsystem));
 
     chooser.setDefaultOption("3-Ball High Auto", AutoDriveCollectAndShoot2);
     chooser.addOption("2-Ball High Auto", AutoDriveCollectAndShoot);
@@ -219,7 +222,7 @@ public class RobotContainer {
         new EnableTurretCommand(turretSubsystem),
         new WaitCommand(0.20),
         new ParallelRaceGroup(
-          new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
+          new ShootHigh(targetTracker, shooterSubsystem, turretSubsystem),
           new WaitCommand(3.25)
         ),
         new DisableTurretCommand(turretSubsystem),
@@ -234,7 +237,7 @@ public class RobotContainer {
                     ),
                 new IntakeIn(intakeSubsystem)),
         new ParallelRaceGroup(
-                        new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
+                        new ShootHigh(targetTracker, shooterSubsystem, turretSubsystem),
                         new WaitCommand(4)),
         new AutoTurnLeftAngleCommand(drivetrainSubsystem, 120),
         new AutoDriveForDistanceCommand(drivetrainSubsystem, 13 * 12)
@@ -258,7 +261,7 @@ public class RobotContainer {
       new EnableTurretCommand(turretSubsystem),
       new WaitCommand(0.20),
       new ParallelRaceGroup(
-        new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
+        new ShootHigh(targetTracker, shooterSubsystem, turretSubsystem),
         new WaitCommand(5)
       )
     );
@@ -271,7 +274,7 @@ public class RobotContainer {
         new AutoTurnLeftAngleCommand(drivetrainSubsystem, 180),
         new EnableTurretCommand(turretSubsystem),
         new ParallelRaceGroup(
-          new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
+          new ShootHigh(targetTracker, shooterSubsystem, turretSubsystem),
           new WaitCommand(5)
         )
       );
@@ -302,7 +305,7 @@ public class RobotContainer {
             new IntakeIn(intakeSubsystem)),
         new AutoTurnLeftAngleCommand(drivetrainSubsystem, 180),
         new EnableTurretCommand(turretSubsystem),
-        new ParallelRaceGroup(new ShootHigh(limelight, shooterSubsystem, turretSubsystem), new WaitCommand(5.0)),
+        new ParallelRaceGroup(new ShootHigh(targetTracker, shooterSubsystem, turretSubsystem), new WaitCommand(5.0)),
         new DisableTurretCommand(turretSubsystem),
         new AutoTurnLeftAngleCommand(drivetrainSubsystem, 50),
         new ParallelCommandGroup(new SequentialCommandGroup(
@@ -312,7 +315,7 @@ public class RobotContainer {
             new ShootDiscard(shooterSubsystem)
                 .until(() -> ballUpper.getBallColor() == BallIdentification.getAllianceColor())),
         new EnableTurretCommand(turretSubsystem),
-        new ParallelRaceGroup(new ShootHigh(limelight, shooterSubsystem, turretSubsystem), new WaitCommand(5.0)));
+        new ParallelRaceGroup(new ShootHigh(targetTracker, shooterSubsystem, turretSubsystem), new WaitCommand(5.0)));
 
     AutoFunkyFourBallOnly =
       new SequentialCommandGroup(
@@ -331,7 +334,7 @@ public class RobotContainer {
         ),
         new WaitCommand(0.20),
         new ParallelRaceGroup(
-          new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
+          new ShootHigh(targetTracker, shooterSubsystem, turretSubsystem),
           new WaitCommand(2.75)
         ),
         new DisableTurretCommand(turretSubsystem),
@@ -348,7 +351,7 @@ public class RobotContainer {
         )
         //new EnableTurretCommand(turretSubsystem),
         // new ParallelRaceGroup(
-        //   new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
+        //   new ShootHigh(targetTracker, shooterSubsystem, turretSubsystem),
         //   new WaitCommand(5)
         // )
       );
@@ -374,5 +377,6 @@ public class RobotContainer {
   public void periodic() {
     ballLower.update();
     ballUpper.update();
+    targetTracker.update(limelight.isTarget(), limelight.getXError(), limelight.getDistance());
   }
 }

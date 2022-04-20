@@ -4,19 +4,19 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.sensors.Limelight;
+import frc.robot.sensors.TargetTracker;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
 
 public class DefaultShootHighCommand extends CommandBase {
   private DoubleSupplier shooterActiveDouble;
-  private Limelight limelight;
+  private TargetTracker targetTracker;
   private ShooterSubsystem shooterSubsystem;
   private TurretSubsystem turretSubsystem;
 
-  public DefaultShootHighCommand(DoubleSupplier shooterActiveDouble, Limelight limelight, ShooterSubsystem shooterSubsystem, TurretSubsystem turretSubsystem) {
+  public DefaultShootHighCommand(DoubleSupplier shooterActiveDouble, TargetTracker targetTracker, ShooterSubsystem shooterSubsystem, TurretSubsystem turretSubsystem) {
     this.shooterActiveDouble = shooterActiveDouble;
-    this.limelight = limelight;
+    this.targetTracker = targetTracker;
     this.shooterSubsystem = shooterSubsystem;
     this.turretSubsystem = turretSubsystem;
     
@@ -31,7 +31,7 @@ public class DefaultShootHighCommand extends CommandBase {
   public void execute() {
     if(shooterActiveDouble.getAsDouble() > ShooterConstants.shooterTriggerbuffer 
         && turretSubsystem.isTurretReady()) {
-      double distance = limelight.getDistance();
+      double distance = targetTracker.getDistance();
       double calculatedRPM = calculateShooterSpeedRPM(distance);
       if (calculatedRPM > 5250) calculatedRPM = 5250;
       shooterSubsystem.shoot(calculatedRPM);

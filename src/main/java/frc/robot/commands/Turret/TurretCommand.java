@@ -2,12 +2,12 @@ package frc.robot.commands.Turret;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.TurretConstants;
-import frc.robot.sensors.Limelight;
+import frc.robot.sensors.TargetTracker;
 import frc.robot.subsystems.TurretSubsystem;
 
 public class TurretCommand extends CommandBase {
 
-  private Limelight limelight;
+  private TargetTracker targetTracker;
   private TurretSubsystem turretSubsystem;
   private enum TurretState {INIT, SEARCH, TRACK};
   private TurretState turretState = TurretState.INIT;
@@ -16,8 +16,8 @@ public class TurretCommand extends CommandBase {
   private double localTrackSpeed = TurretConstants.defaultTrackSpeed;
   private double localSearchSpeed = TurretConstants.defaultSearchSpeed;
 
-  public TurretCommand(Limelight limelight, TurretSubsystem turretSubsystem) {
-    this.limelight = limelight;
+  public TurretCommand(TargetTracker targetTracker, TurretSubsystem turretSubsystem) {
+    this.targetTracker = targetTracker;
 
     this.turretSubsystem = turretSubsystem;
     addRequirements(turretSubsystem);
@@ -78,10 +78,10 @@ public class TurretCommand extends CommandBase {
   }
 
   private void updateTrackSetpoint() {
-    turretSpeed = limelight.getXErrorWithOffset(TurretConstants.aimOffsetDistance)*TurretConstants.turretKP; 
+    turretSpeed = targetTracker.getXErrorWithOffset(TurretConstants.aimOffsetDistance)*TurretConstants.turretKP;
   }
 
   private TurretState determineTurretState(){
-    return limelight.isTarget() ? TurretState.TRACK : TurretState.SEARCH;
+    return targetTracker.hasTarget() ? TurretState.TRACK : TurretState.SEARCH;
   }
 }
