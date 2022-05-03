@@ -8,7 +8,7 @@ import frc.robot.Constants.Flags;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.commands.Shooter.DefaultShootHighCommand;
 import frc.robot.commands.Shooter.ShootDiscard;
-import frc.robot.commands.Shooter.ShootHardcodedDiscard;
+import frc.robot.commands.Shooter.ShootHighManual;
 import frc.robot.commands.Shooter.ShootHigh;
 import frc.robot.commands.Shooter.ShootManual;
 import frc.robot.commands.Indexer.*;
@@ -68,6 +68,9 @@ public class RobotContainer {
   private Command AutoNothing;
   private Command AutoPlop;
   private Command AutoTestingOnly;
+  private Command ModifiedTwoBall;
+  private Command ModifiedTwoBallFast;
+
 
   SendableChooser<Command> chooser = new SendableChooser<>();
 
@@ -106,15 +109,17 @@ public class RobotContainer {
     autoCommands();
     shooterSubsystem.setDefaultCommand(new DefaultShootHighCommand(() -> xboxController.getRightTriggerAxis(), limelight, shooterSubsystem, turretSubsystem));
 
-    chooser.setDefaultOption("3-Ball High Auto", AutoDriveCollectAndShoot2);
-    chooser.addOption("2-Ball High Auto", AutoDriveCollectAndShoot);
-    chooser.addOption("1-Ball High Auto", AutoDriveAndShoot);
+    chooser.setDefaultOption("1-Ball High Auto", AutoDriveAndShoot);
+    // chooser.addOption("Modified 2-Ball Auto", ModifiedTwoBall);
+    // chooser.addOption("3-Ball High Auto", AutoDriveCollectAndShoot2);
+    // chooser.addOption("2-Ball High Auto", AutoDriveCollectAndShoot);
     chooser.addOption("1-Ball Low Auto", AutoPlop);
     chooser.addOption("Drive and Collect", AutoDriveAndCollect);
     chooser.addOption("Drive Only", AutoDriveOnly);
     // chooser.addOption("Cross Country", AutoCrossCountry);
     // chooser.addOption("4-Ball High Auto", AutoFunkyFourBallOnly);
     chooser.addOption("Do Nothing", AutoNothing);
+    // chooser.addOption("TwoBallFast(EXPERIMENTAL)", ModifiedTwoBallFast);
     // chooser.addOption("TESTING ONLY", AutoTestingOnly);
     SmartDashboard.putData(chooser);
 
@@ -157,10 +162,9 @@ public class RobotContainer {
 
     setXboxControllerButtonWhenHeld(xboxController, 4, new ElevatorUpCommand(elevatorSubsystem));
     setXboxControllerButtonWhenHeld(xboxController, 1, new ElevatorDownCommand(elevatorSubsystem));
-    //setXboxControllerButtonWhenHeld(xboxController, 3, new ArmToggle(elevatorSubsystem));
-    setXboxControllerButtonWhenHeld(xboxController, 3, new ShootManual(shooterSubsystem));
+    setXboxControllerButtonWhenHeld(xboxController, 2, new ShootManual(shooterSubsystem));
 
-    setXboxControllerButtonWhenHeld(xboxController, 2, new ShootHardcodedDiscard(shooterSubsystem));
+    setXboxControllerButtonWhenHeld(xboxController, 3, new ShootHighManual(shooterSubsystem));
     // setXboxControllerButtonWhenHeld(xboxController, 6, new ShootHigh(limelight, shooterSubsystem, turretSubsystem));
   }
 
@@ -197,7 +201,7 @@ public class RobotContainer {
     new SequentialCommandGroup(
       new ToggleTurretCommand(turretSubsystem),
       new ParallelRaceGroup(
-          new ShootDiscard(shooterSubsystem),
+          new ShootManual(shooterSubsystem),
           new WaitCommand(4)
       ),
       new AutoReverseDriveForDistanceCommand(drivetrainSubsystem, 200)
@@ -241,7 +245,7 @@ public class RobotContainer {
         new AutoTurnLeftAngleCommand(drivetrainSubsystem, 120),
         new AutoDriveForDistanceCommand(drivetrainSubsystem, 13 * 12)
       );
-    
+
     AutoDriveCollectAndShoot = 
     new SequentialCommandGroup(
       new ShiftGearDown(drivetrainSubsystem),
@@ -254,7 +258,7 @@ public class RobotContainer {
       ),
       new WaitCommand(0.20),
       new ParallelRaceGroup(
-        new AutoTurnRightAngleCommand(drivetrainSubsystem, (150)),     
+        new AutoTurnRightAngleCommand(drivetrainSubsystem, (180)),     
         new IntakeIn(intakeSubsystem)
       ),
       new EnableTurretCommand(turretSubsystem),
@@ -266,18 +270,70 @@ public class RobotContainer {
     );
 
     AutoDriveAndShoot =
+      // new SequentialCommandGroup(
+      //   new ShiftGearDown(drivetrainSubsystem),
+      //   new DisableTurretCommand(turretSubsystem),
+      //   new AutoDriveForDistanceCommand(drivetrainSubsystem, 40),
+      //   new AutoTurnLeftAngleCommand(drivetrainSubsystem, 180),
+      //   new EnableTurretCommand(turretSubsystem),
+      //   new ParallelRaceGroup(
+      //     new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
+      //     new WaitCommand(5)
+      //   )
+      // );
+
       new SequentialCommandGroup(
         new ShiftGearDown(drivetrainSubsystem),
         new DisableTurretCommand(turretSubsystem),
-        new AutoDriveForDistanceCommand(drivetrainSubsystem, 40),
-        new AutoTurnLeftAngleCommand(drivetrainSubsystem, 180),
-        new EnableTurretCommand(turretSubsystem),
         new ParallelRaceGroup(
-          new ShootHigh(limelight, shooterSubsystem, turretSubsystem),
-          new WaitCommand(5)
-        )
+          new ShootHighManual(shooterSubsystem),
+          new WaitCommand(5)),
+        new AutoReverseDriveForDistanceCommand(drivetrainSubsystem, 100)
       );
     
+    ModifiedTwoBall = //robot starts by facing in (towards hub) in this position
+      new SequentialCommandGroup(
+        new ShiftGearDown(drivetrainSubsystem),
+        new DisableTurretCommand(turretSubsystem),
+        new ParallelRaceGroup(
+          new ShootHighManual(shooterSubsystem),
+          new WaitCommand(3)),
+        new AutoTurnRightAngleCommand(drivetrainSubsystem, 180),
+        new WaitCommand(0.20),
+        new IntakeDown(intakeSubsystem),
+        new ParallelRaceGroup(
+          new AutoDriveForDistanceCommand(drivetrainSubsystem, 75),
+          new IntakeIn(intakeSubsystem)
+        ),
+        new WaitCommand(0.20),
+        new AutoTurnRightAngleCommand(drivetrainSubsystem, 180),        
+        new WaitCommand(0.20),
+        new AutoDriveForDistanceCommand(drivetrainSubsystem, 75),
+        new WaitCommand(0.20),
+        new ParallelRaceGroup(
+          new ShootHighManual(shooterSubsystem),
+          new WaitCommand(3))
+      );
+
+    ModifiedTwoBallFast = //robot starts by facing out (away from hub) in this position
+    new SequentialCommandGroup( 
+        new ShiftGearDown(drivetrainSubsystem),
+        new DisableTurretCommand(turretSubsystem),
+        new IntakeDown(intakeSubsystem),
+        new ParallelRaceGroup(
+          new AutoDriveForDistanceCommand(drivetrainSubsystem, 75),
+          new IntakeIn(intakeSubsystem)
+        ),
+        new WaitCommand(0.20),
+        new AutoTurnRightAngleCommand(drivetrainSubsystem, 180),        
+        new WaitCommand(0.20),
+        new AutoDriveForDistanceCommand(drivetrainSubsystem, 75),
+        new WaitCommand(0.20),
+        new ParallelRaceGroup(
+          new ShootHighManual(shooterSubsystem),
+          new WaitCommand(7))
+      );
+        
     AutoDriveAndCollect =
       new SequentialCommandGroup(
         new ShiftGearDown(drivetrainSubsystem),

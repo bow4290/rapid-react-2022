@@ -4,10 +4,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class ShootHardcodedDiscard extends CommandBase {
+public class ShootHighManual extends CommandBase {
   private ShooterSubsystem shooterSubsystem;
 
-  public ShootHardcodedDiscard(ShooterSubsystem shooterSubsystem) {
+  public ShootHighManual(ShooterSubsystem shooterSubsystem) {
     this.shooterSubsystem = shooterSubsystem;
     
     addRequirements(shooterSubsystem);
@@ -19,7 +19,7 @@ public class ShootHardcodedDiscard extends CommandBase {
 
   @Override
   public void execute() {
-    shooterSubsystem.shoot(2000.0);
+    shooterSubsystem.shoot(3600.0);
   }
 
   @Override

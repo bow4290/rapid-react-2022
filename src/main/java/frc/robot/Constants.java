@@ -89,10 +89,10 @@ public final class Constants {
     public static int shooterMotorChannel = 2;
     public static double shooterMotorVoltage = 11.0;
 
-    public static double manualShooterSpeedRPM = 3500;
-    public static double discardSpeedRPM = 1500.0;
+    public static double manualShooterSpeedRPM = 1750;
+    public static double discardSpeedRPM = 1750.0;
     public static double EquationAdjustA = 0; // a(x) + b
-    public static double EquationAdjustB = 75; // a(x) + b
+    public static double EquationAdjustB = 150; // a(x) + b
 
     public static double kF = 1023.0/19900.0;   //1023.0/20330.0
     public static double kP = 0.0;
