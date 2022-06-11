@@ -11,12 +11,10 @@ public class ShootHigh extends CommandBase {
   private ShooterSubsystem shooterSubsystem;
   private TurretSubsystem turretSubsystem;
 
-  public ShootHigh(Limelight limelight, ShooterSubsystem shooterSubsystem, TurretSubsystem turret) {
-    //FIXME: neutered the limelight and turret. add these back sometime
-
-    // this.limelight = limelight;
+  public ShootHigh(Limelight limelight, ShooterSubsystem shooterSubsystem, TurretSubsystem turretSubsystem) {
+    this.limelight = limelight;
     this.shooterSubsystem = shooterSubsystem;
-    // this.turretSubsystem = turretSubsystem;
+    this.turretSubsystem = turretSubsystem;
     
     addRequirements(shooterSubsystem);
   }

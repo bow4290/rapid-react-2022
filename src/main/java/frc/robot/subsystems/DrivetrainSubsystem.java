@@ -10,6 +10,8 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
+
+import frc.robot.RobotContainer;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.Flags;
 
@@ -71,18 +73,21 @@ public class DrivetrainSubsystem extends SubsystemBase {
   }
 
   public void drive(double leftSpeed, double rightSpeed) {
-    drivetrain.tankDrive(leftSpeed, rightSpeed, true);
+    if (RobotContainer.isAuto) {
+      drivetrain.tankDrive(leftSpeed, rightSpeed, true);
+    } else {
+      drivetrain.curvatureDrive(leftSpeed, rightSpeed, true);
+    }
   }
 
   public void resetDriveEncoders() {
-    // Just in case this is what's causing the back-and-forth drivetrain, let's disable it during teleop.
-    // if (forceCorrectEncoderResets) {
-    //   do { leftMotor1.setSelectedSensorPosition(0); } while (Math.abs(getLeftCalculatedPosition()) > 0.5);
-    //   do { rightMotor1.setSelectedSensorPosition(0); } while (Math.abs(getRightCalculatedPosition()) > 0.5);
-    // } else {
-      // leftMotor1.setSelectedSensorPosition(0);
-      // rightMotor1.setSelectedSensorPosition(0);
-    // }
+    if (forceCorrectEncoderResets) {
+      do { leftMotor1.setSelectedSensorPosition(0); } while (Math.abs(getLeftCalculatedPosition()) > 0.5);
+      do { rightMotor1.setSelectedSensorPosition(0); } while (Math.abs(getRightCalculatedPosition()) > 0.5);
+    } else {
+      leftMotor1.setSelectedSensorPosition(0);
+      rightMotor1.setSelectedSensorPosition(0);
+    }
   }
 
   public GearShiftPosition getGearShiftPosition() {

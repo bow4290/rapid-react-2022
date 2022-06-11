@@ -91,8 +91,8 @@ public final class Constants {
 
     public static double manualShooterSpeedRPM = 1750;
     public static double discardSpeedRPM = 1750.0;
-    public static double EquationAdjustA = 0; // a(x) + b
-    public static double EquationAdjustB = 150; // a(x) + b
+    public static double EquationAdjustA = 3.8; // a(x) + b
+    public static double EquationAdjustB = 80; // a(x) + b
 
     public static double kF = 1023.0/19900.0;   //1023.0/20330.0
     public static double kP = 0.0;
